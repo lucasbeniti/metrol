@@ -8,8 +8,11 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
+    Route::controller(AuthenticatedSessionController::class)->group(function () {
+        Route::get('/', 'create');
+        Route::post('/', 'store')->name('login');
+    });
+
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
@@ -27,7 +30,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
 
