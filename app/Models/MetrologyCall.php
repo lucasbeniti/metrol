@@ -14,10 +14,10 @@ class MetrologyCall extends Model
         'user_id',
         'status',
         'closed_at',
+        'created_at'
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at',
     ];
 

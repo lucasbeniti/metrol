@@ -33,6 +33,11 @@ export const metrologyCallColumns = (machines: Machine[], operations: Operation[
     cell: ({ row }) => STATUS_LABELS[row.original.status] || row.original.status,
   },
   {
+    accessorKey: 'created_at',
+    header: 'Data de criação',
+    cell: ({ row }) => new Date(row.original.created_at).toLocaleString('pt-br'),
+  },
+  {
     accessorKey: 'actions',
     header: 'Ações',
     cell: ({ row }) => <UpdateAndDeleteButtons row={row} machines={machines} operations={operations} />,

@@ -7,7 +7,8 @@ export interface MetrologyCall {
     type: MetrologyCallType
     user_id?: number;
     status: MetrologyCallStatus
-    closed_at?: Date
+    closed_at?: Date;
+    created_at: Date;
 }
 
 export enum MetrologyCallStatus {

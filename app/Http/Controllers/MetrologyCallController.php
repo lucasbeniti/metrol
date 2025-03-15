@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Exception;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\MetrologyCallExport;
 
 class MetrologyCallController extends Controller
 {
@@ -104,5 +106,9 @@ class MetrologyCallController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function export() {
+        return Excel::download(new MetrologyCallExport, 'chamados.xlsx');
     }
 }
