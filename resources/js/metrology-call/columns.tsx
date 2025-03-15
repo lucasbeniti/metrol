@@ -1,7 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import UpdateAndDeleteButtons from '@/metrology-call/components/update-and-delete-buttons';
 import { ColumnDef } from '@tanstack/react-table';
-import { PencilIcon, TrashIcon } from 'lucide-react';
 import { STATUS_LABELS, TYPE_LABELS } from './contants';
 import { MetrologyCall } from './types';
 
@@ -35,34 +33,6 @@ export const metrologyCallColumns: ColumnDef<MetrologyCall>[] = [
   {
     accessorKey: 'actions',
     header: 'Ações',
-    cell: () => (
-      <>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant={'ghost'}>
-                <PencilIcon />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Editar</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant={'ghost'}>
-                <TrashIcon />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Deletar</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </>
-    ),
+    cell: ({ row }) => <UpdateAndDeleteButtons row={row} />,
   },
 ];
