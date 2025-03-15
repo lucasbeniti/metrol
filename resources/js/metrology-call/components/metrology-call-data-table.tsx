@@ -30,7 +30,7 @@ export default function MetrologyCallDataTable({ metrologyCalls }: { metrologyCa
     <div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filtre pelo nome do item"
+          placeholder="Pesquise pelo nome do item"
           value={(table.getColumn('item_name')?.getFilterValue() as string) ?? ''}
           onChange={(event) => table.getColumn('item_name')?.setFilterValue(event.target.value)}
           className="max-w-sm"
