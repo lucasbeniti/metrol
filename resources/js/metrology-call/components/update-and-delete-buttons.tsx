@@ -24,8 +24,10 @@ const UpdateAndDeleteButtons = ({ row }: UpdateAndDeleteButtonsProps) => {
 
   return (
     <>
-      <TooltipButton variant="ghost" disabled={disabled} icon={<PencilIcon />} text="Editar" />
-      <TooltipButton variant="ghost" disabled={disabled} icon={<TrashIcon />} text="Deletar" onClick={handleDeleteClick} />
+      <div className="flex gap-1">
+        <TooltipButton variant="ghost" disabled={disabled} icon={<PencilIcon />} text="Editar" />
+        <TooltipButton variant="ghost" disabled={disabled} icon={<TrashIcon />} text="Deletar" onClick={handleDeleteClick} />
+      </div>
 
       <DeleteMetrologyCallDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id} />
     </>
