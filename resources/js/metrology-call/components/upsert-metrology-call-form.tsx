@@ -66,17 +66,19 @@ const UpsertMetrologyCall = ({ isOpen, setIsOpen, machines, operations, existing
         <Separator />
 
         <form onSubmit={onSubmit} className="space-y-8">
-          <Label htmlFor="item_name">Nome do Item</Label>
-          <Input
-            id="item_name"
-            type="text"
-            value={data.item_name}
-            onChange={(e) => setData('item_name', e.target.value)}
-            placeholder="Insira o nome do item"
-          />
-          {errors.item_name && <p className="text-sm text-red-500">{errors.item_name}</p>}
+          <div className="space-y-2">
+            <Label htmlFor="item_name">Nome do Item</Label>
+            <Input
+              id="item_name"
+              type="text"
+              value={data.item_name}
+              onChange={(e) => setData('item_name', e.target.value)}
+              placeholder="Insira o nome do item"
+            />
+            {errors.item_name && <p className="text-sm text-red-500">{errors.item_name}</p>}
+          </div>
 
-          <div className="grid gap-2">
+          <div className="space-y-2">
             <Label htmlFor="machine_id">Máquina</Label>
             <Select onValueChange={(value) => setData('machine_id', value)} value={data.machine_id.toString()}>
               <SelectTrigger>
@@ -93,7 +95,7 @@ const UpsertMetrologyCall = ({ isOpen, setIsOpen, machines, operations, existing
             {errors.machine_id && <p className="text-sm text-red-500">{errors.machine_id}</p>}
           </div>
 
-          <div className="grid gap-2">
+          <div className="space-y-2">
             <Label htmlFor="operation_id">Operação</Label>
             <Select onValueChange={(value) => setData('operation_id', value)} value={data.operation_id.toString()}>
               <SelectTrigger>
@@ -110,7 +112,7 @@ const UpsertMetrologyCall = ({ isOpen, setIsOpen, machines, operations, existing
             {errors.operation_id && <p className="text-sm text-red-500">{errors.operation_id}</p>}
           </div>
 
-          <div className="grid gap-2">
+          <div className="space-y-2">
             <Label htmlFor="type">Tipo</Label>
             <Select onValueChange={(value) => setData('type', value)} value={data.type.toString()}>
               <SelectTrigger>

@@ -34,7 +34,7 @@ const UpdateAndDeleteButtons = ({ row, machines, operations }: UpdateAndDeleteBu
     <>
       <div className="flex gap-1">
         <TooltipButton variant="ghost" disabled={disabled} icon={<PencilIcon />} text="Editar" onClick={handleEditClick} />
-        <TooltipButton variant="ghost" disabled={disabled} icon={<TrashIcon />} text="Deletar" onClick={handleDeleteClick} />
+        <TooltipButton variant="ghost" disabled={disabled} icon={<TrashIcon className="text-red-400" />} text="Deletar" onClick={handleDeleteClick} />
       </div>
 
       <DeleteMetrologyCallDialog isOpen={isDeleteDialogOpen} setIsOpen={setIsDeleteDialogOpen} id={id} />

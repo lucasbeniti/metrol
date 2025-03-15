@@ -12,6 +12,7 @@ use Inertia\Inertia;
 use Exception;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\MetrologyCallExport;
+use Illuminate\Validation\ValidationException;
 
 class MetrologyCallController extends Controller
 {
@@ -36,11 +37,12 @@ class MetrologyCallController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validator->errors(),
-            ], 422);
-        }
+            $errors = $validator->errors()->toArray();
+            foreach ($errors as $field => $messages) {
+                $errors[$field] = 'Este campo é obrigatório.';
+            }
+            throw ValidationException::withMessages($errors);
+        }   
 
         try {
             $request['status'] = 'waiting_receive';

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use App\Models\User;
 
 class LoginRequest extends FormRequest
 {
@@ -41,11 +42,20 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::attempt($this->only('identification', 'password'), $this->boolean('remember'))) {
+        $user = User::where('identification', $this->input('identification'))->first();
+        if (!$user) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
                 'identification' => __('auth.failed'),
+            ]);
+        }
+
+        if (!Auth::attempt($this->only('identification', 'password'), $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'password' => __('auth.password_incorrect'),
             ]);
         }
 

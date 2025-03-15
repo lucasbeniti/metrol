@@ -21,13 +21,23 @@ export default function Login() {
 
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
+
     post(route('login'), {
-      onFinish: () => reset('password'),
-      onError: (error) => {
-        console.error(error);
-      },
       onSuccess: () => {
         toast.info('Bem vindo!');
+      },
+      onError: (errors) => {
+        if (errors.identification || errors.password) {
+          if (errors.identification) {
+            errors.identification = 'A identificação informada está incorreta';
+          }
+          if (errors.password) {
+            errors.password = 'A senha informada está incorreta.';
+          }
+        }
+      },
+      onFinish: () => {
+        reset('password');
       },
     });
   };
@@ -43,12 +53,13 @@ export default function Login() {
             <Input
               id="identification"
               type="text"
-              required
               autoFocus
               tabIndex={1}
               value={data.identification}
               onChange={(e) => setData('identification', e.target.value)}
               placeholder="Insira sua identificação"
+              autoComplete="username"
+              required
             />
             <InputError message={errors.identification} />
           </div>
@@ -60,11 +71,12 @@ export default function Login() {
             <Input
               id="password"
               type="password"
-              required
               tabIndex={2}
               value={data.password}
               onChange={(e) => setData('password', e.target.value)}
               placeholder="Insira sua senha"
+              autoComplete="current-password"
+              required
             />
             <InputError message={errors.password} />
           </div>
