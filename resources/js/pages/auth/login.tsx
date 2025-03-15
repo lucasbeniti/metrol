@@ -6,6 +6,7 @@ import AuthLayout from '@/layouts/auth-layout';
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
+import { toast } from 'sonner';
 
 type LoginForm = {
   identification: string;
@@ -22,6 +23,12 @@ export default function Login() {
     e.preventDefault();
     post(route('login'), {
       onFinish: () => reset('password'),
+      onError: (error) => {
+        console.error(error);
+      },
+      onSuccess: () => {
+        toast.info('Bem vindo!');
+      },
     });
   };
 

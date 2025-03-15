@@ -9,6 +9,7 @@ import { CreateMetrologyCall } from '@/metrology-call/types';
 import { Operation } from '@/operation/types';
 import { useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface CreateMetrologyCallFormProps {
   isOpen: boolean;
@@ -31,9 +32,10 @@ const CreateMetrologyCallForm = ({ isOpen, setIsOpen, machines, operations }: Cr
       onSuccess: () => {
         reset();
         setIsOpen(false);
+        toast.success('Chamado criado com sucesso!');
       },
       onError: (errors) => {
-        console.error('Erros:', errors);
+        console.error(errors);
       },
     });
   };

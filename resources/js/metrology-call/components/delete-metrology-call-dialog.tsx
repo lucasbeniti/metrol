@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useForm } from '@inertiajs/react';
 import { DialogClose } from '@radix-ui/react-dialog';
+import { toast } from 'sonner';
 
 interface DeleteMetrologyCallDialogProps {
   isOpen: boolean;
@@ -16,6 +17,12 @@ const DeleteMetrologyCallDialog = ({ isOpen, setIsOpen, id }: DeleteMetrologyCal
     submitDelete(route('metrology-calls.destroy', id), {
       onFinish: () => {
         setIsOpen(false);
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+      onSuccess: () => {
+        toast.success('Chamado deletado com sucesso!');
       },
     });
   };
