@@ -25,8 +25,8 @@ export enum MetrologyCallType {
 
 export interface CreateMetrologyCall {
     item_name: string;
-    machine_id: string;
-    operation_id: string;
-    type: string;
+    machine_id: string | number;
+    operation_id: string | number;
+    type: string | MetrologyCallType;
     [key: string]: any;
 }

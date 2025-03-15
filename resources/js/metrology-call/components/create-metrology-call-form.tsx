@@ -16,41 +16,51 @@ interface CreateMetrologyCallFormProps {
   setIsOpen: (isOpen: boolean) => void;
   machines: Machine[];
   operations: Operation[];
+  existingMetrologyCall?: CreateMetrologyCall;
 }
 
-const CreateMetrologyCallForm = ({ isOpen, setIsOpen, machines, operations }: CreateMetrologyCallFormProps) => {
-  const { data, setData, post, processing, errors, reset } = useForm<CreateMetrologyCall>({
-    item_name: '',
-    machine_id: '',
-    operation_id: '',
-    type: '',
+const CreateMetrologyCallForm = ({ isOpen, setIsOpen, machines, operations, existingMetrologyCall }: CreateMetrologyCallFormProps) => {
+  const { data, setData, post, put, processing, errors, reset } = useForm<CreateMetrologyCall>({
+    item_name: existingMetrologyCall?.item_name || '',
+    machine_id: existingMetrologyCall?.machine_id?.toString() || '',
+    operation_id: existingMetrologyCall?.operation_id?.toString() || '',
+    type: existingMetrologyCall?.type || '',
   });
 
   const onSubmit: React.FormEventHandler = (e) => {
     e.preventDefault();
-    post(route('metrology-calls.store'), {
-      onSuccess: () => {
-        reset();
-        setIsOpen(false);
-        toast.success('Chamado criado com sucesso!');
-      },
-      onError: (errors) => {
-        console.error(errors);
-      },
-    });
+
+    if (existingMetrologyCall) {
+      put(route('metrology-calls.update', existingMetrologyCall.id), {
+        onSuccess: () => {
+          reset();
+          setIsOpen(false);
+          toast.success('Chamado atualizado com sucesso!');
+        },
+        onError: (errors) => {
+          console.error(errors);
+        },
+      });
+    } else {
+      post(route('metrology-calls.store'), {
+        onSuccess: () => {
+          reset();
+          setIsOpen(false);
+          toast.success('Chamado criado com sucesso!');
+        },
+        onError: (errors) => {
+          console.error(errors);
+        },
+      });
+    }
   };
 
   return (
-    <Dialog
-      open={isOpen}
-      onOpenChange={(isOpen) => {
-        setIsOpen(isOpen);
-      }}
-    >
+    <Dialog open={isOpen} onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Criação do chamado</DialogTitle>
-          <DialogDescription>Informe os dados para efetuar a criação de um chamado.</DialogDescription>
+          <DialogTitle>{existingMetrologyCall ? 'Editar Chamado' : 'Criação do Chamado'}</DialogTitle>
+          <DialogDescription>Informe os dados para efetuar a {existingMetrologyCall ? 'Criação' : 'Atualização'} de um chamado</DialogDescription>
         </DialogHeader>
 
         <Separator />
@@ -102,7 +112,7 @@ const CreateMetrologyCallForm = ({ isOpen, setIsOpen, machines, operations }: Cr
 
           <div className="grid gap-2">
             <Label htmlFor="type">Tipo</Label>
-            <Select onValueChange={(value) => setData('type', value)} value={data.type}>
+            <Select onValueChange={(value) => setData('type', value)} value={data.type.toString()}>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione um tipo" />
               </SelectTrigger>
@@ -123,7 +133,7 @@ const CreateMetrologyCallForm = ({ isOpen, setIsOpen, machines, operations }: Cr
             </DialogClose>
             <Button type="submit" disabled={processing}>
               {processing && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
-              Criar
+              {existingMetrologyCall ? 'Atualizar' : 'Criar'}
             </Button>
           </DialogFooter>
         </form>

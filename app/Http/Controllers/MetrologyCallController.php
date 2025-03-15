@@ -62,28 +62,46 @@ class MetrologyCallController extends Controller
         }
     }
 
-    public function destroy($id) {
+    public function update($id, Request $request) {
         try{
             $metrologyCall = MetrologyCall::find($id);
             if (!$metrologyCall) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Chamado de metrologia não encontrado.',
-            ], 404);
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Chamado de metrologia não encontrado.',
+                ], 404);
             }
 
-            $metrologyCall->delete();
-
-            $metrologyCalls = MetrologyCall::with(['machine', 'operation'])->get();
-            $machines = Machine::all();
-            $operations = Operation::all();
+            $metrologyCall->update($request->all());
             
             return redirect()->route('metrology-calls.index');
         }catch(Exception $e) {
             return response()->json([
-            'status' => 'error',
-            'message' => 'Erro ao deletar o chamado de metrologia.',
-            'error' => $e->getMessage(),
+                'status' => 'error',
+                'message' => 'Erro ao atualizar o chamado de metrologia.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function destroy($id) {
+        try{
+            $metrologyCall = MetrologyCall::find($id);
+            if (!$metrologyCall) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Chamado de metrologia não encontrado.',
+                ], 404);
+            }
+
+            $metrologyCall->delete();
+            
+            return redirect()->route('metrology-calls.index');
+        }catch(Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Erro ao deletar o chamado de metrologia.',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }

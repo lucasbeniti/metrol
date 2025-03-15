@@ -1,12 +1,22 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Machine } from '@/machine/types';
 import { metrologyCallColumns } from '@/metrology-call/columns';
 import { MetrologyCall } from '@/metrology-call/types';
+import { Operation } from '@/operation/types';
 import { ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
 
-export default function MetrologyCallDataTable({ metrologyCalls }: { metrologyCalls: MetrologyCall[] }) {
+export default function MetrologyCallDataTable({
+  metrologyCalls,
+  machines,
+  operations,
+}: {
+  metrologyCalls: MetrologyCall[];
+  machines: Machine[];
+  operations: Operation[];
+}) {
   const [data, setData] = useState<MetrologyCall[]>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -15,7 +25,7 @@ export default function MetrologyCallDataTable({ metrologyCalls }: { metrologyCa
   }, [metrologyCalls]);
 
   const table = useReactTable({
-    columns: metrologyCallColumns,
+    columns: metrologyCallColumns(machines, operations),
     data,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

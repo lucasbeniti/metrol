@@ -46,7 +46,7 @@ export default function MetrologyCalls({ metrologyCalls, machines, operations }:
             Excel
           </Button>
         </div>
-        <MetrologyCallDataTable metrologyCalls={metrologyCalls} />
+        <MetrologyCallDataTable metrologyCalls={metrologyCalls} machines={machines} operations={operations} />
       </div>
 
       <CreateMetrologyCallForm isOpen={isOpen} setIsOpen={setIsOpen} machines={machines} operations={operations} />
