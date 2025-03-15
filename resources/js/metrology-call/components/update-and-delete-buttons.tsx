@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import TooltipButton from '@/components/tooltip-button';
 import { STATUS_MAP } from '@/metrology-call/contants';
 import { MetrologyCall, MetrologyCallStatus } from '@/metrology-call/types';
@@ -13,7 +11,7 @@ interface UpdateAndDeleteButtonsProps {
 }
 
 const UpdateAndDeleteButtons = ({ row }: UpdateAndDeleteButtonsProps) => {
-  const disabled = row.original.status !== (STATUS_MAP[MetrologyCallStatus.WAITING_RECEIVE] as any);
+  const disabled = row.original.status !== (STATUS_MAP[MetrologyCallStatus.WAITING_RECEIVE] as unknown);
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState(row.original.id);
 
