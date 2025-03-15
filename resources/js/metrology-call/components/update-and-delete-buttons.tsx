@@ -1,6 +1,6 @@
 import TooltipButton from '@/components/tooltip-button';
 import { Machine } from '@/machine/types';
-import CreateMetrologyCallForm from '@/metrology-call/components/create-metrology-call-form';
+import CreateMetrologyCallForm from '@/metrology-call/components/upsert-metrology-call-form';
 import { STATUS_MAP } from '@/metrology-call/contants';
 import { MetrologyCall, MetrologyCallStatus } from '@/metrology-call/types';
 import { Operation } from '@/operation/types';

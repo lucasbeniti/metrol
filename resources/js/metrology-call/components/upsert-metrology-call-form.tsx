@@ -11,7 +11,7 @@ import { useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
-interface CreateMetrologyCallFormProps {
+interface UpsertMetrologyCallProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   machines: Machine[];
@@ -19,7 +19,7 @@ interface CreateMetrologyCallFormProps {
   existingMetrologyCall?: CreateMetrologyCall;
 }
 
-const CreateMetrologyCallForm = ({ isOpen, setIsOpen, machines, operations, existingMetrologyCall }: CreateMetrologyCallFormProps) => {
+const UpsertMetrologyCall = ({ isOpen, setIsOpen, machines, operations, existingMetrologyCall }: UpsertMetrologyCallProps) => {
   const { data, setData, post, put, processing, errors, reset } = useForm<CreateMetrologyCall>({
     item_name: existingMetrologyCall?.item_name || '',
     machine_id: existingMetrologyCall?.machine_id?.toString() || '',
@@ -142,4 +142,4 @@ const CreateMetrologyCallForm = ({ isOpen, setIsOpen, machines, operations, exis
   );
 };
 
-export default CreateMetrologyCallForm;
+export default UpsertMetrologyCall;

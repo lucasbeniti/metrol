@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { Machine } from '@/machine/types';
-import CreateMetrologyCallForm from '@/metrology-call/components/create-metrology-call-form';
 import MetrologyCallDataTable from '@/metrology-call/components/metrology-call-data-table';
+import CreateMetrologyCallForm from '@/metrology-call/components/upsert-metrology-call-form';
 import { MetrologyCall } from '@/metrology-call/types';
 import { Operation } from '@/operation/types';
 import { type BreadcrumbItem } from '@/types';
