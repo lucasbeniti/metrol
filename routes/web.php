@@ -9,9 +9,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::controller(MetrologyCallController::class)->prefix('/metrology-calls')->group(function() {
+    Route::controller(MetrologyCallController::class)->prefix('/metrology-calls')->name('metrology-calls.')->group(function() {
         Route::get('/', 'index');
-        Route::post('/', 'store');
+        Route::post('/', 'store')->name('store');
     });
 });
 

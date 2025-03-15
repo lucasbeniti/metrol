@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface MetrologyCall {
     id: string;
     item_name: string;
@@ -20,4 +21,12 @@ export enum MetrologyCallType {
     SETUP,
     PRODUCTION,
     ADJUST
+}
+
+export interface CreateMetrologyCall {
+    item_name: string;
+    machine_id: string;
+    operation_id: string;
+    type: string;
+    [key: string]: any;
 }

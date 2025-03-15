@@ -2,10 +2,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { metrologyCallColumns } from '@/metrology-call/columns';
 import { MetrologyCall } from '@/metrology-call/types';
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function MetrologyCallDataTable({ metrologyCalls }: { metrologyCalls: MetrologyCall[] }) {
-  const [data] = useState<MetrologyCall[]>(metrologyCalls);
+  const [data, setData] = useState<MetrologyCall[]>([]);
+
+  useEffect(() => {
+    setData(metrologyCalls);
+  }, [metrologyCalls]);
 
   const table = useReactTable({
     columns: metrologyCallColumns,

@@ -1,0 +1,133 @@
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
+import { Machine } from '@/machine/types';
+import { CreateMetrologyCall } from '@/metrology-call/types';
+import { Operation } from '@/operation/types';
+import { useForm } from '@inertiajs/react';
+import { LoaderCircle } from 'lucide-react';
+import { Button } from '../ui/button';
+
+interface CreateMetrologyCallFormProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  machines: Machine[];
+  operations: Operation[];
+}
+
+const CreateMetrologyCallForm = ({ isOpen, setIsOpen, machines, operations }: CreateMetrologyCallFormProps) => {
+  const { data, setData, post, processing, errors, reset } = useForm<CreateMetrologyCall>({
+    item_name: '',
+    machine_id: '',
+    operation_id: '',
+    type: '',
+  });
+
+  const onSubmit: React.FormEventHandler = (e) => {
+    e.preventDefault();
+    post(route('metrology-calls.store'), {
+      onSuccess: () => {
+        reset();
+        setIsOpen(false);
+      },
+      onError: (errors) => {
+        console.error('Erros:', errors);
+      },
+    });
+  };
+
+  return (
+    <Dialog
+      open={isOpen}
+      onOpenChange={(isOpen) => {
+        setIsOpen(isOpen);
+      }}
+    >
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Criação do chamado</DialogTitle>
+          <DialogDescription>Informe os dados para efetuar a criação de um chamado.</DialogDescription>
+        </DialogHeader>
+
+        <Separator />
+
+        <form onSubmit={onSubmit} className="space-y-8">
+          <Label htmlFor="item_name">Nome do Item</Label>
+          <Input
+            id="item_name"
+            type="text"
+            value={data.item_name}
+            onChange={(e) => setData('item_name', e.target.value)}
+            placeholder="Insira o nome do item"
+          />
+          {errors.item_name && <p className="text-sm text-red-500">{errors.item_name}</p>}
+
+          <div className="grid gap-2">
+            <Label htmlFor="machine_id">Máquina</Label>
+            <Select onValueChange={(value) => setData('machine_id', value)} value={data.machine_id.toString()}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione uma máquina" />
+              </SelectTrigger>
+              <SelectContent>
+                {machines.map((machine) => (
+                  <SelectItem key={machine.id} value={machine.id.toString()}>
+                    {machine.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {errors.machine_id && <p className="text-sm text-red-500">{errors.machine_id}</p>}
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="operation_id">Operação</Label>
+            <Select onValueChange={(value) => setData('operation_id', value)} value={data.operation_id.toString()}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione uma operação" />
+              </SelectTrigger>
+              <SelectContent>
+                {operations.map((operation) => (
+                  <SelectItem key={operation.id} value={operation.id.toString()}>
+                    {operation.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {errors.operation_id && <p className="text-sm text-red-500">{errors.operation_id}</p>}
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="type">Tipo</Label>
+            <Select onValueChange={(value) => setData('type', value)} value={data.type}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione um tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="setup">Setup</SelectItem>
+                <SelectItem value="production">Produção</SelectItem>
+                <SelectItem value="adjust">Ajuste</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.type && <p className="text-sm text-red-500">{errors.type}</p>}
+          </div>
+
+          <Separator />
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant={'ghost'}>Cancelar</Button>
+            </DialogClose>
+            <Button type="submit" disabled={processing}>
+              {processing && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
+              Criar
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default CreateMetrologyCallForm;

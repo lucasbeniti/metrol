@@ -1,10 +1,14 @@
-import MetrologyCallDataTable from '@/components/metrology-call-data-table';
+import CreateMetrologyCallForm from '@/components/metrology-call/create-metrology-call-form';
+import MetrologyCallDataTable from '@/components/metrology-call/metrology-call-data-table';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
+import { Machine } from '@/machine/types';
 import { MetrologyCall } from '@/metrology-call/types';
+import { Operation } from '@/operation/types';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { FileOutput, PlusIcon } from 'lucide-react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -15,15 +19,24 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 interface MetrologyCallProps {
   metrologyCalls: MetrologyCall[];
+  machines: Machine[];
+  operations: Operation[];
 }
+export default function MetrologyCalls({ metrologyCalls, machines, operations }: MetrologyCallProps) {
+  const [isOpen, setIsOpen] = useState(false);
 
-export default function MetrologyCalls({ metrologyCalls }: MetrologyCallProps) {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Chamados" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
         <div className="ml-auto flex gap-2">
-          <Button className="w-fit" variant={'outline'}>
+          <Button
+            className="w-fit"
+            variant={'outline'}
+            onClick={() => {
+              setIsOpen(true);
+            }}
+          >
             <PlusIcon />
             Criar
           </Button>
@@ -35,6 +48,8 @@ export default function MetrologyCalls({ metrologyCalls }: MetrologyCallProps) {
         </div>
         <MetrologyCallDataTable metrologyCalls={metrologyCalls} />
       </div>
+
+      <CreateMetrologyCallForm isOpen={isOpen} setIsOpen={setIsOpen} machines={machines} operations={operations} />
     </AppLayout>
   );
 }
