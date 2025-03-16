@@ -1,28 +1,32 @@
 import { handleExport } from '@/actions/export-file';
-import ClientsDataTable from '@/components/client/table';
-import UpsertDialog from '@/components/client/upsert-dialog';
 import CreateAndExportButtons from '@/components/create-and-export-buttons';
+import OperationDataTable from '@/components/operation/table';
+import UpsertDialog from '@/components/operation/upsert-dialog';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { IClient } from '@/types/client';
+import { ICostCenter } from '@/types/cost-center';
+import { IItem } from '@/types/item';
+import { IOperation } from '@/types/operation';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: 'Clientes',
-    href: '/clients',
+    title: 'Operações',
+    href: '/operations',
   },
 ];
 
-interface ClientsProps {
-  clients: IClient[];
+interface OperationsProps {
+  operations: IOperation[];
+  costCenters: ICostCenter[];
+  items: IItem[];
 }
-export default function Clients({ clients }: ClientsProps) {
+export default function ClientsList({ operations, costCenters, items }: OperationsProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleExportClick = () => {
-    handleExport('clients.export', 'clientes');
+    handleExport('operations.export', 'operações');
   };
 
   const handleCreateClick = () => {
@@ -34,10 +38,10 @@ export default function Clients({ clients }: ClientsProps) {
       <Head title="Clientes" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
         <CreateAndExportButtons handleCreateClick={handleCreateClick} handleExportClick={handleExportClick} />
-        <ClientsDataTable clients={clients} />
+        <OperationDataTable operations={operations} costCenters={costCenters} items={items} />
       </div>
 
-      <UpsertDialog isOpen={isOpen} setIsOpen={setIsOpen} />
+      <UpsertDialog isOpen={isOpen} setIsOpen={setIsOpen} costCenters={costCenters} items={items} />
     </AppLayout>
   );
 }

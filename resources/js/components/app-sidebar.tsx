@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { LayoutGrid, MonitorCog, Ruler, UsersRound } from 'lucide-react';
+import { Handshake, LayoutGrid, MonitorCog, Ruler, UsersRound } from 'lucide-react';
 
 const mainNavItems: NavItem[] = [
   {
@@ -25,6 +25,11 @@ const mainNavItems: NavItem[] = [
     title: 'Clientes',
     url: '/clients',
     icon: UsersRound,
+  },
+  {
+    title: 'Operações',
+    url: '/operations',
+    icon: Handshake,
   },
 ];
 

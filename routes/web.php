@@ -3,6 +3,7 @@
 use App\Http\Controllers\MetrologyCallController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\OperationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -28,6 +29,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(ClientController::class)->prefix('/clients')->name('clients.')->group(function() {
+        Route::get('/', 'index')->name('index');
+        Route::post('/', 'store')->name('store');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+        Route::get('/export', 'export')->name('export');
+    });
+
+    Route::controller(OperationController::class)->prefix('/operations')->name('operations.')->group(function() {
         Route::get('/', 'index')->name('index');
         Route::post('/', 'store')->name('store');
         Route::put('/{id}', 'update')->name('update');
