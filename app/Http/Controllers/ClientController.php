@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ClientExport;
 use App\Http\Requests\Client\UpsertClientRequest;
 use Inertia\Inertia;
 use App\Models\Client;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ClientController extends Controller
 {
@@ -34,5 +37,9 @@ class ClientController extends Controller
         $client->delete();
         
         return redirect()->route('clients.index');
+    }
+
+    public function export(): BinaryFileResponse {
+        return Excel::download(new ClientExport, 'clientes.xlsx');
     }
 }

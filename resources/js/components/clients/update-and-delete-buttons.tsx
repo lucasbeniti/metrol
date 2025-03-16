@@ -4,7 +4,7 @@ import { Row } from '@tanstack/react-table';
 import { PencilIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 import DestroyRowDialog from '../delete-dialog';
-import UpsertClients from './upsert-dialog';
+import UpsertDialog from './upsert-dialog';
 
 interface UpdateAndDeleteButtonsProps {
   row: Row<IClient>;
@@ -33,7 +33,7 @@ const UpdateAndDeleteButtons = ({ row }: UpdateAndDeleteButtonsProps) => {
 
       <DestroyRowDialog isOpen={isDeleteDialogOpen} setIsOpen={setIsDeleteDialogOpen} id={id} text="cliente" callRoute="clients.destroy" />
 
-      <UpsertClients isOpen={isEditFormOpen} setIsOpen={setIsEditFormOpen} />
+      <UpsertDialog isOpen={isEditFormOpen} setIsOpen={setIsEditFormOpen} existingClient={row.original} />
     </>
   );
 };

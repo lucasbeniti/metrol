@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Exports;
+
+use App\Models\Client;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Carbon\Carbon;
+
+class ClientExport implements FromCollection, WithMapping, WithHeadings
+{
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function collection()
+    {
+        return Client::all();
+    }
+
+    public function headings(): array
+    {
+        return ['ID', 'Nome', 'Data de criação', 'Data de atualização'];
+    }
+
+    public function map($client): array
+    {
+        return [
+            $client->id,
+            $client->name,
+            Carbon::parse($client->created_at)->format('d/m/Y H:i:s'),
+            Carbon::parse($client->updated_at)->format('d/m/Y H:i:s'),
+        ];
+    }
+}

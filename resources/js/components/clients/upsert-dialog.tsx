@@ -15,7 +15,7 @@ const UpsertDialog = ({ isOpen, setIsOpen, existingClient }: UpsertClientsProps)
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{existingClient ? 'Editar Cliente' : 'Criar Cliente'}</DialogTitle>
-          <DialogDescription>Informe os dados para efetuar a {existingClient ? 'edição' : 'criação'} de um ciente.</DialogDescription>
+          <DialogDescription>Informe os dados para efetuar a {existingClient ? 'edição' : 'criação'} de um cliente.</DialogDescription>
         </DialogHeader>
 
         <Separator />

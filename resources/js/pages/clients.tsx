@@ -1,3 +1,4 @@
+import { handleExport } from '@/actions/export-file';
 import ClientsListDataTable from '@/components/clients/table';
 import UpsertDialog from '@/components/clients/upsert-dialog';
 import CreateAndExportButtons from '@/components/create-and-export-buttons';
@@ -17,7 +18,7 @@ export default function ClientsList({ clients }: ClientsProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleExportClick = () => {
-    console.log('teste');
+    handleExport('clients.export', 'clientes');
   };
 
   const handleCreateClick = () => {
