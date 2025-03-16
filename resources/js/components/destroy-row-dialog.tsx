@@ -8,11 +8,12 @@ interface DestroyRowDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   id: string;
-  text: string;
+  entityName: string;
   callRoute: string;
+  description: string;
 }
 
-const DestroyRowDialog = ({ isOpen, setIsOpen, id, text, callRoute }: DestroyRowDialogProps) => {
+const DestroyRowDialog = ({ isOpen, setIsOpen, id, description, entityName, callRoute }: DestroyRowDialogProps) => {
   const { processing, delete: submitDelete } = useForm();
 
   const handleDestroy = () => {
@@ -24,7 +25,9 @@ const DestroyRowDialog = ({ isOpen, setIsOpen, id, text, callRoute }: DestroyRow
         console.error(error);
       },
       onSuccess: () => {
-        toast.success(`${text.charAt(0).toUpperCase()}${text.slice(1)} deletado com sucesso!`);
+        toast.success(
+          `${entityName.charAt(0).toUpperCase()}${entityName.slice(1)} ${entityName == 'máquina' ? 'deletada' : 'deletado'} com sucesso!`,
+        );
       },
     });
   };
@@ -34,7 +37,7 @@ const DestroyRowDialog = ({ isOpen, setIsOpen, id, text, callRoute }: DestroyRow
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Você tem certeza?</DialogTitle>
-          <DialogDescription>Após deletar o {text}, não será possível recuperá-lo.</DialogDescription>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>

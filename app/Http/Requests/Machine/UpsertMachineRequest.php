@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Requests\Machine;
+
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpsertMachineRequest extends FormRequest
+{
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'code' => 'required|string',
+            'operation_id' => 'required|exists:operations,id',
+        ];
+    }
+}

@@ -28,7 +28,8 @@ export const clientColumns = (): ColumnDef<IClient>[] => [
     cell: ({ row }) => (
       <UpdateAndDeleteButtons
         row={row.original}
-        text="cliente"
+        description="Após deletar o cliente não será possível recuperá-lo"
+        entityName="cliente"
         deleteRoute="clients.destroy"
         UpsertDialog={(props) => <UpsertDialog existingClient={row.original} {...props} />}
       />

@@ -44,7 +44,8 @@ export const metrologyCallColumns = (machines: IMachine[], operations: IOperatio
     cell: ({ row }) => (
       <UpdateAndDeleteButtons
         row={row.original}
-        text="chamado"
+        description="Após deletar o chamado, não será possível recuperá-lo."
+        entityName="chamado"
         deleteRoute="metrology-calls.destroy"
         UpsertDialog={(props) => <UpsertDialog {...props} machines={machines} operations={operations} existingMetrologyCall={row.original} />}
       />
