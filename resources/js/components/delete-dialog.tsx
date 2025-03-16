@@ -24,7 +24,7 @@ const DestroyRowDialog = ({ isOpen, setIsOpen, id, text, callRoute }: DestroyRow
         console.error(error);
       },
       onSuccess: () => {
-        toast.success('Chamado deletado com sucesso!');
+        toast.success(`${text.charAt(0).toUpperCase()}${text.slice(1)} deletado com sucesso!`);
       },
     });
   };
