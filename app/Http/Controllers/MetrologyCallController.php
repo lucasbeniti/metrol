@@ -42,21 +42,13 @@ class MetrologyCallController extends Controller
                 $errors[$field] = 'Este campo é obrigatório.';
             }
             throw ValidationException::withMessages($errors);
-        }   
+        }
 
         try {
             $request['status'] = 'waiting_receive';
             MetrologyCall::create($request->all());
-
-            $metrologyCalls = MetrologyCall::with(['machine', 'operation'])->get();
-            $machines = Machine::all();
-            $operations = Operation::all();
             
-            return Inertia::render('metrology-calls', [
-                'metrologyCalls' => $metrologyCalls,
-                'machines' => $machines,
-                'operations' => $operations
-            ]);
+            return redirect()->route('metrology-calls.index');
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -67,15 +59,23 @@ class MetrologyCallController extends Controller
     }
 
     public function update($id, Request $request) {
+        $validator = Validator::make($request->all(), [
+            'item_name' => 'required|string|max:255',
+            'machine_id' => 'required|exists:machines,id',
+            'operation_id' => 'required|exists:operations,id',
+            'type' => 'required|in:setup,production,adjust'
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->toArray();
+            foreach ($errors as $field => $messages) {
+                $errors[$field] = 'Este campo é obrigatório.';
+            }
+            throw ValidationException::withMessages($errors);
+        }
+
         try{
             $metrologyCall = MetrologyCall::find($id);
-            if (!$metrologyCall) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Chamado de metrologia não encontrado.',
-                ], 404);
-            }
-
             $metrologyCall->update($request->all());
             
             return redirect()->route('metrology-calls.index');
@@ -91,13 +91,6 @@ class MetrologyCallController extends Controller
     public function destroy($id) {
         try{
             $metrologyCall = MetrologyCall::find($id);
-            if (!$metrologyCall) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Chamado de metrologia não encontrado.',
-                ], 404);
-            }
-
             $metrologyCall->delete();
             
             return redirect()->route('metrology-calls.index');

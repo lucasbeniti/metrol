@@ -24,7 +24,7 @@ export enum MetrologyCallType {
     ADJUST
 }
 
-export interface CreateMetrologyCall {
+export interface IUpsertMetrologyCall {
     item_name: string;
     machine_id: string | number;
     operation_id: string | number;

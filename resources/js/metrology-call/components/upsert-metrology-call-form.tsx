@@ -5,29 +5,30 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Machine } from '@/machine/types';
-import { CreateMetrologyCall } from '@/metrology-call/types';
 import { Operation } from '@/operation/types';
 import { useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
+import { FormEventHandler } from 'react';
 import { toast } from 'sonner';
+import { IUpsertMetrologyCall } from '../types';
 
 interface UpsertMetrologyCallProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   machines: Machine[];
   operations: Operation[];
-  existingMetrologyCall?: CreateMetrologyCall;
+  existingMetrologyCall?: IUpsertMetrologyCall;
 }
 
 const UpsertMetrologyCall = ({ isOpen, setIsOpen, machines, operations, existingMetrologyCall }: UpsertMetrologyCallProps) => {
-  const { data, setData, post, put, processing, errors, reset } = useForm<CreateMetrologyCall>({
+  const { data, setData, post, put, processing, errors, reset } = useForm<IUpsertMetrologyCall>({
     item_name: existingMetrologyCall?.item_name || '',
     machine_id: existingMetrologyCall?.machine_id?.toString() || '',
     operation_id: existingMetrologyCall?.operation_id?.toString() || '',
     type: existingMetrologyCall?.type || '',
   });
 
-  const onSubmit: React.FormEventHandler = (e) => {
+  const onSubmit: FormEventHandler = (e) => {
     e.preventDefault();
 
     if (existingMetrologyCall) {
@@ -59,8 +60,8 @@ const UpsertMetrologyCall = ({ isOpen, setIsOpen, machines, operations, existing
     <Dialog open={isOpen} onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{existingMetrologyCall ? 'Editar Chamado' : 'Criação do Chamado'}</DialogTitle>
-          <DialogDescription>Informe os dados para efetuar a {existingMetrologyCall ? 'Criação' : 'Atualização'} de um chamado</DialogDescription>
+          <DialogTitle>{existingMetrologyCall ? 'Editar Chamado' : 'Criar Chamado'}</DialogTitle>
+          <DialogDescription>Informe os dados para efetuar a {existingMetrologyCall ? 'edição' : 'criação'} de um chamado.</DialogDescription>
         </DialogHeader>
 
         <Separator />
