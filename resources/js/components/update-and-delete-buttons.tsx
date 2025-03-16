@@ -1,22 +1,22 @@
 import TooltipButton from '@/components/tooltip-button';
-import { IClient } from '@/types/client';
-import { Row } from '@tanstack/react-table';
 import { PencilIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
-import DestroyRowDialog from '../delete-dialog';
-import UpsertDialog from './upsert-dialog';
+import DestroyRowDialog from './destroy-row-dialog';
 
-interface UpdateAndDeleteButtonsProps {
-  row: Row<IClient>;
+interface UpdateAndDeleteButtonsProps<T> {
+  row: T;
+  text: string;
+  deleteRoute: string;
+  UpsertDialog: React.FC<{ isOpen: boolean; setIsOpen: (open: boolean) => void; existingEntity: T }>;
 }
 
-const UpdateAndDeleteButtons = ({ row }: UpdateAndDeleteButtonsProps) => {
+const UpdateAndDeleteButtons = <T extends { id: string }>({ row, text, deleteRoute, UpsertDialog }: UpdateAndDeleteButtonsProps<T>) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
-  const [id, setId] = useState(row.original.id);
+  const [id, setId] = useState(row.id);
 
   const handleDeleteClick = () => {
-    setId(row.original.id);
+    setId(row.id);
     setIsDeleteDialogOpen(true);
   };
 
@@ -31,9 +31,9 @@ const UpdateAndDeleteButtons = ({ row }: UpdateAndDeleteButtonsProps) => {
         <TooltipButton variant="ghost" icon={<TrashIcon className="text-red-400" />} text="Deletar" onClick={handleDeleteClick} />
       </div>
 
-      <DestroyRowDialog isOpen={isDeleteDialogOpen} setIsOpen={setIsDeleteDialogOpen} id={id} text="cliente" callRoute="clients.destroy" />
+      <DestroyRowDialog isOpen={isDeleteDialogOpen} setIsOpen={setIsDeleteDialogOpen} id={id} text={text} callRoute={deleteRoute} />
 
-      <UpsertDialog isOpen={isEditFormOpen} setIsOpen={setIsEditFormOpen} existingClient={row.original} />
+      <UpsertDialog isOpen={isEditFormOpen} setIsOpen={setIsEditFormOpen} existingEntity={row} />
     </>
   );
 };

@@ -1,6 +1,7 @@
-import UpdateAndDeleteButtons from '@/components/clients/update-and-delete-buttons';
 import { IClient } from '@/types/client';
 import { ColumnDef } from '@tanstack/react-table';
+import UpdateAndDeleteButtons from '../update-and-delete-buttons';
+import UpsertDialog from './upsert-dialog';
 
 export const clientColumns = (): ColumnDef<IClient>[] => [
   {
@@ -24,6 +25,13 @@ export const clientColumns = (): ColumnDef<IClient>[] => [
   {
     accessorKey: 'actions',
     header: 'Ações',
-    cell: ({ row }) => <UpdateAndDeleteButtons row={row} />,
+    cell: ({ row }) => (
+      <UpdateAndDeleteButtons
+        row={row.original}
+        text="cliente"
+        deleteRoute="clients.destroy"
+        UpsertDialog={(props) => <UpsertDialog existingClient={row.original} {...props} />}
+      />
+    ),
   },
 ];

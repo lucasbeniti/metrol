@@ -1,9 +1,10 @@
-import UpdateAndDeleteButtons from '@/components/metrology-call/update-and-delete-buttons';
 import { STATUS_LABELS, TYPE_LABELS } from '@/constants/metrology-call';
 import { IMachine } from '@/types/machine';
 import { IMetrologyCall } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
 import { ColumnDef } from '@tanstack/react-table';
+import UpdateAndDeleteButtons from '../update-and-delete-buttons';
+import UpsertDialog from './upsert-dialog';
 
 export const metrologyCallColumns = (machines: IMachine[], operations: IOperation[]): ColumnDef<IMetrologyCall>[] => [
   {
@@ -40,6 +41,13 @@ export const metrologyCallColumns = (machines: IMachine[], operations: IOperatio
   {
     accessorKey: 'actions',
     header: 'Ações',
-    cell: ({ row }) => <UpdateAndDeleteButtons row={row} machines={machines} operations={operations} />,
+    cell: ({ row }) => (
+      <UpdateAndDeleteButtons
+        row={row.original}
+        text="chamado"
+        deleteRoute="metrology-calls.destroy"
+        UpsertDialog={(props) => <UpsertDialog {...props} machines={machines} operations={operations} existingMetrologyCall={row.original} />}
+      />
+    ),
   },
 ];

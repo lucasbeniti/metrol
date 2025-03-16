@@ -28,8 +28,8 @@ class ClientExport implements FromCollection, WithMapping, WithHeadings
         return [
             $client->id,
             $client->name,
-            Carbon::parse($client->created_at)->format('d/m/Y H:i:s'),
-            Carbon::parse($client->updated_at)->format('d/m/Y H:i:s'),
+            Carbon::parse($client->created_at)->setTimezone('America/Sao_Paulo')->format('d/m/Y H:i:s'),
+            Carbon::parse($client->updated_at)->setTimezone('America/Sao_Paulo')->format('d/m/Y H:i:s'),
         ];
     }
 }
