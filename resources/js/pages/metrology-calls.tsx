@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { Machine } from '@/machine/types';
 import MetrologyCallDataTable from '@/metrology-call/components/metrology-call-data-table';
-import CreateMetrologyCallForm from '@/metrology-call/components/upsert-metrology-call-form';
+import UpsertMetrologyCallForm from '@/metrology-call/components/upsert-metrology-call-form';
 import { MetrologyCall } from '@/metrology-call/types';
 import { Operation } from '@/operation/types';
 import { type BreadcrumbItem } from '@/types';
@@ -74,7 +74,7 @@ export default function MetrologyCalls({ metrologyCalls, machines, operations }:
         <MetrologyCallDataTable metrologyCalls={metrologyCalls} machines={machines} operations={operations} />
       </div>
 
-      <CreateMetrologyCallForm isOpen={isOpen} setIsOpen={setIsOpen} machines={machines} operations={operations} />
+      <UpsertMetrologyCallForm isOpen={isOpen} setIsOpen={setIsOpen} machines={machines} operations={operations} />
     </AppLayout>
   );
 }

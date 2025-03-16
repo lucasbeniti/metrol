@@ -22,7 +22,7 @@ class MetrologyCallExport implements FromCollection, WithHeadings, WithMapping
     {
         return ['ID', 'Nome do item', 'Máquina', 'Operação', 'Tipo', 'Status', 'Data de Criação'];
     }
-
+    
     public function map($metrologyCall): array
     {
         $STATUS_MAP = [

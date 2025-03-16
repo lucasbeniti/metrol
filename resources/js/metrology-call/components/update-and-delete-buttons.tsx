@@ -1,6 +1,5 @@
 import TooltipButton from '@/components/tooltip-button';
 import { Machine } from '@/machine/types';
-import CreateMetrologyCallForm from '@/metrology-call/components/upsert-metrology-call-form';
 import { STATUS_MAP } from '@/metrology-call/contants';
 import { MetrologyCall, MetrologyCallStatus } from '@/metrology-call/types';
 import { Operation } from '@/operation/types';
@@ -8,6 +7,7 @@ import { Row } from '@tanstack/react-table';
 import { PencilIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 import DeleteMetrologyCallDialog from './delete-metrology-call-dialog';
+import UpsertMetrologyCallForm from './upsert-metrology-call-form';
 
 interface UpdateAndDeleteButtonsProps {
   row: Row<MetrologyCall>;
@@ -39,7 +39,7 @@ const UpdateAndDeleteButtons = ({ row, machines, operations }: UpdateAndDeleteBu
 
       <DeleteMetrologyCallDialog isOpen={isDeleteDialogOpen} setIsOpen={setIsDeleteDialogOpen} id={id} />
 
-      <CreateMetrologyCallForm
+      <UpsertMetrologyCallForm
         isOpen={isEditFormOpen}
         setIsOpen={setIsEditFormOpen}
         machines={machines}
