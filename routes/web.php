@@ -21,6 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(MachineController::class)->prefix('/machines')->name('machines.')->group(function() {
         Route::get('/', 'index')->name('index');
+        Route::get('/export', 'export')->name('export');
     });
 
     Route::controller(ClientController::class)->prefix('/clients')->name('clients.')->group(function() {

@@ -1,13 +1,13 @@
 import TooltipButton from '@/components/tooltip-button';
-import CreateClientsForm from '@/clients/components/upsert-clients-form';
-import { Clients} from '@/clients/types';
+import { IClient } from '@/types/client';
 import { Row } from '@tanstack/react-table';
 import { PencilIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
-import DeleteClientsDialog from '@/clients/components/delete-clients-dialog';
+import DestroyRowDialog from '../delete-dialog';
+import UpsertClients from './upsert-dialog';
 
 interface UpdateAndDeleteButtonsProps {
-  row: Row<Clients>;
+  row: Row<IClient>;
 }
 
 const UpdateAndDeleteButtons = ({ row }: UpdateAndDeleteButtonsProps) => {
@@ -31,12 +31,9 @@ const UpdateAndDeleteButtons = ({ row }: UpdateAndDeleteButtonsProps) => {
         <TooltipButton variant="ghost" icon={<TrashIcon className="text-red-400" />} text="Deletar" onClick={handleDeleteClick} />
       </div>
 
-      <DeleteClientsDialog isOpen={isDeleteDialogOpen} setIsOpen={setIsDeleteDialogOpen} id={id} />
+      <DestroyRowDialog isOpen={isDeleteDialogOpen} setIsOpen={setIsDeleteDialogOpen} id={id} text="cliente" callRoute="clients.destroy" />
 
-      <CreateClientsForm
-        isOpen={isEditFormOpen}
-        setIsOpen={setIsEditFormOpen}
-      />
+      <UpsertClients isOpen={isEditFormOpen} setIsOpen={setIsEditFormOpen} />
     </>
   );
 };

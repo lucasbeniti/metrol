@@ -4,17 +4,19 @@ import { useForm } from '@inertiajs/react';
 import { DialogClose } from '@radix-ui/react-dialog';
 import { toast } from 'sonner';
 
-interface DeleteClientsDialogProps {
+interface DestroyRowDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   id: string;
+  text: string;
+  callRoute: string;
 }
 
-const DeleteClientsDialog = ({ isOpen, setIsOpen, id }: DeleteClientsDialogProps) => {
+const DestroyRowDialog = ({ isOpen, setIsOpen, id, text, callRoute }: DestroyRowDialogProps) => {
   const { processing, delete: submitDelete } = useForm();
 
-  const handleDelete = () => {
-    submitDelete(route('clients.destroy', id), {
+  const handleDestroy = () => {
+    submitDelete(route(callRoute, id), {
       onFinish: () => {
         setIsOpen(false);
       },
@@ -22,7 +24,7 @@ const DeleteClientsDialog = ({ isOpen, setIsOpen, id }: DeleteClientsDialogProps
         console.error(error);
       },
       onSuccess: () => {
-        toast.success('Cliente deletado com sucesso!');
+        toast.success('Chamado deletado com sucesso!');
       },
     });
   };
@@ -32,7 +34,7 @@ const DeleteClientsDialog = ({ isOpen, setIsOpen, id }: DeleteClientsDialogProps
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Você tem certeza?</DialogTitle>
-          <DialogDescription>Após deletar o cliente, não será possível recuperá-lo.</DialogDescription>
+          <DialogDescription>Após deletar o {text}, não será possível recuperá-lo.</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>
@@ -40,7 +42,7 @@ const DeleteClientsDialog = ({ isOpen, setIsOpen, id }: DeleteClientsDialogProps
               Cancelar
             </Button>
           </DialogClose>
-          <Button variant={'destructive'} disabled={processing} onClick={handleDelete}>
+          <Button variant={'destructive'} disabled={processing} onClick={handleDestroy}>
             Deletar
           </Button>
         </DialogFooter>
@@ -49,4 +51,4 @@ const DeleteClientsDialog = ({ isOpen, setIsOpen, id }: DeleteClientsDialogProps
   );
 };
 
-export default DeleteClientsDialog;
+export default DestroyRowDialog;

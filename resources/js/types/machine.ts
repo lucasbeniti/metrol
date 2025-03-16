@@ -1,4 +1,4 @@
-export interface Machine {
+export interface IMachine {
     id: string;
     name: string;
     code: string;

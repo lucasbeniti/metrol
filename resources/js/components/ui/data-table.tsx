@@ -1,52 +1,27 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Machine } from '@/machine/types';
-import { metrologyCallColumns } from '@/metrology-call/columns';
-import { MetrologyCall } from '@/metrology-call/types';
-import { Operation } from '@/operation/types';
-import { ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
-import { useEffect, useState } from 'react';
+import { flexRender, Table as TableType } from '@tanstack/react-table';
+import { Button } from './button';
+import { Input } from './input';
 
-export default function MetrologyCallDataTable({
-  metrologyCalls,
-  machines,
-  operations,
-}: {
-  metrologyCalls: MetrologyCall[];
-  machines: Machine[];
-  operations: Operation[];
-}) {
-  const [data, setData] = useState<MetrologyCall[]>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+interface DataTableProps<T> {
+  table: TableType<T>;
+  data: T[];
+  filterBy: string;
+  placeholder: string;
+}
 
-  useEffect(() => {
-    setData(metrologyCalls);
-  }, [metrologyCalls]);
-
-  const table = useReactTable({
-    columns: metrologyCallColumns(machines, operations),
-    data,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      columnFilters,
-    },
-  });
-
+const DataTable = <T,>({ table, data, filterBy, placeholder }: DataTableProps<T>) => {
   return (
     <div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Pesquise pelo nome do item"
-          value={(table.getColumn('item_name')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('item_name')?.setFilterValue(event.target.value)}
+          placeholder={`Pesquise pelo ${placeholder}`}
+          value={(table.getColumn(filterBy)?.getFilterValue() as string) ?? ''}
+          onChange={(event) => table.getColumn(filterBy)?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
       </div>
-      <div className="rounded-lg border shadow-md">
+      <div className="flex items-center rounded-lg border shadow-md">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -68,7 +43,7 @@ export default function MetrologyCallDataTable({
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={metrologyCallColumns.length} className="py-4 text-center">
+                <TableCell colSpan={data.length} className="py-4 text-center">
                   Nenhum dado encontrado.
                 </TableCell>
               </TableRow>
@@ -86,4 +61,6 @@ export default function MetrologyCallDataTable({
       </div>
     </div>
   );
-}
+};
+
+export default DataTable;

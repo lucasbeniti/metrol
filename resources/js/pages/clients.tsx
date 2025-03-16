@@ -1,48 +1,38 @@
-import { Button } from '@/components/ui/button';
+import ClientsListDataTable from '@/components/clients/table';
+import UpsertDialog from '@/components/clients/upsert-dialog';
+import CreateAndExportButtons from '@/components/create-and-export-buttons';
+import { breadcrumbs } from '@/constants/breadcrumbs';
 import AppLayout from '@/layouts/app-layout';
-import ClientsListDataTable from '@/clients/components/clients-data-table';
-import CreateClientsForm from '@/clients/components/upsert-clients-form';
-import  {Clients}  from '@/clients/types';
 import { type BreadcrumbItem } from '@/types';
+import { IClient } from '@/types/client';
 import { Head } from '@inertiajs/react';
-import { FileOutput, PlusIcon } from 'lucide-react';
 import { useState } from 'react';
-import { toast } from 'sonner';
 
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: 'Clientes',
-    href: '/clients',
-  },
-];
+const filteredBreadcrumbs = breadcrumbs.filter((breadcrumb: BreadcrumbItem) => breadcrumb.title === 'Clientes');
 
 interface ClientsProps {
-  ClientsList: Clients[];
+  clients: IClient[];
 }
-export default function ClientsList({ ClientsList }: ClientsProps) {
+export default function ClientsList({ clients }: ClientsProps) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleExportClick = () => {
+    console.log('teste');
+  };
+
+  const handleCreateClick = () => {
+    setIsOpen(true);
+  };
+
   return (
-    <AppLayout breadcrumbs={breadcrumbs}>
+    <AppLayout breadcrumbs={filteredBreadcrumbs}>
       <Head title="Clientes" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-        <div className="ml-auto flex gap-2">
-          <Button
-            className="w-fit"
-            variant={'outline'}
-            onClick={() => {
-              setIsOpen(true);
-            }}
-          >
-            <PlusIcon />
-            Criar
-          </Button>
-
-        </div>
-        <ClientsListDataTable Clients={ClientsList} />
+        <CreateAndExportButtons handleCreateClick={handleCreateClick} handleExportClick={handleExportClick} />
+        <ClientsListDataTable clients={clients} />
       </div>
 
-      <CreateClientsForm isOpen={isOpen} setIsOpen={setIsOpen}  />
+      <UpsertDialog isOpen={isOpen} setIsOpen={setIsOpen} />
     </AppLayout>
   );
 }

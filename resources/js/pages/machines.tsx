@@ -1,39 +1,27 @@
-import { Button } from '@/components/ui/button';
+import { handleExport } from '@/actions/export-file';
+import CreateAndExportButtons from '@/components/create-and-export-buttons';
+import MachineDataTable from '@/components/machine/table';
+import { breadcrumbs } from '@/constants/breadcrumbs';
 import AppLayout from '@/layouts/app-layout';
-import MachineDataTable from '@/machine/components/machines-data-table';
-import { Machine } from '@/machine/types';
 import { type BreadcrumbItem } from '@/types';
+import { IMachine } from '@/types/machine';
 import { Head } from '@inertiajs/react';
-import { FileOutput, PlusIcon } from 'lucide-react';
 
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: 'Máquinas',
-    href: '/machines',
-  },
-];
-
+const filteredBreadcrumbs = breadcrumbs.filter((breadcrumb: BreadcrumbItem) => breadcrumb.title === 'Máquinas');
 interface MachinesProps {
-  machines: Machine[];
+  machines: IMachine[];
 }
 
 export default function Machines({ machines }: MachinesProps) {
+  const handleExportClick = () => {
+    handleExport('machines.export', 'máquinas');
+  };
+
   return (
-    <AppLayout breadcrumbs={breadcrumbs}>
+    <AppLayout breadcrumbs={filteredBreadcrumbs}>
       <Head title="Chamados" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-        <div className="ml-auto flex gap-2">
-          <Button className="w-fit" variant={'outline'}>
-            <PlusIcon />
-            Criar
-          </Button>
-
-          <Button variant={'outline'}>
-            <FileOutput />
-            Excel
-          </Button>
-        </div>
-
+        <CreateAndExportButtons handleCreateClick={() => {}} handleExportClick={handleExportClick} />
         <MachineDataTable machines={machines} />
       </div>
     </AppLayout>

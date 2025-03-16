@@ -1,11 +1,11 @@
-import { Machine } from '@/machine/types';
-import UpdateAndDeleteButtons from '@/metrology-call/components/update-and-delete-buttons';
-import { Operation } from '@/operation/types';
+import UpdateAndDeleteButtons from '@/components/metrology-call/update-and-delete-buttons';
+import { STATUS_LABELS, TYPE_LABELS } from '@/constants/metrology-call';
+import { IMachine } from '@/types/machine';
+import { IMetrologyCall } from '@/types/metrology-call';
+import { IOperation } from '@/types/operation';
 import { ColumnDef } from '@tanstack/react-table';
-import { STATUS_LABELS, TYPE_LABELS } from './contants';
-import { MetrologyCall } from './types';
 
-export const metrologyCallColumns = (machines: Machine[], operations: Operation[]): ColumnDef<MetrologyCall>[] => [
+export const metrologyCallColumns = (machines: IMachine[], operations: IOperation[]): ColumnDef<IMetrologyCall>[] => [
   {
     accessorKey: 'id',
     header: 'ID',

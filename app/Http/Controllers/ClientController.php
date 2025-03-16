@@ -2,87 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
+use App\Http\Requests\Client\UpsertClientRequest;
 use Inertia\Inertia;
 use App\Models\Client;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Response;
 
 class ClientController extends Controller
 {
-    public function index() {
-        $ClientsList = Client::get();
+    public function index(): Response {
         return Inertia::render('clients', [
-            'ClientsList' => $ClientsList,
+            'clients' => Client::all()
         ]);
     }
 
-    public function store(Request $request) {
-        $validator = Validator::make($request->all(), [
-          'name' => 'required|string|max:255',
-        ]);
-
-        if ($validator->fails()) {
-            $errors = $validator->errors()->toArray();
-            foreach ($errors as $field => $messages) {
-                $errors[$field] = 'Este campo é obrigatório.';
-            }
-            throw ValidationException::withMessages($errors);
-        }
-
-        try {
-            Client::create($request->all());
-            
-            return redirect()->route('clients.index');
-        } catch (Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Erro ao criar o cliente.',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+    public function store(UpsertClientRequest $request): RedirectResponse {
+        Client::create($request->all());
+        
+        return redirect()->route('clients.index');
     }
 
-    public function update($id, Request $request) {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-        ]);
+    public function update($id, UpsertClientRequest $request): RedirectResponse {
+        $client = Client::findOrFail($id);
+        $client->update($request->validated());
 
-        if ($validator->fails()) {
-            $errors = $validator->errors()->toArray();
-            foreach ($errors as $field => $messages) {
-                $errors[$field] = 'Este campo é obrigatório.';
-            }
-            throw ValidationException::withMessages($errors);
-        }
-
-        try{
-            $client = Client::find($id);
-            $client->update($request->all());
-            
-            return redirect()->route('clients.index');
-        }catch(Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Erro ao atualizar o cliente.',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return redirect()->route('clients.index');
     }
 
-    public function destroy($id) {
-        try{
-            $client = Client::find($id);
-            $client->delete();
-            
-            return redirect()->route('clients.index');
-        }catch(Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Erro ao deletar o cliente.',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+    public function destroy($id): RedirectResponse {
+        $client = Client::findOrFail($id);
+        $client->delete();
+        
+        return redirect()->route('clients.index');
     }
-
 }

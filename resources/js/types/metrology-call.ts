@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export interface MetrologyCall {
+export interface IMetrologyCall {
     id: string;
     item_name: string;
     machine_id: number;

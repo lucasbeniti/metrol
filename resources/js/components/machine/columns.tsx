@@ -1,7 +1,7 @@
-import { Machine } from '@/machine/types';
+import { IMachine } from '@/types/machine';
 import { ColumnDef } from '@tanstack/react-table';
 
-export const machineColumns: ColumnDef<Machine>[] = [
+export const machineColumns: ColumnDef<IMachine>[] = [
   {
     accessorKey: 'id',
     header: 'ID',
@@ -17,9 +17,5 @@ export const machineColumns: ColumnDef<Machine>[] = [
   {
     accessorKey: 'operation.name',
     header: 'Operação',
-  },
-  {
-    accessorKey: 'actions',
-    header: 'Ações',
   },
 ];

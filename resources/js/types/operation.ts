@@ -1,4 +1,4 @@
-export interface Operation {
+export interface IOperation {
     id: string;
     name: string;
     code: string;

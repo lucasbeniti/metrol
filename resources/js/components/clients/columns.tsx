@@ -1,8 +1,8 @@
-import UpdateAndDeleteButtons from '@/clients/components/update-and-delete-buttons';
+import UpdateAndDeleteButtons from '@/components/clients/update-and-delete-buttons';
+import { IClient } from '@/types/client';
 import { ColumnDef } from '@tanstack/react-table';
-import { Clients } from './types';
 
-export const ClientsColumns = (): ColumnDef<Clients>[] => [
+export const clientColumns = (): ColumnDef<IClient>[] => [
   {
     accessorKey: 'id',
     header: 'ID',
