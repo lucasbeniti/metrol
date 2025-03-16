@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { LayoutGrid, Ruler } from 'lucide-react';
+import { LayoutGrid, Ruler, UsersRound } from 'lucide-react';
 
 const mainNavItems: NavItem[] = [
   {
@@ -15,6 +15,11 @@ const mainNavItems: NavItem[] = [
     title: 'Chamados',
     url: '/metrology-calls',
     icon: Ruler,
+  },
+  {
+    title: 'Clientes',
+    url: '/clients',
+    icon: UsersRound,
   },
 ];
 
