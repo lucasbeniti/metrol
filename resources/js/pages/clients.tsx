@@ -1,6 +1,6 @@
 import { handleExport } from '@/actions/export-file';
-import ClientsListDataTable from '@/components/clients/table';
-import UpsertDialog from '@/components/clients/upsert-dialog';
+import ClientsListDataTable from '@/components/client/table';
+import UpsertDialog from '@/components/client/upsert-dialog';
 import CreateAndExportButtons from '@/components/create-and-export-buttons';
 import { breadcrumbs } from '@/constants/breadcrumbs';
 import AppLayout from '@/layouts/app-layout';
