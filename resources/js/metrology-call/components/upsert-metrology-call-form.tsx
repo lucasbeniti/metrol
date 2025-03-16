@@ -75,13 +75,14 @@ const UpsertMetrologyCall = ({ isOpen, setIsOpen, machines, operations, existing
               value={data.item_name}
               onChange={(e) => setData('item_name', e.target.value)}
               placeholder="Insira o nome do item"
+              required
             />
             {errors.item_name && <p className="text-sm text-red-500">{errors.item_name}</p>}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="machine_id">Máquina</Label>
-            <Select onValueChange={(value) => setData('machine_id', value)} value={data.machine_id.toString()}>
+            <Select onValueChange={(value) => setData('machine_id', value)} value={data.machine_id.toString()} required>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione uma máquina" />
               </SelectTrigger>
@@ -98,7 +99,7 @@ const UpsertMetrologyCall = ({ isOpen, setIsOpen, machines, operations, existing
 
           <div className="space-y-2">
             <Label htmlFor="operation_id">Operação</Label>
-            <Select onValueChange={(value) => setData('operation_id', value)} value={data.operation_id.toString()}>
+            <Select onValueChange={(value) => setData('operation_id', value)} value={data.operation_id.toString()} required>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione uma operação" />
               </SelectTrigger>
@@ -115,7 +116,7 @@ const UpsertMetrologyCall = ({ isOpen, setIsOpen, machines, operations, existing
 
           <div className="space-y-2">
             <Label htmlFor="type">Tipo</Label>
-            <Select onValueChange={(value) => setData('type', value)} value={data.type.toString()}>
+            <Select onValueChange={(value) => setData('type', value)} value={data.type.toString()} required>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione um tipo" />
               </SelectTrigger>

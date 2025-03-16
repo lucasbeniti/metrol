@@ -7,7 +7,7 @@ import { Row } from '@tanstack/react-table';
 import { PencilIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 import DeleteMetrologyCallDialog from './delete-metrology-call-dialog';
-import UpsertMetrologyCall from './upsert-metrology-call-form';
+import UpsertMetrologyCallForm from './upsert-metrology-call-form';
 
 interface UpdateAndDeleteButtonsProps {
   row: Row<MetrologyCall>;
@@ -39,7 +39,7 @@ const UpdateAndDeleteButtons = ({ row, machines, operations }: UpdateAndDeleteBu
 
       <DeleteMetrologyCallDialog isOpen={isDeleteDialogOpen} setIsOpen={setIsDeleteDialogOpen} id={id} />
 
-      <UpsertMetrologyCall
+      <UpsertMetrologyCallForm
         isOpen={isEditFormOpen}
         setIsOpen={setIsEditFormOpen}
         machines={machines}
