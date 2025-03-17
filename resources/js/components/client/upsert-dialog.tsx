@@ -3,13 +3,13 @@ import { Separator } from '@/components/ui/separator';
 import { IUpsertClient } from '@/types/client';
 import UpsertForm from './upsert-form';
 
-interface UpsertClientsProps {
+interface UpsertDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   existingClient?: IUpsertClient;
 }
 
-const UpsertDialog = ({ isOpen, setIsOpen, existingClient }: UpsertClientsProps) => {
+const UpsertDialog = ({ isOpen, setIsOpen, existingClient }: UpsertDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       <DialogContent>

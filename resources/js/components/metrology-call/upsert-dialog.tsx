@@ -5,7 +5,7 @@ import { IUpsertMetrologyCall } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
 import UpsertForm from './upsert-form';
 
-interface UpsertMetrologyCallProps {
+interface UpsertDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   machines: IMachine[];
@@ -13,7 +13,7 @@ interface UpsertMetrologyCallProps {
   existingMetrologyCall?: IUpsertMetrologyCall;
 }
 
-const UpsertDialog = ({ isOpen, setIsOpen, machines, operations, existingMetrologyCall }: UpsertMetrologyCallProps) => {
+const UpsertDialog = ({ isOpen, setIsOpen, machines, operations, existingMetrologyCall }: UpsertDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       <DialogContent>

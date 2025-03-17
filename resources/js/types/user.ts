@@ -7,6 +7,7 @@ export interface IUser {
     type: USER_TYPE | string;
     created_at: string;
     updated_at: string;
+    avatar: string | undefined;
     [key: string]: unknown;
 }
 

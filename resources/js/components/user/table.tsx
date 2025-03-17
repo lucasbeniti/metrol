@@ -1,5 +1,5 @@
 import { useCustomTable } from '@/hooks/use-custom-table';
-import { IUser } from '@/types';
+import { IUser } from '@/types/user';
 import DataTable from '../ui/data-table';
 import { usersColumns } from './columns';
 
