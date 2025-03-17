@@ -72,18 +72,6 @@ const UpsertForm = ({ existingUser, setIsOpen }: UpsertFormProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="code">Senha</Label>
-        <Input
-          id="password"
-          type="text"
-          value={data.password}
-          onChange={(e) => setData('password', e.target.value)}
-          placeholder="Insira a senha do usuário"
-        />
-        {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
-      </div>
-
-      <div className="space-y-2">
         <Label htmlFor="type">Tipo</Label>
         <Select onValueChange={(value) => setData('type', value)} value={data.type.toString()}>
           <SelectTrigger>

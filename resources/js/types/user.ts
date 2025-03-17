@@ -13,7 +13,6 @@ export interface IUser {
 
 export interface IUpsertUser {
     name: string;
-    password: string;
     identification: string;
     type: USER_TYPE | string;
     [key: string]: any;

@@ -9,6 +9,7 @@ use App\Exports\UserExport;
 use App\Http\Requests\UpsertUserRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -22,7 +23,8 @@ class UserController extends Controller
 
     public function store(UpsertUserRequest $request): RedirectResponse {
         $data = $request->validated();
-
+        $data['password'] = Hash::make('123');
+        
         User::create($data);
         
         return redirect()->route('users.index');

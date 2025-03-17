@@ -10,15 +10,15 @@ import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: 'Operações',
-    href: '/operations',
+    title: 'Usuários',
+    href: '/users',
   },
 ];
 
 interface UsersProps {
   users: IUser[];
 }
-export default function ClientsList({ users }: UsersProps) {
+export default function Users({ users }: UsersProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleExportClick = () => {

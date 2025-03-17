@@ -22,7 +22,7 @@ interface OperationsProps {
   costCenters: ICostCenter[];
   items: IItem[];
 }
-export default function ClientsList({ operations, costCenters, items }: OperationsProps) {
+export default function Operations({ operations, costCenters, items }: OperationsProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleExportClick = () => {

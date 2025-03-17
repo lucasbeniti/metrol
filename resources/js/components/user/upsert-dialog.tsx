@@ -15,7 +15,14 @@ const UpsertDialog = ({ isOpen, setIsOpen, existingUser }: UpsertDialogProps) =>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{existingUser ? 'Editar Usuário' : 'Criar Usuário'}</DialogTitle>
-          <DialogDescription>Informe os dados para efetuar a {existingUser ? 'edição' : 'criação'} de um usuário.</DialogDescription>
+          <DialogDescription>
+            Informe os dados para efetuar a {existingUser ? 'edição' : 'criação'} de um usuário.
+            {!existingUser && (
+              <span className="mt-2 block text-red-400">
+                A senha será gerada automaticamente como um valor padrão: 123. <br /> O usuário poderá efetuar a alteração após realizar o login.
+              </span>
+            )}
+          </DialogDescription>
         </DialogHeader>
 
         <Separator />
