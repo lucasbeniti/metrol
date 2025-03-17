@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\MachineExport;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Machine\UpsertMachineRequest;
+use App\Http\Requests\UpsertMachineRequest;
 use Inertia\Inertia;
 use App\Models\Machine;
 use App\Models\Operation;

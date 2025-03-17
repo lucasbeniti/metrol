@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Machine;
+namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpsertMachineRequest extends FormRequest
+class UpsertItemRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,7 +17,7 @@ class UpsertMachineRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'code' => 'required|string',
-            'operation_id' => 'required|exists:operations,id',
+            'cost_center_id' => 'required|exists:cost_centers,id',
         ];
     }
 }

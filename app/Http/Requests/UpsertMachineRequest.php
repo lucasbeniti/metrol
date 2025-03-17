@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\CostCenter;
+namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpsertCostCenterRequest extends FormRequest
+class UpsertMachineRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,7 +17,7 @@ class UpsertCostCenterRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'code' => 'required|string',
-            'client_id' => 'required|exists:clients,id',
+            'operation_id' => 'required|exists:operations,id',
         ];
     }
 }

@@ -7,7 +7,7 @@ use App\Models\Operation;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\OperationExport;
-use App\Http\Requests\Operation\UpsertOperationRequest;
+use App\Http\Requests\UpsertOperationRequest;
 use App\Models\CostCenter;
 use App\Models\Item;
 use Illuminate\Http\RedirectResponse;

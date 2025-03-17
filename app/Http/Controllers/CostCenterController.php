@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\MachineExport;
+use App\Exports\CostCenterExport;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CostCenter\UpsertCostCenterRequest;
+use App\Http\Requests\UpsertCostCenterRequest;
 use App\Models\CostCenter;
 use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
@@ -41,6 +41,6 @@ class CostCenterController extends Controller
     }
 
     public function export(): BinaryFileResponse {
-        return Excel::download(new MachineExport, 'centros_de_custo.xlsx');
+        return Excel::download(new CostCenterExport, 'centros_de_custo.xlsx');
     }
 }

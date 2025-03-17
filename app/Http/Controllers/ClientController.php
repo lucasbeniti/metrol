@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ClientExport;
-use App\Http\Requests\Client\UpsertClientRequest;
+use App\Http\Requests\UpsertClientRequest;
 use Inertia\Inertia;
 use App\Models\Client;
 use Illuminate\Http\RedirectResponse;

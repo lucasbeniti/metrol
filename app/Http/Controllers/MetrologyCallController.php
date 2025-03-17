@@ -9,7 +9,7 @@ use App\Models\Operation;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\MetrologyCallExport;
-use App\Http\Requests\MetrologyCall\UpsertMetrologyCallRequest;
+use App\Http\Requests\UpsertMetrologyCallRequest;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
