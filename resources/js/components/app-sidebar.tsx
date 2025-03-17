@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Handshake, LayoutGrid, MonitorCog, PackageSearch, Ruler, Theater, UsersRound } from 'lucide-react';
+import { Handshake, LayoutGrid, MonitorCog, PackageSearch, Ruler, Theater, Users2Icon, UsersRound } from 'lucide-react';
 
 const mainNavItems: NavItem[] = [
   {
@@ -40,6 +40,11 @@ const mainNavItems: NavItem[] = [
     title: 'Items',
     url: '/items',
     icon: PackageSearch,
+  },
+  {
+    title: 'Usuários',
+    url: '/users',
+    icon: Users2Icon,
   },
 ];
 

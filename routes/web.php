@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CostCenterController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OperationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -55,6 +56,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(ItemController::class)->prefix('/items')->name('items.')->group(function() {
+        Route::get('/', 'index')->name('index');
+        Route::post('/', 'store')->name('store');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+        Route::get('/export', 'export')->name('export');
+    });
+    
+    Route::controller(UserController::class)->prefix('/users')->name('users.')->group(function() {
         Route::get('/', 'index')->name('index');
         Route::post('/', 'store')->name('store');
         Route::put('/{id}', 'update')->name('update');
