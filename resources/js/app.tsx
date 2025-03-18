@@ -1,9 +1,9 @@
-import '../css/app.css';
-
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
+import '../css/app.css';
 import { Toaster } from './components/ui/sonner';
+import { DestroyDialogProvider } from './contexts/destroy-dialog-context';
 import { initializeTheme } from './hooks/use-appearance';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -16,8 +16,10 @@ createInertiaApp({
 
     root.render(
       <>
-        <App {...props} />
-        <Toaster position="top-right" richColors />
+        <DestroyDialogProvider>
+          <App {...props} />
+          <Toaster position="top-right" richColors />
+        </DestroyDialogProvider>
       </>,
     );
   },

@@ -1,7 +1,7 @@
 import TooltipButton from '@/components/tooltip-button';
+import { useDestroyDialog } from '@/contexts/destroy-dialog-context';
 import { PencilIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
-import DestroyRowDialog from './destroy-row-dialog';
 
 interface UpdateAndDeleteButtonsProps<T> {
   row: T;
@@ -18,13 +18,16 @@ const UpdateAndDeleteButtons = <T extends { id: string }>({
   UpsertDialog,
   entityName,
 }: UpdateAndDeleteButtonsProps<T>) => {
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
-  const [id, setId] = useState(row.id);
+  const { openDeleteDialog } = useDestroyDialog();
 
   const handleDeleteClick = () => {
-    setId(row.id);
-    setIsDeleteDialogOpen(true);
+    openDeleteDialog({
+      id: row.id,
+      description,
+      callRoute: deleteRoute,
+      entityName,
+    });
   };
 
   const handleEditClick = () => {
@@ -37,15 +40,6 @@ const UpdateAndDeleteButtons = <T extends { id: string }>({
         <TooltipButton variant="ghost" icon={<PencilIcon />} text="Editar" onClick={handleEditClick} />
         <TooltipButton variant="ghost" icon={<TrashIcon className="text-red-400" />} text="Deletar" onClick={handleDeleteClick} />
       </div>
-
-      <DestroyRowDialog
-        isOpen={isDeleteDialogOpen}
-        setIsOpen={setIsDeleteDialogOpen}
-        id={id}
-        description={description}
-        callRoute={deleteRoute}
-        entityName={entityName}
-      />
 
       <UpsertDialog isOpen={isEditFormOpen} setIsOpen={setIsEditFormOpen} existingEntity={row} />
     </>
