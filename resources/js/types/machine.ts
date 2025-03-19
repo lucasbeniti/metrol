@@ -4,6 +4,7 @@ export interface IMachine {
     name: string;
     code: string;
     operation_id: string;
+    created_at: Date;
 }
 
 export interface IUpsertMachine {

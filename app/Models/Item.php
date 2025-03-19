@@ -9,11 +9,11 @@ class Item extends Model
     protected $fillable = [
         'name',
         'code',
+        'created_at',
         'cost_center_id',
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at'
     ];
 

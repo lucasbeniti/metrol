@@ -23,6 +23,11 @@ export const usersColumns = (): ColumnDef<IUser>[] => [
     cell: ({ row }) => TYPE_LABELS[row.original.type] || row.original.type,
   },
   {
+    accessorKey: 'created_at',
+    header: 'Data de criação',
+    cell: ({ row }) => new Date(row.original.created_at).toLocaleString('pt-br'),
+  },
+  {
     accessorKey: 'actions',
     header: 'Ações',
     cell: ({ row }) => (

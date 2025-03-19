@@ -4,6 +4,7 @@ export interface IItem {
     name: string;
     code: string;
     cost_center_id: string;
+    created_at: Date;
 }
 
 export interface IUpsertItem {

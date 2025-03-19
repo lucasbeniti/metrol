@@ -17,14 +17,14 @@ const mainNavItems: NavItem[] = [
     icon: Ruler,
   },
   {
+    title: 'Peça',
+    url: '/items',
+    icon: PackageSearch,
+  },
+  {
     title: 'Máquinas',
     url: '/machines',
     icon: MonitorCog,
-  },
-  {
-    title: 'Clientes',
-    url: '/clients',
-    icon: UsersRound,
   },
   {
     title: 'Operações',
@@ -37,9 +37,9 @@ const mainNavItems: NavItem[] = [
     icon: Theater,
   },
   {
-    title: 'Items',
-    url: '/items',
-    icon: PackageSearch,
+    title: 'Clientes',
+    url: '/clients',
+    icon: UsersRound,
   },
   {
     title: 'Usuários',

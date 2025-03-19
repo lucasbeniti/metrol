@@ -22,6 +22,11 @@ export const costCenterColumns = (clients: IClient[]): ColumnDef<ICostCenter>[] 
     header: 'Cliente',
   },
   {
+    accessorKey: 'created_at',
+    header: 'Data de criação',
+    cell: ({ row }) => new Date(row.original.created_at).toLocaleString('pt-br'),
+  },
+  {
     accessorKey: 'actions',
     header: 'Ações',
     cell: ({ row }) => (

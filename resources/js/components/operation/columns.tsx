@@ -27,6 +27,11 @@ export const operationColumns = (costCenters: ICostCenter[], items: IItem[]): Co
     header: 'Centro de custo',
   },
   {
+    accessorKey: 'created_at',
+    header: 'Data de criação',
+    cell: ({ row }) => new Date(row.original.created_at).toLocaleString('pt-br'),
+  },
+  {
     accessorKey: 'actions',
     header: 'Ações',
     cell: ({ row }) => (

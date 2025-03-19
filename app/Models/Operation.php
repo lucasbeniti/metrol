@@ -11,10 +11,10 @@ class Operation extends Model
         'code',
         'item_id',
         'cost_center_id',
+        'created_at',
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at'
     ];
 

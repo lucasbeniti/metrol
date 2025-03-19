@@ -18,11 +18,6 @@ export const clientColumns = (): ColumnDef<IClient>[] => [
     cell: ({ row }) => new Date(row.original.created_at).toLocaleString('pt-br'),
   },
   {
-    accessorKey: 'updated_at',
-    header: 'Data de atualização',
-    cell: ({ row }) => new Date(row.original.updated_at).toLocaleString('pt-br'),
-  },
-  {
     accessorKey: 'actions',
     header: 'Ações',
     cell: ({ row }) => (

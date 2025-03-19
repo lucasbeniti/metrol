@@ -4,6 +4,7 @@ export interface ICostCenter {
     name: string;
     code: string;
     client_id: string;
+    created_at: Date;
 }
 
 export interface IUpsertCostCenter {

@@ -5,6 +5,7 @@ export interface IOperation {
     code: string;
     item_id: string;
     cost_center_id: string;
+    created_at: Date;
 }
 
 export interface IUpsertOperation {

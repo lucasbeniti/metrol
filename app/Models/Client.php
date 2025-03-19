@@ -8,7 +8,10 @@ class Client extends Model
 {
     protected $fillable = [
         'name',
-        'created_at',
+        'created_at'
+    ];
+
+    protected $hidden = [
         'updated_at'
     ];
 
