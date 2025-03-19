@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\CostCenterExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpsertCostCenterRequest;
+use App\Models\Client;
 use App\Models\CostCenter;
 use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
@@ -16,7 +17,8 @@ class CostCenterController extends Controller
 {
     public function index(): Response {
         return Inertia::render('cost-centers', [
-            'costCenters' => CostCenter::with('client')->get()
+            'costCenters' => CostCenter::with('client')->get(),
+            'clients' => Client::all()
         ]);
     }
 

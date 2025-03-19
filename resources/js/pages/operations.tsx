@@ -35,7 +35,7 @@ export default function Operations({ operations, costCenters, items }: Operation
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
-      <Head title="Clientes" />
+      <Head title="Operações" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
         <CreateAndExportButtons handleCreateClick={handleCreateClick} handleExportClick={handleExportClick} />
         <OperationDataTable operations={operations} costCenters={costCenters} items={items} />

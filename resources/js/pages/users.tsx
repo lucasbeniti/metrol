@@ -31,7 +31,7 @@ export default function Users({ users }: UsersProps) {
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
-      <Head title="Clientes" />
+      <Head title="Usuários" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
         <CreateAndExportButtons handleCreateClick={handleCreateClick} handleExportClick={handleExportClick} />
         <UsersDataTable users={users} />

@@ -79,10 +79,10 @@ const UpsertForm = ({ existingCostCenter, clients, setIsOpen }: UpsertFormProps)
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="operation_id">Operação</Label>
-        <Select onValueChange={(value) => setData('operation_id', value)} value={data.operation_id.toString()}>
+        <Label htmlFor="client_id">Cliente</Label>
+        <Select onValueChange={(value) => setData('client_id', value)} value={data.client_id.toString()}>
           <SelectTrigger>
-            <SelectValue placeholder="Selecione uma operação" />
+            <SelectValue placeholder="Selecione um cliente" />
           </SelectTrigger>
           <SelectContent>
             {clients.map((client) => (
