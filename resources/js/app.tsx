@@ -17,12 +17,12 @@ createInertiaApp({
 
     root.render(
       <>
-        <UpsertDialogProvider>
-          <DestroyDialogProvider>
+        <DestroyDialogProvider>
+          <UpsertDialogProvider>
             <App {...props} />
             <Toaster position="top-right" richColors />
-          </DestroyDialogProvider>
-        </UpsertDialogProvider>
+          </UpsertDialogProvider>
+        </DestroyDialogProvider>
       </>,
     );
   },

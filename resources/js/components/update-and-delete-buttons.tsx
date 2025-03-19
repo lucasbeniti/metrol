@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import TooltipButton from '@/components/tooltip-button';
 import { useDestroyDialog } from '@/contexts/destroy-dialog-context';
+import { useUpsertDialog } from '@/contexts/upsert-dialog-context';
 import { PencilIcon, TrashIcon } from 'lucide-react';
-import { useState } from 'react';
 
 interface UpdateAndDeleteButtonsProps<T> {
   row: T;
   description: string;
   deleteRoute: string;
-  UpsertDialog: React.FC<{ isOpen: boolean; setIsOpen: (open: boolean) => void; existingEntity: T }>;
+  UpsertDialog: React.ComponentType<any>;
   entityName: string;
+  upsertDialogProps?: Record<string, any>;
 }
 
 const UpdateAndDeleteButtons = <T extends { id: string }>({
@@ -17,9 +19,10 @@ const UpdateAndDeleteButtons = <T extends { id: string }>({
   deleteRoute,
   UpsertDialog,
   entityName,
+  upsertDialogProps = {},
 }: UpdateAndDeleteButtonsProps<T>) => {
-  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const { openDeleteDialog } = useDestroyDialog();
+  const { openUpsertDialog } = useUpsertDialog();
 
   const handleDeleteClick = () => {
     openDeleteDialog({
@@ -31,18 +34,20 @@ const UpdateAndDeleteButtons = <T extends { id: string }>({
   };
 
   const handleEditClick = () => {
-    setIsEditFormOpen(true);
+    openUpsertDialog({
+      UpsertDialogComponent: UpsertDialog,
+      props: {
+        existingEntity: row,
+        ...upsertDialogProps,
+      },
+    });
   };
 
   return (
-    <>
-      <div className="flex gap-1">
-        <TooltipButton variant="ghost" icon={<PencilIcon />} text="Editar" onClick={handleEditClick} />
-        <TooltipButton variant="ghost" icon={<TrashIcon className="text-red-400" />} text="Deletar" onClick={handleDeleteClick} />
-      </div>
-
-      <UpsertDialog isOpen={isEditFormOpen} setIsOpen={setIsEditFormOpen} existingEntity={row} />
-    </>
+    <div className="flex gap-1">
+      <TooltipButton variant="ghost" icon={<PencilIcon />} text="Editar" onClick={handleEditClick} />
+      <TooltipButton variant="ghost" icon={<TrashIcon className="text-red-400" />} text="Deletar" onClick={handleDeleteClick} />
+    </div>
   );
 };
 
