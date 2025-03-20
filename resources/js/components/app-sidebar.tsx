@@ -17,7 +17,7 @@ const mainNavItems: NavItem[] = [
     icon: Ruler,
   },
   {
-    title: 'Peça',
+    title: 'Peças',
     url: '/items',
     icon: PackageSearch,
   },

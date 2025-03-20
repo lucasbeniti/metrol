@@ -11,7 +11,7 @@ import { Head } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: 'Items',
+    title: 'Peças',
     href: '/items',
   },
 ];
@@ -39,7 +39,7 @@ export default function CostCenters({ items, costCenters }: ItemProps) {
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
-      <Head title="Items" />
+      <Head title="Peças" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
         <CreateAndExportButtons handleCreateClick={handleOpenDialog} handleExportClick={handleExportClick} />
         <ItemsDataTable costCenters={costCenters} items={items} />
