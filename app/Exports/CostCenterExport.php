@@ -6,6 +6,7 @@ use App\Models\CostCenter;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Carbon\Carbon;
 
 class CostCenterExport implements FromCollection, WithMapping, WithHeadings
 {
@@ -19,7 +20,7 @@ class CostCenterExport implements FromCollection, WithMapping, WithHeadings
 
     public function headings(): array
     {
-        return ['ID', 'Nome', 'Código', 'Cliente'];
+        return ['ID', 'Nome', 'Código', 'Cliente', 'Data de Criação'];
     }
 
     public function map($costCenter): array
@@ -28,7 +29,8 @@ class CostCenterExport implements FromCollection, WithMapping, WithHeadings
             $costCenter->id,
             $costCenter->name,
             $costCenter->code,
-            $costCenter->client->name
+            $costCenter->client->name,
+            Carbon::parse($costCenter->created_at)->timezone('America/Sao_Paulo')->format('d/m/Y H:i:s')
         ];  
     }
 }

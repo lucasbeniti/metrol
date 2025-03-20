@@ -7,6 +7,7 @@ use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Carbon\Carbon;
 
 class UserExport implements FromCollection, WithMapping, WithHeadings
 {
@@ -20,7 +21,7 @@ class UserExport implements FromCollection, WithMapping, WithHeadings
 
     public function headings(): array
     {
-        return ['ID', 'Nome', 'Identificação', 'Tipo'];
+        return ['ID', 'Nome', 'Identificação', 'Tipo', 'Data de Criação'];
     }
 
     public function map($user): array
@@ -35,7 +36,8 @@ class UserExport implements FromCollection, WithMapping, WithHeadings
             $user->id,
             $user->name,
             $user->identification,
-            $USER_TYPE_MAP[$user->type]
+            $USER_TYPE_MAP[$user->type],
+            Carbon::parse($user->created_at)->timezone('America/Sao_Paulo')->format('d/m/Y H:i:s')
         ];
     }
 }

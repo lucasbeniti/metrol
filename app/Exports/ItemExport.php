@@ -6,6 +6,7 @@ use App\Models\Item;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Carbon\Carbon;
 
 class ItemExport implements FromCollection, WithMapping, WithHeadings
 {
@@ -19,7 +20,7 @@ class ItemExport implements FromCollection, WithMapping, WithHeadings
 
     public function headings(): array
     {
-        return ['ID', 'Nome', 'Código', 'Centro de Custo'];
+        return ['ID', 'Nome', 'Código', 'Centro de Custo', 'Data de Criação'];
     }
 
     public function map($item): array
@@ -28,7 +29,8 @@ class ItemExport implements FromCollection, WithMapping, WithHeadings
             $item->id,
             $item->name,
             $item->code,
-            $item->costCenter->name
+            $item->costCenter->name,
+            Carbon::parse($item->created_at)->timezone('America/Sao_Paulo')->format('d/m/Y H:i:s')
         ];
     }
 }

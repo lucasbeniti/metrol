@@ -20,7 +20,7 @@ class ClientExport implements FromCollection, WithMapping, WithHeadings
 
     public function headings(): array
     {
-        return ['ID', 'Nome', 'Data de criação', 'Data de atualização'];
+        return ['ID', 'Nome', 'Data de criação'];
     }
 
     public function map($client): array
@@ -29,7 +29,6 @@ class ClientExport implements FromCollection, WithMapping, WithHeadings
             $client->id,
             $client->name,
             Carbon::parse($client->created_at)->setTimezone('America/Sao_Paulo')->format('d/m/Y H:i:s'),
-            Carbon::parse($client->updated_at)->setTimezone('America/Sao_Paulo')->format('d/m/Y H:i:s'),
         ];
     }
 }
