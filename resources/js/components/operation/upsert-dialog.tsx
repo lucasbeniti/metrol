@@ -1,6 +1,5 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
-import { ICostCenter } from '@/types/cost-center';
 import { IItem } from '@/types/item';
 import { IUpsertOperation } from '@/types/operation';
 import UpsertForm from './upsert-form';
@@ -9,11 +8,10 @@ interface UpsertDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   existingOperation?: IUpsertOperation;
-  costCenters: ICostCenter[];
   items: IItem[];
 }
 
-const UpsertDialog = ({ isOpen, setIsOpen, existingOperation, costCenters, items }: UpsertDialogProps) => {
+const UpsertDialog = ({ isOpen, setIsOpen, existingOperation, items }: UpsertDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       <DialogContent>
@@ -24,8 +22,8 @@ const UpsertDialog = ({ isOpen, setIsOpen, existingOperation, costCenters, items
 
         <Separator />
 
-        <UpsertForm existingOperation={existingOperation} setIsOpen={setIsOpen} costCenters={costCenters} items={items} />
-      </DialogContent>
+        <UpsertForm existingOperation={existingOperation} setIsOpen={setIsOpen} items={items} />
+        </DialogContent>
     </Dialog>
   );
 };

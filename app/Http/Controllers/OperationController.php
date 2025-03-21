@@ -16,11 +16,12 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class OperationController extends Controller
 {
-    public function index(): Response {
+    public function index($itemId): Response {
         return Inertia::render('operations', [
-            'operations' => Operation::with(['costCenter', 'item'])->get(),
-            'costCenters' => CostCenter::all(),
-            'items' => Item::all()
+            'operations' => Operation::with(['item'])
+                ->where('item_id', $itemId)
+                ->get(),
+            'item' => Item::findOrFail($itemId),
         ]);
     }
 

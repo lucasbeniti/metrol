@@ -39,13 +39,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/export', 'export')->name('export');
     });
 
-    Route::controller(OperationController::class)->prefix('/operations')->name('operations.')->group(function() {
-        Route::get('/', 'index')->name('index');
-        Route::post('/', 'store')->name('store');
-        Route::put('/{id}', 'update')->name('update');
-        Route::delete('/{id}', 'destroy')->name('destroy');
-        Route::get('/export', 'export')->name('export');
-    });
+    // AGORA UTILIZAMOS SUBGRUPOS BASEADO NO ITEM
+    // Route::controller(OperationController::class)->prefix('/operations')->name('operations.')->group(function() {
+    //     Route::get('/', 'index')->name('index');
+    //     Route::post('/', 'store')->name('store');
+    //     Route::put('/{id}', 'update')->name('update');
+    //     Route::delete('/{id}', 'destroy')->name('destroy');
+    //     Route::get('/export', 'export')->name('export');
+    // });
 
     Route::controller(CostCenterController::class)->prefix('/cost-centers')->name('cost-centers.')->group(function() {
         Route::get('/', 'index')->name('index');
@@ -61,6 +62,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'destroy')->name('destroy');
         Route::get('/export', 'export')->name('export');
+
+        // Subgrupo para operações do item selecionado
+        Route::controller(OperationController::class)->prefix('/{item}/operations')->name('operations.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'store')->name('store');
+            Route::put('/{operation}', 'update')->name('update'); 
+            Route::delete('/{operation}', 'destroy')->name('destroy');
+            Route::get('/export', 'export')->name('export');
+        });
     });
     
     Route::controller(UserController::class)->prefix('/users')->name('users.')->group(function() {

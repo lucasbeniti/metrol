@@ -45,7 +45,7 @@ class MetrologyCallExport implements FromCollection, WithHeadings, WithMapping
             $metrologyCall->operation->name,
             $TYPE_MAP[$metrologyCall->type],
             $STATUS_MAP[$metrologyCall->status],
-            Carbon::parse($metrologyCall->created_at)->timezone('America/Sao_Paulo')->format('d/m/Y H:i:s')
+            Carbon::parse($metrologyCall->created_at)->format('d/m/Y H:i:s')
         ];
     }
 }

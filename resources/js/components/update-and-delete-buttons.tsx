@@ -44,8 +44,8 @@ const UpdateAndDeleteButtons = <T extends { id: string }>({
   };
 
   return (
-    <div className="flex gap-1">
-      <TooltipButton variant="ghost" icon={<PencilIcon />} text="Editar" onClick={handleEditClick} />
+    <div className="flex gap-1 ">
+      <TooltipButton variant="ghost" icon={<PencilIcon className="text-yellow-500" />} text="Editar" onClick={handleEditClick} />
       <TooltipButton variant="ghost" icon={<TrashIcon className="text-red-400" />} text="Deletar" onClick={handleDeleteClick} />
     </div>
   );

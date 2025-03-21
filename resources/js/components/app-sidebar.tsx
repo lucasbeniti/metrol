@@ -27,11 +27,6 @@ const mainNavItems: NavItem[] = [
     icon: MonitorCog,
   },
   {
-    title: 'Operações',
-    url: '/operations',
-    icon: Handshake,
-  },
-  {
     title: 'Centros de Custo',
     url: '/cost-centers',
     icon: Theater,

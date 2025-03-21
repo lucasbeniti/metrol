@@ -30,7 +30,7 @@ class CostCenterExport implements FromCollection, WithMapping, WithHeadings
             $costCenter->name,
             $costCenter->code,
             $costCenter->client->name,
-            Carbon::parse($costCenter->created_at)->timezone('America/Sao_Paulo')->format('d/m/Y H:i:s')
+            Carbon::parse($costCenter->created_at)->format('d/m/Y H:i:s')
         ];  
     }
 }

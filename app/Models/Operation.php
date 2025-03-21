@@ -10,17 +10,12 @@ class Operation extends Model
         'name',
         'code',
         'item_id',
-        'cost_center_id',
         'created_at',
     ];
 
     protected $hidden = [
         'updated_at'
     ];
-
-    public function costCenter() {
-        return $this->belongsTo(CostCenter::class);
-    }
 
     public function item() {
         return $this->belongsTo(Item::class);

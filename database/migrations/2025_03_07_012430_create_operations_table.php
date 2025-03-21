@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('code');
-            $table->foreignId('cost_center_id')->constrained();
             $table->foreignId('item_id')->constrained();
             $table->timestamps();
         });

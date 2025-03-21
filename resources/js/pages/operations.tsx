@@ -5,47 +5,46 @@ import UpsertDialog from '@/components/operation/upsert-dialog';
 import { useUpsertDialog } from '@/contexts/upsert-dialog-context';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { ICostCenter } from '@/types/cost-center';
 import { IItem } from '@/types/item';
 import { IOperation } from '@/types/operation';
 import { Head } from '@inertiajs/react';
 
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: 'Operações',
-    href: '/operations',
-  },
-];
-
 interface OperationsProps {
   operations: IOperation[];
-  costCenters: ICostCenter[];
-  items: IItem[];
+  item: IItem; 
 }
-export default function Operations({ operations, costCenters, items }: OperationsProps) {
-  const handleExportClick = () => {
-    handleExport('operations.export', 'operações');
-  };
 
+export default function Operations({ operations, item }: OperationsProps) {
   const { openUpsertDialog } = useUpsertDialog();
+
+  const handleExportClick = () => handleExport('operations.export', 'operações');
 
   const handleOpenDialog = () => {
     openUpsertDialog({
       UpsertDialogComponent: UpsertDialog,
-      props: {
-        costCenters,
-        items,
+      props: { 
+        item,
         operations,
       },
     });
   };
 
+  const breadcrumbs: BreadcrumbItem[] = [
+    {
+      title: `Operações de ${item?.name || 'Indefinido'}`,
+      href: '/operations',
+    },
+  ];
+
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
-      <Head title="Operações" />
+      <Head title={`Operações do item ${item?.name || 'Indefinido'}`} />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-        <CreateAndExportButtons handleCreateClick={handleOpenDialog} handleExportClick={handleExportClick} />
-        <OperationDataTable operations={operations} costCenters={costCenters} items={items} />
+        <CreateAndExportButtons 
+          handleCreateClick={handleOpenDialog} 
+          handleExportClick={handleExportClick} 
+        />
+        <OperationDataTable operations={operations} items={[item]} />
       </div>
     </AppLayout>
   );

@@ -30,7 +30,7 @@ class ItemExport implements FromCollection, WithMapping, WithHeadings
             $item->name,
             $item->code,
             $item->costCenter->name,
-            Carbon::parse($item->created_at)->timezone('America/Sao_Paulo')->format('d/m/Y H:i:s')
+            Carbon::parse($item->created_at)->format('d/m/Y H:i:s')
         ];
     }
 }

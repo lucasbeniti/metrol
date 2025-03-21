@@ -16,7 +16,6 @@ class OperationSeeder extends Seeder
             'name' => 'Operação 1',
             'code' => '1',
             'item_id' => 1,
-            'cost_center_id' => 1,
         ]);
     }
 }

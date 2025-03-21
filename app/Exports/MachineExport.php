@@ -30,7 +30,7 @@ class MachineExport implements FromCollection, WithMapping, WithHeadings
             $machine->name,
             $machine->code,
             $machine->operation->name,
-            Carbon::parse($machine->created_at)->timezone('America/Sao_Paulo')->format('d/m/Y H:i:s')
+            Carbon::parse($machine->created_at)->format('d/m/Y H:i:s')
         ];
     }
 }

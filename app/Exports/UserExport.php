@@ -37,7 +37,7 @@ class UserExport implements FromCollection, WithMapping, WithHeadings
             $user->name,
             $user->identification,
             $USER_TYPE_MAP[$user->type],
-            Carbon::parse($user->created_at)->timezone('America/Sao_Paulo')->format('d/m/Y H:i:s')
+            Carbon::parse($user->created_at)->format('d/m/Y H:i:s')
         ];
     }
 }
