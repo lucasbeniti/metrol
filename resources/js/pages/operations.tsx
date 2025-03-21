@@ -11,7 +11,7 @@ import { Head } from '@inertiajs/react';
 
 interface OperationsProps {
   operations: IOperation[];
-  item: IItem; 
+  item: IItem;
 }
 
 export default function Operations({ operations, item }: OperationsProps) {
@@ -22,7 +22,7 @@ export default function Operations({ operations, item }: OperationsProps) {
   const handleOpenDialog = () => {
     openUpsertDialog({
       UpsertDialogComponent: UpsertDialog,
-      props: { 
+      props: {
         item,
         operations,
       },
@@ -31,20 +31,17 @@ export default function Operations({ operations, item }: OperationsProps) {
 
   const breadcrumbs: BreadcrumbItem[] = [
     {
-      title: `Operações de ${item?.name || 'Indefinido'}`,
+      title: `Operações do ${item.name}`,
       href: '/operations',
     },
   ];
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
-      <Head title={`Operações do item ${item?.name || 'Indefinido'}`} />
+      <Head title={`Operações do item ${item.name}`} />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-        <CreateAndExportButtons 
-          handleCreateClick={handleOpenDialog} 
-          handleExportClick={handleExportClick} 
-        />
-        <OperationDataTable operations={operations} items={[item]} />
+        <CreateAndExportButtons handleCreateClick={handleOpenDialog} handleExportClick={handleExportClick} />
+        <OperationDataTable operations={operations} item={item} />
       </div>
     </AppLayout>
   );

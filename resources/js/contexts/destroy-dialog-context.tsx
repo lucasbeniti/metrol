@@ -1,47 +1,51 @@
 import DestroyRowDialog from '@/components/destroy-row-dialog';
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 interface DestroyDialogContextType {
-  openDeleteDialog: (params: { id: string; description: string; callRoute: string; entityName: string }) => void;
+  openDeleteDialog: (params: { id: string; parentId?: string; description: string; callRoute: string; entityName: string }) => void;
 }
 
-const DestroyDialogContext = createContext<DestroyDialogContextType | undefined>(undefined);
+interface DestroyDialogParams {
+  id: string;
+  parentId?: string;
+  description: string;
+  callRoute: string;
+  entityName: string;
+}
 
-export function DestroyDialogProvider({ children }: { children: ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [dialogProps, setDialogProps] = useState<{
-    id: string;
-    description: string;
-    callRoute: string;
-    entityName: string;
-  } | null>(null);
+const DestroyDialogContext = createContext<DestroyDialogContextType | null>(null);
 
-  const openDeleteDialog = (params: { id: string; description: string; callRoute: string; entityName: string }) => {
-    setDialogProps(params);
-    setIsOpen(true);
+export const useDestroyDialog = () => {
+  const context = useContext(DestroyDialogContext);
+  if (!context) {
+    throw new Error('useDestroyDialog must be used within a DestroyDialogProvider');
+  }
+  return context;
+};
+
+export const DestroyDialogProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deleteDialogParams, setDeleteDialogParams] = useState<DestroyDialogParams | null>(null);
+
+  const openDeleteDialog = (params: DestroyDialogParams) => {
+    setDeleteDialogParams(params);
+    setIsDeleteDialogOpen(true);
   };
 
   return (
     <DestroyDialogContext.Provider value={{ openDeleteDialog }}>
       {children}
-      {dialogProps && (
+      {deleteDialogParams && (
         <DestroyRowDialog
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          id={dialogProps.id}
-          description={dialogProps.description}
-          callRoute={dialogProps.callRoute}
-          entityName={dialogProps.entityName}
+          isOpen={isDeleteDialogOpen}
+          setIsOpen={setIsDeleteDialogOpen}
+          id={deleteDialogParams.id}
+          parentId={deleteDialogParams.parentId}
+          description={deleteDialogParams.description}
+          callRoute={deleteDialogParams.callRoute}
+          entityName={deleteDialogParams.entityName}
         />
       )}
     </DestroyDialogContext.Provider>
   );
-}
-
-export const useDestroyDialog = () => {
-  const context = useContext(DestroyDialogContext);
-  if (context === undefined) {
-    throw new Error('useDestroyDialog must be used within a DestroyDialogProvider');
-  }
-  return context;
 };

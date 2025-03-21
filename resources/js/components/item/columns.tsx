@@ -1,12 +1,11 @@
+import TooltipButton from '@/components/tooltip-button';
 import { ICostCenter } from '@/types/cost-center';
 import { IItem } from '@/types/item';
+import { Link } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
+import { List } from 'lucide-react';
 import UpdateAndDeleteButtons from '../update-and-delete-buttons';
 import UpsertDialog from './upsert-dialog';
-import { Link } from '@inertiajs/react';
-import { List  } from 'lucide-react';
-import TooltipButton from '@/components/tooltip-button';
-
 
 export const itemsColumns = (costCenters: ICostCenter[]): ColumnDef<IItem>[] => [
   {
@@ -36,7 +35,7 @@ export const itemsColumns = (costCenters: ICostCenter[]): ColumnDef<IItem>[] => 
     cell: ({ row }) => (
       <div className="flex gap-1">
         <Link href={route('items.operations.index', row.original.id)}>
-          <TooltipButton variant="ghost" icon={<List className="text-blue-800" />} text="Operações" />
+          <TooltipButton variant="ghost" icon={<List className="text-blue-500" />} text="Operações" />
         </Link>
         <UpdateAndDeleteButtons
           row={row.original}
@@ -45,7 +44,6 @@ export const itemsColumns = (costCenters: ICostCenter[]): ColumnDef<IItem>[] => 
           deleteRoute="items.destroy"
           UpsertDialog={(props) => <UpsertDialog {...props} existingItem={row.original} costCenters={costCenters} />}
         />
-
       </div>
     ),
   },

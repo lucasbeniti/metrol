@@ -8,10 +8,10 @@ interface UpsertDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   existingOperation?: IUpsertOperation;
-  items: IItem[];
+  item: IItem;
 }
 
-const UpsertDialog = ({ isOpen, setIsOpen, existingOperation, items }: UpsertDialogProps) => {
+const UpsertDialog = ({ isOpen, setIsOpen, existingOperation, item }: UpsertDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       <DialogContent>
@@ -22,8 +22,8 @@ const UpsertDialog = ({ isOpen, setIsOpen, existingOperation, items }: UpsertDia
 
         <Separator />
 
-        <UpsertForm existingOperation={existingOperation} setIsOpen={setIsOpen} items={items} />
-        </DialogContent>
+        <UpsertForm existingOperation={existingOperation} setIsOpen={setIsOpen} item={item} />
+      </DialogContent>
     </Dialog>
   );
 };

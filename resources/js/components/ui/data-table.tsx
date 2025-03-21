@@ -11,6 +11,7 @@ interface DataTableProps<T> {
 }
 
 const DataTable = <T,>({ table, data, filterBy, placeholder }: DataTableProps<T>) => {
+  const colspan = data.length == 0 ? table.getHeaderGroups()[0].headers.length : data.length
   return (
     <div>
       <div className="flex items-center py-4">
@@ -43,7 +44,7 @@ const DataTable = <T,>({ table, data, filterBy, placeholder }: DataTableProps<T>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={data.length} className="py-4 text-center">
+                <TableCell colSpan={colspan} className="py-4 text-center">
                   Nenhum dado encontrado.
                 </TableCell>
               </TableRow>

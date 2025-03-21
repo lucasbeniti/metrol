@@ -18,7 +18,6 @@ class UpsertOperationRequest extends FormRequest
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:255',
             'item_id' => 'required|exists:items,id',
-            'cost_center_id' => 'required|exists:cost_centers,id',
         ];
     }
 }

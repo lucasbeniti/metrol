@@ -8,7 +8,6 @@ use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\OperationExport;
 use App\Http\Requests\UpsertOperationRequest;
-use App\Models\CostCenter;
 use App\Models\Item;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
@@ -30,21 +29,21 @@ class OperationController extends Controller
 
         Operation::create($data);
         
-        return redirect()->route('operations.index');
+        return redirect()->route('items.operations.index', ['item' => $data['item_id']]);
     }
 
-    public function update($id, UpsertOperationRequest $request): RedirectResponse {
-        $operation = Operation::findOrFail($id);
+    public function update($itemId, $operationId, UpsertOperationRequest $request): RedirectResponse {
+        $operation = Operation::where('item_id', $itemId)->findOrFail($operationId);
         $operation->update($request->validated());
 
-        return redirect()->route('operations.index');
+        return redirect()->route('items.operations.index', ['item' => $operation['item_id']]);
     }
 
-    public function destroy($id): RedirectResponse {
-        $operation = Operation::findOrFail($id);
+    public function destroy($itemId, $operationId): RedirectResponse {
+        $operation = Operation::where('item_id', $itemId)->findOrFail($operationId);
         $operation->delete();
 
-        return redirect()->route('operations.index');
+        return redirect()->route('items.operations.index', ['item' => $operation['item_id']]);
     }
 
     public function export(): BinaryFileResponse {

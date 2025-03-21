@@ -2,37 +2,39 @@ import { Button } from '@/components/ui/button';
 import { DialogClose, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { IItem } from '@/types/item';
 import { IUpsertOperation } from '@/types/operation';
 import { useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useEffect } from 'react';
 import { toast } from 'sonner';
 
 interface UpsertFormProps {
   existingOperation?: IUpsertOperation;
   setIsOpen: (isOpen: boolean) => void;
-  items: IItem[];
+  item: IItem;
 }
 
-const UpsertForm = ({ existingOperation, items = [], setIsOpen }: UpsertFormProps) => {
-  // Encontrando o item fixo diretamente pelo itemId
-  const selectedItem = existingOperation
-  ? items.find((item) => item.id === existingOperation.item_id) // Edição
-  : items.find((item) => item.id === data.item_id) || items[0]; // Criação
-  console.log(selectedItem);
+const UpsertForm = ({ existingOperation, item, setIsOpen }: UpsertFormProps) => {
   const { data, setData, post, put, processing, errors, reset } = useForm<IUpsertOperation>({
     name: existingOperation?.name || '',
     code: existingOperation?.code || '',
+    item_id: existingOperation?.item_id || '',
   });
+
+  useEffect(() => {
+    if (item.id) {
+      setData('item_id', item.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item.id]);
 
   const onSubmit: FormEventHandler = (e) => {
     e.preventDefault();
 
     if (existingOperation) {
-      put(route('operations.update', existingOperation.id), {
+      put(route('items.operations.update', { item: item.id, operation: existingOperation.id }), {
         onSuccess: () => {
           reset();
           setIsOpen(false);
@@ -43,7 +45,7 @@ const UpsertForm = ({ existingOperation, items = [], setIsOpen }: UpsertFormProp
         },
       });
     } else {
-      post(route('operations.store'), {
+      post(route('items.operations.store', { item: item.id }), {
         onSuccess: () => {
           reset();
           setIsOpen(false);
@@ -60,37 +62,14 @@ const UpsertForm = ({ existingOperation, items = [], setIsOpen }: UpsertFormProp
     <form onSubmit={onSubmit} className="space-y-8">
       <div className="space-y-2">
         <Label htmlFor="name">Nome</Label>
-        <Input
-          id="name"
-          type="text"
-          value={data.name}
-          onChange={(e) => setData('name', e.target.value)}
-          placeholder="Insira o nome da operação"
-        />
+        <Input id="name" type="text" value={data.name} onChange={(e) => setData('name', e.target.value)} placeholder="Insira o nome da operação" />
         {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="code">Código</Label>
-        <Input
-          id="code"
-          type="text"
-          value={data.code}
-          onChange={(e) => setData('code', e.target.value)}
-          placeholder="Insira o código da operação"
-        />
+        <Input id="code" type="text" value={data.code} onChange={(e) => setData('code', e.target.value)} placeholder="Insira o código da operação" />
         {errors.code && <p className="text-sm text-red-500">{errors.code}</p>}
-      </div>
-
-      {/* Campo fixo do Item */}
-      <div className="space-y-2">
-        <Label htmlFor="item_id">Item</Label>
-        <Input
-          id="item_id"
-          type="text"
-          value={selectedItem ? selectedItem.name : 'Nenhum item selecionado'}
-          disabled
-        />
       </div>
 
       <Separator />

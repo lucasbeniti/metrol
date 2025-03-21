@@ -4,15 +4,9 @@ import { IOperation } from '@/types/operation';
 import DataTable from '../ui/data-table';
 import { operationColumns } from './columns';
 
-export default function OperationDataTable({
-  operations,
-  items,
-}: {
-  operations: IOperation[];
-  items: IItem[];
-}) {
+export default function OperationDataTable({ operations, item }: { operations: IOperation[]; item: IItem }) {
   const { table } = useCustomTable<IOperation>({
-    columns: operationColumns(items),
+    columns: operationColumns(item),
     data: operations,
   });
 

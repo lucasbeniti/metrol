@@ -10,6 +10,7 @@ interface UpdateAndDeleteButtonsProps<T> {
   deleteRoute: string;
   UpsertDialog: React.ComponentType<any>;
   entityName: string;
+  parentId?: string;
   upsertDialogProps?: Record<string, any>;
 }
 
@@ -19,6 +20,7 @@ const UpdateAndDeleteButtons = <T extends { id: string }>({
   deleteRoute,
   UpsertDialog,
   entityName,
+  parentId,
   upsertDialogProps = {},
 }: UpdateAndDeleteButtonsProps<T>) => {
   const { openDeleteDialog } = useDestroyDialog();
@@ -27,6 +29,7 @@ const UpdateAndDeleteButtons = <T extends { id: string }>({
   const handleDeleteClick = () => {
     openDeleteDialog({
       id: row.id,
+      parentId,
       description,
       callRoute: deleteRoute,
       entityName,
@@ -44,7 +47,7 @@ const UpdateAndDeleteButtons = <T extends { id: string }>({
   };
 
   return (
-    <div className="flex gap-1 ">
+    <div className="flex gap-1">
       <TooltipButton variant="ghost" icon={<PencilIcon className="text-yellow-500" />} text="Editar" onClick={handleEditClick} />
       <TooltipButton variant="ghost" icon={<TrashIcon className="text-red-400" />} text="Deletar" onClick={handleDeleteClick} />
     </div>

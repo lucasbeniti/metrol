@@ -4,7 +4,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import UpdateAndDeleteButtons from '../update-and-delete-buttons';
 import UpsertDialog from './upsert-dialog';
 
-export const operationColumns = (items: IItem[]): ColumnDef<IOperation>[] => [
+export const operationColumns = (item: IItem): ColumnDef<IOperation>[] => [
   {
     accessorKey: 'id',
     header: 'ID',
@@ -30,8 +30,9 @@ export const operationColumns = (items: IItem[]): ColumnDef<IOperation>[] => [
         row={row.original}
         description="Após deletar a operação, não será possível recuperá-la."
         entityName="operação"
-        deleteRoute="operations.destroy"
-        UpsertDialog={(props) => <UpsertDialog {...props} existingOperation={row.original} items={items} />}
+        deleteRoute="items.operations.destroy"
+        parentId={item.id}
+        UpsertDialog={(props) => <UpsertDialog {...props} existingOperation={row.original} item={item} />}
       />
     ),
   },

@@ -9,5 +9,6 @@ export interface IOperation {
 export interface IUpsertOperation {
     name: string;
     code: string;
+    item_id: string;
     [key: string]: any;
 }

@@ -11,25 +11,42 @@ interface DestroyRowDialogProps {
   entityName: string;
   callRoute: string;
   description: string;
+  parentId?: string;
 }
 
-const DestroyRowDialog = ({ isOpen, setIsOpen, id, description, entityName, callRoute }: DestroyRowDialogProps) => {
+const DestroyRowDialog = ({ isOpen, setIsOpen, id, description, entityName, callRoute, parentId }: DestroyRowDialogProps) => {
   const { processing, delete: submitDelete } = useForm();
 
   const handleDestroy = () => {
-    submitDelete(route(callRoute, id), {
-      onFinish: () => {
-        setIsOpen(false);
-      },
-      onError: (error) => {
-        console.error(error);
-      },
-      onSuccess: () => {
-        toast.success(
-          `${entityName.charAt(0).toUpperCase()}${entityName.slice(1)} ${entityName == 'máquina' ? 'deletada' : 'deletado'} com sucesso!`,
-        );
-      },
-    });
+    if (parentId && callRoute.includes('operations')) {
+      submitDelete(route(callRoute, [parentId, id]), {
+        onFinish: () => {
+          setIsOpen(false);
+        },
+        onError: (error) => {
+          console.error(error);
+        },
+        onSuccess: () => {
+          toast.success(
+            `${entityName.charAt(0).toUpperCase()}${entityName.slice(1)} ${entityName == 'máquina' || entityName == 'operação' ? 'deletada' : 'deletado'} com sucesso!`,
+          );
+        },
+      });
+    } else {
+      submitDelete(route(callRoute, id), {
+        onFinish: () => {
+          setIsOpen(false);
+        },
+        onError: (error) => {
+          console.error(error);
+        },
+        onSuccess: () => {
+          toast.success(
+            `${entityName.charAt(0).toUpperCase()}${entityName.slice(1)} ${entityName == 'máquina' ? 'deletada' : 'deletado'} com sucesso!`,
+          );
+        },
+      });
+    }
   };
 
   return (
