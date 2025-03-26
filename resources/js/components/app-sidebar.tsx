@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { SharedData, type NavItem } from '@/types';
 import { usePage } from '@inertiajs/react';
-import { LayoutGrid, MonitorCog, PackageSearch, Ruler, Theater, Users2Icon, UsersRound } from 'lucide-react';
+import { LayoutGrid, Wrench, MonitorCog, PackageSearch, Ruler, Theater, Users2Icon, UsersRound } from 'lucide-react';
 
 const mainNavItems: NavItem[] = [
   {
@@ -20,6 +20,11 @@ const mainNavItems: NavItem[] = [
     title: 'Peças',
     url: '/items',
     icon: PackageSearch,
+  },
+  {
+    title: 'Ferramentas',
+    url: '/tools',
+    icon: Wrench,
   },
   {
     title: 'Máquinas',

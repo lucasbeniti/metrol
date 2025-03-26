@@ -1,30 +1,26 @@
 import { handleExport } from '@/actions/export-file';
 import CreateAndExportButtons from '@/components/create-and-export-buttons';
-import MachineDataTable from '@/components/machine/table';
-import UpsertDialog from '@/components/machine/upsert-dialog';
+import ToolDataTable from '@/components/tool/table';
+import UpsertDialog from '@/components/tool/upsert-dialog';
 import { useUpsertDialog } from '@/contexts/upsert-dialog-context';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { IMachine } from '@/types/machine';
-import { IOperation } from '@/types/operation';
 import { ITool } from '@/types/tool';
 import { Head } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: 'Máquinas',
-    href: '/machines',
+    title: 'Ferramentas',
+    href: '/tools',
   },
 ];
-interface MachinesProps {
-  machines: IMachine[];
-  operations: IOperation[];
+
+interface ToolProps {
   tools: ITool[];
 }
-
-export default function Machines({ machines, operations, tools }: MachinesProps) {
+export default function Tools({ tools }: ToolProps) {
   const handleExportClick = () => {
-    handleExport('machines.export', 'máquinas');
+    handleExport('tools.export', 'tools');
   };
 
   const { openUpsertDialog } = useUpsertDialog();
@@ -33,8 +29,6 @@ export default function Machines({ machines, operations, tools }: MachinesProps)
     openUpsertDialog({
       UpsertDialogComponent: UpsertDialog,
       props: {
-        machines,
-        operations,
         tools,
       },
     });
@@ -42,10 +36,10 @@ export default function Machines({ machines, operations, tools }: MachinesProps)
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
-      <Head title="Máquinas" />
+      <Head title="Ferramentas" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
         <CreateAndExportButtons handleCreateClick={handleOpenDialog} handleExportClick={handleExportClick} />
-        <MachineDataTable machines={machines} operations={operations} tools={tools}/>
+        <ToolDataTable  tools={tools} />
       </div>
     </AppLayout>
   );

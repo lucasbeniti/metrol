@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpsertMachineRequest;
 use Inertia\Inertia;
 use App\Models\Machine;
+use App\Models\Tool;
 use App\Models\Operation;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
@@ -17,8 +18,9 @@ class MachineController extends Controller
 {
     public function index(): Response {
         return Inertia::render('machines', [
-            'machines' => Machine::with('operation')->get(),
-            'operations' => Operation::all()
+            'machines' => Machine::with(['operation', 'tool'])->get(),
+            'operations' => Operation::all(),
+            'tools' => Tool::all()
         ]);
     }
 

@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             CostCenterSeeder::class,
             ItemSeeder::class,
             OperationSeeder::class,
+            ToolSeeder::class,
             MachineSeeder::class,
             MetrologyCallSeeder::class,
         ]);

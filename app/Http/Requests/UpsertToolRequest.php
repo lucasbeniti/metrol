@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpsertMachineRequest extends FormRequest
+class UpsertToolRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,8 +17,6 @@ class UpsertMachineRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'code' => 'required|string',
-            'operation_id' => 'required|exists:operations,id',
-            'tool_id' => 'nullable|exists:operations,id',
         ];
     }
 }

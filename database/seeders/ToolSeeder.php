@@ -2,21 +2,19 @@
 
 namespace Database\Seeders;
 
-use App\Models\Machine;
+use App\Models\Tool;
 use Illuminate\Database\Seeder;
 
-class MachineSeeder extends Seeder
+class ToolSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Machine::create([
-            'name' => 'Machine 1',
+        Tool::create([
+            'name' => 'Tool 1',
             'code' => '1',
-            'operation_id' => '1',
-            'tool_id' => null
         ]);
     }
 }

@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/ui/separator';
 import { IUpsertMachine } from '@/types/machine';
 import { IOperation } from '@/types/operation';
+import { ITool } from '@/types/tool';
 import { useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
@@ -14,14 +15,15 @@ import { toast } from 'sonner';
 interface UpsertFormProps {
   existingMachine?: IUpsertMachine;
   operations: IOperation[];
+  tools: ITool[];
   setIsOpen: (isOpen: boolean) => void;
 }
-
-const UpsertForm = ({ existingMachine, operations, setIsOpen }: UpsertFormProps) => {
+const UpsertForm = ({ existingMachine, operations, tools, setIsOpen }: UpsertFormProps) => {
   const { data, setData, post, put, processing, errors, reset } = useForm<IUpsertMachine>({
     name: existingMachine?.name || '',
     code: existingMachine?.code || '',
     operation_id: existingMachine?.operation_id?.toString() || '',
+    tool_id: existingMachine?.tool_id?.toString() || '',
   });
 
   const onSubmit: FormEventHandler = (e) => {
@@ -81,6 +83,26 @@ const UpsertForm = ({ existingMachine, operations, setIsOpen }: UpsertFormProps)
           </SelectContent>
         </Select>
         {errors.operation_id && <p className="text-sm text-red-500">{errors.operation_id}</p>}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="tool_id">Ferramenta</Label>
+        <Select  onValueChange={(value) => setData('tool_id', value === "none" ? null : value)} value={data.tool_id ? data.tool_id.toString() : 'none'}>
+          <SelectTrigger>
+            <SelectValue placeholder="Selecione uma ferramenta" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem key="none" value="none">
+               Não se aplica
+            </SelectItem>
+            {tools.map((tool) => (
+              <SelectItem key={tool.id} value={tool.id.toString()}>
+                {tool.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {errors.tool_id && <p className="text-sm text-red-500">{errors.tool_id}</p>}
       </div>
 
       <Separator />

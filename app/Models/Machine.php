@@ -10,6 +10,7 @@ class Machine extends Model
         'name',
         'code',
         'operation_id',
+        'tool_id',
         'created_at'
     ];
 
@@ -19,5 +20,9 @@ class Machine extends Model
 
     public function operation() {
         return $this->belongsTo(Operation::class);
+    }
+
+    public function tool() {
+        return $this->belongsTo(Tool::class);
     }
 }

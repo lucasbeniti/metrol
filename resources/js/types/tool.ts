@@ -1,17 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export interface IMachine {
+export interface ITool {
     id: string;
     name: string;
     code: string;
-    operation_id: string;
-    tool_id: string | null;
     created_at: Date;
 }
 
-export interface IUpsertMachine {
+export interface IUpsertTool {
     name: string;
     code: string;
-    operation_id: string;
-    tool_id: string | null;
     [key: string]: any;
 }

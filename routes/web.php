@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OperationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ToolController;
 use App\Http\Middleware\CheckUserType;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         Route::controller(MachineController::class)->prefix('/machines')->name('machines.')->group(function() {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'store')->name('store');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+            Route::get('/export', 'export')->name('export');
+        });
+
+        Route::controller(ToolController::class)->prefix('/tools')->name('tools.')->group(function() {
             Route::get('/', 'index')->name('index');
             Route::post('/', 'store')->name('store');
             Route::put('/{id}', 'update')->name('update');
