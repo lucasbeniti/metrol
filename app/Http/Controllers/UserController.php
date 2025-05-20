@@ -4,47 +4,51 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\UserExport;
 use App\Http\Requests\UpsertUserRequest;
-use App\Models\User;
+use App\Http\Services\UserService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Hash;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class UserController extends Controller
 {
-    public function index(): Response {
+    protected UserService $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
+    public function index(): Response
+    {
         return Inertia::render('users', [
-            'users' => User::all()
+            'users' => $this->userService->getAll()
         ]);
     }
 
-    public function store(UpsertUserRequest $request): RedirectResponse {
-        $data = $request->validated();
-        $data['password'] = Hash::make('123');
-        
-        User::create($data);
+    public function store(UpsertUserRequest $request): RedirectResponse
+    {
+        $this->userService->store($request->validated());
         
         return redirect()->route('users.index');
     }
 
-    public function update($id, UpsertUserRequest $request): RedirectResponse {
-        $user = User::findOrFail($id);
-        $user->update($request->validated());
+    public function update($id, UpsertUserRequest $request): RedirectResponse
+    {
+        $this->userService->update($id, $request->validated());
 
         return redirect()->route('users.index');
     }
 
-    public function destroy($id): RedirectResponse {
-        $user = User::findOrFail($id);
-        $user->delete();
+    public function destroy($id): RedirectResponse
+    {
+        $this->userService->destroy($id);
 
         return redirect()->route('users.index');
     }
 
-    public function export(): BinaryFileResponse {
-        return Excel::download(new UserExport, 'usuários.xlsx');
+    public function export(): BinaryFileResponse
+    {
+        return $this->userService->export();
     }
 }
