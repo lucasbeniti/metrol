@@ -2,44 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ClientExport;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpsertClientRequest;
 use Inertia\Inertia;
-use App\Models\Client;
+use App\Http\Services\Client\ClientServiceInterface;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
-use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ClientController extends Controller
 {
-    public function index(): Response {
+    protected ClientServiceInterface $clientService;
+
+    public function __construct(ClientServiceInterface $clientService)
+    {
+        $this->clientService = $clientService;
+    }
+
+    public function index(): Response
+    {
         return Inertia::render('clients', [
-            'clients' => Client::all()
+            'clients' => $this->clientService->getAll()
         ]);
     }
 
-    public function store(UpsertClientRequest $request): RedirectResponse {
-        Client::create($request->all());
+    public function store(UpsertClientRequest $request): RedirectResponse
+    {
+        $this->clientService->store($request->validated());
         
         return redirect()->route('clients.index');
     }
 
-    public function update($id, UpsertClientRequest $request): RedirectResponse {
-        $client = Client::findOrFail($id);
-        $client->update($request->validated());
+    public function update($id, UpsertClientRequest $request): RedirectResponse
+    {
+        $this->clientService->update($id, $request->validated());
 
         return redirect()->route('clients.index');
     }
 
-    public function destroy($id): RedirectResponse {
-        $client = Client::findOrFail($id);
-        $client->delete();
-        
+    public function destroy($id): RedirectResponse
+    {
+        $this->clientService->destroy($id);
+
         return redirect()->route('clients.index');
     }
 
-    public function export(): BinaryFileResponse {
-        return Excel::download(new ClientExport, 'clientes.xlsx');
+    public function export(): BinaryFileResponse
+    {
+        return $this->clientService->export();
     }
 }
