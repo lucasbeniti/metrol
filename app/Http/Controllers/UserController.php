@@ -5,16 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use App\Http\Requests\UpsertUserRequest;
-use App\Http\Services\UserService;
+use App\Http\Services\User\UserServiceInterface;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class UserController extends Controller
 {
-    protected UserService $userService;
+    protected UserServiceInterface $userService;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserServiceInterface $userService)
     {
         $this->userService = $userService;
     }

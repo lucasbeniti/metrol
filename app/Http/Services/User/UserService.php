@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Services\User;
 
 use App\Http\Repositories\User\UserRepositoryInterface;
 use App\Models\User;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class UserService
+class UserService implements UserServiceInterface
 {
     protected UserRepositoryInterface $userRepository;
 
