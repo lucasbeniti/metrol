@@ -7,6 +7,8 @@ use App\Http\Repositories\User\UserRepositoryInterface;
 use App\Http\Repositories\CostCenter\CostCenterRepositoryInterface;
 use App\Http\Repositories\Client\ClientRepository;
 use App\Http\Repositories\CostCenter\CostCenterRepository;
+use App\Http\Repositories\Item\ItemRepository;
+use App\Http\Repositories\Item\ItemRepositoryInterface;
 use App\Http\Repositories\User\UserRepository;
 use App\Http\Services\User\UserServiceInterface;
 use App\Http\Services\User\UserService;
@@ -14,6 +16,8 @@ use App\Http\Services\Client\ClientServiceInterface;
 use App\Http\Services\Client\ClientService;
 use App\Http\Services\CostCenter\CostCenterService;
 use App\Http\Services\CostCenter\CostCenterServiceInterface;
+use App\Http\Services\Item\ItemService;
+use App\Http\Services\Item\ItemServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -33,6 +37,9 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(CostCenterRepositoryInterface::class, CostCenterRepository::class);
         $this->app->bind(CostCenterServiceInterface::class, CostCenterService::class);
+
+        $this->app->bind(ItemRepositoryInterface::class, ItemRepository::class);
+        $this->app->bind(ItemServiceInterface::class, ItemService::class);
     }
 
     /**
