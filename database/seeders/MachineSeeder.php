@@ -13,7 +13,7 @@ class MachineSeeder extends Seeder
     public function run(): void
     {
         Machine::create([
-            'name' => 'Machine 1',
+            'name' => 'Máquina 1',
             'code' => '1',
             'operation_id' => '1',
             'tool_id' => null

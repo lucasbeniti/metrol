@@ -18,7 +18,7 @@ class MetrologyCallController extends Controller
 {
     public function index(): Response {
         return Inertia::render('metrology-calls', [
-            'metrologyCalls' => MetrologyCall::with(['machine', 'operation'])->get(),
+            'metrologyCalls' => MetrologyCall::with(['machine', 'operation'])->orderBy('id', 'desc')->get(),
             'machines' => Machine::all(),
             'operations' => Operation::all()
         ]);

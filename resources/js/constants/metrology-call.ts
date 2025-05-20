@@ -7,8 +7,8 @@ export const TYPE_LABELS: Record<string, string> = {
 };
 
 export const STATUS_LABELS: Record<string, string> = {
-  ok: 'Ok',
-  nok: 'Não ok',
+  ok: 'Aprovado',
+  nok: 'Reprovado',
   waiting_receive: 'Aguardando Recebimento',
   waiting_measurement: 'Aguardando Medição',
 };

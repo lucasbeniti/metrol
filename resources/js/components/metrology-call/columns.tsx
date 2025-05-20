@@ -1,6 +1,6 @@
 import { STATUS_LABELS, TYPE_LABELS } from '@/constants/metrology-call';
 import { IMachine } from '@/types/machine';
-import { IMetrologyCall } from '@/types/metrology-call';
+import { IMetrologyCall, MetrologyCallStatus } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
 import { ColumnDef } from '@tanstack/react-table';
 import UpdateAndDeleteButtons from '../update-and-delete-buttons';
@@ -41,14 +41,17 @@ export const metrologyCallColumns = (machines: IMachine[], operations: IOperatio
   {
     accessorKey: 'actions',
     header: 'Ações',
-    cell: ({ row }) => (
-      <UpdateAndDeleteButtons
-        row={row.original}
-        description="Após deletar o chamado, não será possível recuperá-lo."
-        entityName="chamado"
-        deleteRoute="metrology-calls.destroy"
-        UpsertDialog={(props) => <UpsertDialog {...props} machines={machines} operations={operations} existingMetrologyCall={row.original} />}
-      />
-    ),
+    cell: ({ row }) =>
+      row.original.status === ('waiting_receive' as MetrologyCallStatus) ? (
+        <UpdateAndDeleteButtons
+          row={row.original}
+          description="Após deletar o chamado, não será possível recuperá-lo."
+          entityName="chamado"
+          deleteRoute="metrology-calls.destroy"
+          UpsertDialog={(props) => <UpsertDialog {...props} machines={machines} operations={operations} existingMetrologyCall={row.original} />}
+        />
+      ) : (
+        <div className="flex h-8 items-center">Não disponível</div>
+      ),
   },
 ];

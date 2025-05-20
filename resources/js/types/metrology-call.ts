@@ -12,11 +12,11 @@ export interface IMetrologyCall {
 }
 
 export enum MetrologyCallStatus {
-    OK,
-    NOK,
-    WAITING_RECEIVE,
-    WAITING_MEASUREMENT
-}
+    OK = 'ok',
+    NOK = 'nok',
+    WAITING_RECEIVE = 'waiting_receive',
+    WAITING_MEASUREMENT = 'waiting_measurement',
+  }
 
 export enum MetrologyCallType {
     SETUP,
