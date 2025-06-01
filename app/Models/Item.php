@@ -17,7 +17,8 @@ class Item extends Model
         'updated_at'
     ];
 
-    public function costCenter() {
+    public function costCenter() 
+    {
         return $this->belongsTo(CostCenter::class);
     }
 }

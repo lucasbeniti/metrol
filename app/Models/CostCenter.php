@@ -17,7 +17,8 @@ class CostCenter extends Model
         'updated_at'
     ];
 
-    public function client() {
+    public function client() 
+    {
         return $this->belongsTo(Client::class);
     }
 }

@@ -21,15 +21,18 @@ class MetrologyCall extends Model
         'updated_at',
     ];
 
-    public function machine() {
+    public function machine() 
+    {
         return $this->belongsTo(Machine::class);
     }
 
-    public function operation( ) {
+    public function operation() 
+    {
         return $this->belongsTo(Operation::class);
     }
 
-    public function user() {
+    public function user() 
+    {
         return $this->belongsTo(User::class);
     }
 }

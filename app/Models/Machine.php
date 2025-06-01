@@ -18,7 +18,8 @@ class Machine extends Model
         'updated_at'
     ];
 
-    public function operation() {
+    public function operation() 
+    {
         return $this->belongsTo(Operation::class);
     }
 

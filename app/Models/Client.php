@@ -15,7 +15,8 @@ class Client extends Model
         'updated_at'
     ];
 
-    public function costCenters() {
+    public function costCenters() 
+    {
         return $this->hasMany(CostCenter::class);
     }
 }
