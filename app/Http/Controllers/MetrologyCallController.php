@@ -3,51 +3,61 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Machine;
-use App\Models\MetrologyCall;
 use App\Models\Operation;
 use Inertia\Inertia;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\MetrologyCallExport;
 use App\Http\Requests\UpsertMetrologyCallRequest;
+use App\Http\Services\Machine\MachineServiceInterface;
+use App\Http\Services\MetrologyCall\MetrologyCallServiceInterface;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class MetrologyCallController extends Controller
 {
-    public function index(): Response {
+    protected MetrologyCallServiceInterface $metrologyCallService;
+    protected MachineServiceInterface $machineService;
+
+    public function __construct(MetrologyCallServiceInterface $metrologyCallService, MachineServiceInterface $machineService)
+    {
+        $this->metrologyCallService = $metrologyCallService;
+        $this->machineService = $machineService;
+    }
+
+    public function index(): Response 
+    {
         return Inertia::render('metrology-calls', [
-            'metrologyCalls' => MetrologyCall::with(['machine', 'operation'])->orderBy('id', 'desc')->get(),
-            'machines' => Machine::all(),
+            'metrologyCalls' => $this->metrologyCallService->getAll(),
+            'machines' => $this->machineService->getAll(),
             'operations' => Operation::all()
         ]);
     }
 
-    public function store(UpsertMetrologyCallRequest $request): RedirectResponse {
+    public function store(UpsertMetrologyCallRequest $request): RedirectResponse 
+    {
         $data = $request->validated();
         $data['status'] = 'waiting_receive';
         
-        MetrologyCall::create($data);
+        $this->metrologyCallService->store($data);
         
         return redirect()->route('metrology-calls.index');
     }
 
-    public function update($id, UpsertMetrologyCallRequest $request): RedirectResponse {
-        $metrologyCall = MetrologyCall::findOrFail($id);
-        $metrologyCall->update($request->validated());
+    public function update($id, UpsertMetrologyCallRequest $request): RedirectResponse 
+    {
+        $this->metrologyCallService->update($id, $request->validated());
 
         return redirect()->route('metrology-calls.index');
     }
 
-    public function destroy($id): RedirectResponse {
-        $metrologyCall = MetrologyCall::findOrFail($id);
-        $metrologyCall->delete();
+    public function destroy($id): RedirectResponse 
+    {
+        $this->metrologyCallService->destroy($id);
 
         return redirect()->route('metrology-calls.index');
     }
 
-    public function export(): BinaryFileResponse {
-        return Excel::download(new MetrologyCallExport, 'chamados.xlsx');
+    public function export(): BinaryFileResponse 
+    {
+        return $this->metrologyCallService->export();
     }
 }

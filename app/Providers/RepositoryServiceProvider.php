@@ -11,6 +11,8 @@ use App\Http\Repositories\Item\ItemRepository;
 use App\Http\Repositories\Item\ItemRepositoryInterface;
 use App\Http\Repositories\Machine\MachineRepository;
 use App\Http\Repositories\Machine\MachineRepositoryInterface;
+use App\Http\Repositories\MetrologyCall\MetrologyCallRepository;
+use App\Http\Repositories\MetrologyCall\MetrologyCallRepositoryInterface;
 use App\Http\Repositories\User\UserRepository;
 use App\Http\Services\User\UserServiceInterface;
 use App\Http\Services\User\UserService;
@@ -22,6 +24,8 @@ use App\Http\Services\Item\ItemService;
 use App\Http\Services\Item\ItemServiceInterface;
 use App\Http\Services\Machine\MachineService;
 use App\Http\Services\Machine\MachineServiceInterface;
+use App\Http\Services\MetrologyCall\MetrologyCallService;
+use App\Http\Services\MetrologyCall\MetrologyCallServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -47,6 +51,9 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(MachineRepositoryInterface::class, MachineRepository::class);
         $this->app->bind(MachineServiceInterface::class, MachineService::class);
+
+        $this->app->bind(MetrologyCallRepositoryInterface::class, MetrologyCallRepository::class);
+        $this->app->bind(MetrologyCallServiceInterface::class, MetrologyCallService::class);
     }
 
     /**
