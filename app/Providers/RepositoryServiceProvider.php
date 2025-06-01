@@ -13,6 +13,8 @@ use App\Http\Repositories\Machine\MachineRepository;
 use App\Http\Repositories\Machine\MachineRepositoryInterface;
 use App\Http\Repositories\MetrologyCall\MetrologyCallRepository;
 use App\Http\Repositories\MetrologyCall\MetrologyCallRepositoryInterface;
+use App\Http\Repositories\Operation\OperationRepository;
+use App\Http\Repositories\Operation\OperationRepositoryInterface;
 use App\Http\Repositories\User\UserRepository;
 use App\Http\Services\User\UserServiceInterface;
 use App\Http\Services\User\UserService;
@@ -26,6 +28,8 @@ use App\Http\Services\Machine\MachineService;
 use App\Http\Services\Machine\MachineServiceInterface;
 use App\Http\Services\MetrologyCall\MetrologyCallService;
 use App\Http\Services\MetrologyCall\MetrologyCallServiceInterface;
+use App\Http\Services\Operation\OperationService;
+use App\Http\Services\Operation\OperationServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -54,6 +58,9 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(MetrologyCallRepositoryInterface::class, MetrologyCallRepository::class);
         $this->app->bind(MetrologyCallServiceInterface::class, MetrologyCallService::class);
+
+        $this->app->bind(OperationRepositoryInterface::class, OperationRepository::class);
+        $this->app->bind(OperationServiceInterface::class, OperationService::class);
     }
 
     /**
