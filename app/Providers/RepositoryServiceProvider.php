@@ -9,6 +9,8 @@ use App\Http\Repositories\Client\ClientRepository;
 use App\Http\Repositories\CostCenter\CostCenterRepository;
 use App\Http\Repositories\Item\ItemRepository;
 use App\Http\Repositories\Item\ItemRepositoryInterface;
+use App\Http\Repositories\Machine\MachineRepository;
+use App\Http\Repositories\Machine\MachineRepositoryInterface;
 use App\Http\Repositories\User\UserRepository;
 use App\Http\Services\User\UserServiceInterface;
 use App\Http\Services\User\UserService;
@@ -18,6 +20,8 @@ use App\Http\Services\CostCenter\CostCenterService;
 use App\Http\Services\CostCenter\CostCenterServiceInterface;
 use App\Http\Services\Item\ItemService;
 use App\Http\Services\Item\ItemServiceInterface;
+use App\Http\Services\Machine\MachineService;
+use App\Http\Services\Machine\MachineServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -40,6 +44,9 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(ItemRepositoryInterface::class, ItemRepository::class);
         $this->app->bind(ItemServiceInterface::class, ItemService::class);
+
+        $this->app->bind(MachineRepositoryInterface::class, MachineRepository::class);
+        $this->app->bind(MachineServiceInterface::class, MachineService::class);
     }
 
     /**
