@@ -11,7 +11,6 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Illuminate\Http\Request;
 
 class ToolController extends Controller
 {

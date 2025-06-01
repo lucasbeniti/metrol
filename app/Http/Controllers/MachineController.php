@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpsertMachineRequest;
 use App\Http\Services\Machine\MachineServiceInterface;
 use Inertia\Inertia;
-use App\Models\Machine;
 use App\Models\Tool;
 use App\Models\Operation;
 use Illuminate\Http\RedirectResponse;
