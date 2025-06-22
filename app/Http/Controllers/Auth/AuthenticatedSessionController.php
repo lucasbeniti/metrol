@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if(auth()->user()->type == 'admin') {
+        if(Auth::user()->user_role_id === 1) {
             return redirect()->intended(route('dashboard.index', absolute: false));
         }
         return redirect()->intended(route('metrology-calls.index', absolute: false));
