@@ -4,20 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class Action extends Model
 {
     protected $fillable = [
-        'name',
-        'code'
+        'name'
     ];
 
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
-    public function costCenters() 
+    public function logs()
     {
-        return $this->hasMany(CostCenter::class);
+        return $this->hasMany(Log::class);
     }
 }

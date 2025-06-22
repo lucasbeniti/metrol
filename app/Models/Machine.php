@@ -9,12 +9,11 @@ class Machine extends Model
     protected $fillable = [
         'name',
         'code',
-        'operation_id',
-        'tool_id',
-        'created_at'
+        'operation_id'
     ];
 
     protected $hidden = [
+        'created_at',
         'updated_at'
     ];
 
@@ -23,7 +22,8 @@ class Machine extends Model
         return $this->belongsTo(Operation::class);
     }
 
-    public function tool() {
-        return $this->belongsTo(Tool::class);
+    public function metrologyCalls()
+    {
+        return $this->hasMany(MetrologyCall::class);
     }
 }

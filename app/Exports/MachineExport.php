@@ -3,7 +3,6 @@
 namespace App\Exports;
 
 use App\Models\Machine;
-use App\Models\Tool;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -17,12 +16,11 @@ class MachineExport implements FromCollection, WithMapping, WithHeadings
     public function collection()
     {
         return Machine::all();
-        return Tool::all();
     }
 
     public function headings(): array
     {
-        return ['ID', 'Nome', 'Código', 'Operação', 'Ferramenta', 'Data de Criação'];
+        return ['ID', 'Nome', 'Código', 'Operação', 'Data de Criação'];
     }
 
     public function map($machine): array

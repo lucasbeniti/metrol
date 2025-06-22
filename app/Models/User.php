@@ -45,4 +45,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function userRole()
+    {
+        return $this->belongsTo(UserRole::class, 'user_role_id', 'id');
+    }
+
+    // public function metrologyCalls()
+    // {
+    //     return $this->hasMany(MetrologyCall::class, 'user_id', 'id');
+    // }
+
+    public function logs()
+    {
+        return $this->hasMany(Log::class, 'user_id', 'id');
+    }
 }

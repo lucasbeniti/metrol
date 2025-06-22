@@ -9,16 +9,21 @@ class Item extends Model
     protected $fillable = [
         'name',
         'code',
-        'created_at',
         'cost_center_id',
     ];
 
     protected $hidden = [
+        'created_at',
         'updated_at'
     ];
 
     public function costCenter() 
     {
         return $this->belongsTo(CostCenter::class);
+    }
+
+    public function operations()
+    {
+        return $this->hasMany(Operation::class);
     }
 }

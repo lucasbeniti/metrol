@@ -1,0 +1,29 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Table;
+use Illuminate\Database\Seeder;
+
+class TablesSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $tables = [
+            'users',
+            'metrology_calls',
+            'machines',
+            'clients',
+            'cost_centers',
+            'operations',
+            'items'
+        ];
+
+        foreach ($tables as $table) {
+            Table::create(['name' => $table]);
+        }
+    }
+}

@@ -4,16 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tool extends Model
+class UserRole extends Model
 {
     protected $fillable = [
         'name',
-        'code',
-        'created_at'
     ];
 
     protected $hidden = [
-        'updated_at'
+        'created_at',
+        'updated_at',
     ];
 
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
