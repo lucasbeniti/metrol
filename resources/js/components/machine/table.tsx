@@ -1,13 +1,12 @@
 import { useCustomTable } from '@/hooks/use-custom-table';
 import { IMachine } from '@/types/machine';
 import { IOperation } from '@/types/operation';
-import { ITool } from '@/types/tool';
 import DataTable from '../ui/data-table';
 import { machineColumns } from './columns';
 
-export default function MachineDataTable({ machines, operations, tools }: { machines: IMachine[]; operations: IOperation[]; tools: ITool[] }) {
+export default function MachineDataTable({ machines, operations }: { machines: IMachine[]; operations: IOperation[] }) {
   const { table } = useCustomTable<IMachine>({
-    columns: machineColumns(operations, tools),
+    columns: machineColumns(operations),
     data: machines,
   });
 

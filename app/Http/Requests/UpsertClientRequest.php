@@ -16,6 +16,7 @@ class UpsertClientRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'code' => 'required|unique:clients,code'
         ];
     }
 }

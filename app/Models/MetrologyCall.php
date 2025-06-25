@@ -17,8 +17,17 @@ class MetrologyCall extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at',
+    ];
+
+    protected $casts = [
+        'machine_id' => 'integer',
+        'operation_id' => 'integer',
+        'opened_by_user_id' => 'integer',
+        'metrology_call_type_id' => 'integer',
+        'closed_by_user_id' => 'integer',
+        'metrology_call_status_id' => 'integer',
+        'closed_at' => 'datetime',
     ];
 
     public function operation()

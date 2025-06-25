@@ -15,6 +15,10 @@ class Action extends Model
         'updated_at',
     ];
 
+    protected $casts = [
+        'name' => 'string',
+    ];
+
     public function logs()
     {
         return $this->hasMany(Log::class);

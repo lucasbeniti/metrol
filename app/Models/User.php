@@ -19,9 +19,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'identification',
+        'user_role_id',
         'password',
-        'created_at',
-        'type'
+        'created_at'
     ];
 
     /**
@@ -51,10 +51,10 @@ class User extends Authenticatable
         return $this->belongsTo(UserRole::class, 'user_role_id', 'id');
     }
 
-    // public function metrologyCalls()
-    // {
-    //     return $this->hasMany(MetrologyCall::class, 'user_id', 'id');
-    // }
+    public function metrologyCalls()
+    {
+        return $this->hasMany(MetrologyCall::class, 'user_id', 'id');
+    }
 
     public function logs()
     {

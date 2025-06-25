@@ -11,8 +11,11 @@ class MetrologyCallType extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at',
+    ];
+
+    protected $casts = [
+        'name' => 'string',
     ];
 
     public function metrologyCalls()

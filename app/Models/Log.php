@@ -14,8 +14,14 @@ class Log extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at',
+    ];
+
+    protected $casts = [
+        'user_id' => 'integer',
+        'action_id' => 'integer',
+        'description' => 'string',
+        'table_id' => 'integer',
     ];
 
     public function user()

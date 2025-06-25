@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\UpsertCostCenterRequest;
 use App\Http\Services\Client\ClientServiceInterface;
 use App\Http\Services\CostCenter\CostCenterServiceInterface;

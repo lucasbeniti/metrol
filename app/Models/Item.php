@@ -13,8 +13,13 @@ class Item extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at'
+    ];
+
+    protected $casts = [
+        'name' => 'string',
+        'code' => 'integer',
+        'cost_center_id' => 'integer',
     ];
 
     public function costCenter() 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\UpsertClientRequest;
 use Inertia\Inertia;
 use App\Http\Services\Client\ClientServiceInterface;

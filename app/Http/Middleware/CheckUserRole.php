@@ -16,6 +16,7 @@ class CheckUserRole
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Validação para garantir que o usuário é um administrador
         if (Auth::user()->user_role_id !== 1) {
             return redirect()->route('metrology-calls.index');
         }

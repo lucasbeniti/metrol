@@ -17,8 +17,7 @@ class UpsertMachineRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'code' => 'required|string',
-            'operation_id' => 'required|exists:operations,id',
-            'tool_id' => 'nullable|exists:operations,id',
+            'operation_id' => 'required|exists:operations,id'
         ];
     }
 }

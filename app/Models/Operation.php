@@ -13,8 +13,13 @@ class Operation extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at'
+    ];
+
+    protected $casts = [
+        'name' => 'string',
+        'code' => 'integer',
+        'item_id' => 'integer',
     ];
 
     public function item() 

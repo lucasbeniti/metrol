@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\UpsertMachineRequest;
 use App\Http\Services\Machine\MachineServiceInterface;
 use Inertia\Inertia;

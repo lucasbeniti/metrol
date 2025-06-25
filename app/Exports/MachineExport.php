@@ -30,7 +30,6 @@ class MachineExport implements FromCollection, WithMapping, WithHeadings
             $machine->name,
             $machine->code,
             $machine->operation->name,
-            $machine->tool ? $machine->tool->name : 'Não se aplica',
             Carbon::parse($machine->created_at)->format('d/m/Y H:i:s')
         ];
     }

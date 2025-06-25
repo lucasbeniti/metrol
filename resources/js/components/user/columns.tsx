@@ -1,4 +1,4 @@
-import { TYPE_LABELS } from '@/constants/user';
+import { getUserRoleLabel } from '@/constants/user';
 import { IUser } from '@/types/user';
 import { ColumnDef } from '@tanstack/react-table';
 import UpdateAndDeleteButtons from '../update-and-delete-buttons';
@@ -18,9 +18,9 @@ export const usersColumns = (): ColumnDef<IUser>[] => [
     header: 'Identificação',
   },
   {
-    accessorKey: 'type',
+    accessorKey: 'user_role.name',
     header: 'Tipo',
-    cell: ({ row }) => TYPE_LABELS[row.original.type] || row.original.type,
+    cell: ({ row }) => getUserRoleLabel(row.original.user_role.name),
   },
   {
     accessorKey: 'created_at',

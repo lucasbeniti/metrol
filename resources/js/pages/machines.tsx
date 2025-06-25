@@ -7,7 +7,6 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { IMachine } from '@/types/machine';
 import { IOperation } from '@/types/operation';
-import { ITool } from '@/types/tool';
 import { Head } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -19,10 +18,9 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface MachinesProps {
   machines: IMachine[];
   operations: IOperation[];
-  tools: ITool[];
 }
 
-export default function Machines({ machines, operations, tools }: MachinesProps) {
+export default function Machines({ machines, operations }: MachinesProps) {
   const handleExportClick = () => {
     handleExport('machines.export', 'máquinas');
   };
@@ -35,7 +33,6 @@ export default function Machines({ machines, operations, tools }: MachinesProps)
       props: {
         machines,
         operations,
-        tools,
       },
     });
   };
@@ -45,7 +42,7 @@ export default function Machines({ machines, operations, tools }: MachinesProps)
       <Head title="Máquinas" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
         <CreateAndExportButtons handleCreateClick={handleOpenDialog} handleExportClick={handleExportClick} />
-        <MachineDataTable machines={machines} operations={operations} tools={tools}/>
+        <MachineDataTable machines={machines} operations={operations} />
       </div>
     </AppLayout>
   );

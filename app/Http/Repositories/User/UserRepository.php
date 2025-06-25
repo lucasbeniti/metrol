@@ -19,7 +19,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function getAll(): Collection
     {
-        return $this->model->all();
+        return $this->model->with('userRole')->get();
     }
 
     public function getById(int $id): ?User 

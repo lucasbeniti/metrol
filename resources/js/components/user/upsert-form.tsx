@@ -19,8 +19,7 @@ const UpsertForm = ({ existingUser, setIsOpen }: UpsertFormProps) => {
   const { data, setData, post, put, processing, errors, reset } = useForm<IUpsertUser>({
     name: existingUser?.name || '',
     identification: existingUser?.identification || '',
-    password: existingUser?.password || '',
-    type: existingUser?.type || '',
+    user_role_id: existingUser?.user_role_id || '',
   });
 
   const onSubmit: FormEventHandler = (e) => {
@@ -73,17 +72,17 @@ const UpsertForm = ({ existingUser, setIsOpen }: UpsertFormProps) => {
 
       <div className="space-y-2">
         <Label htmlFor="type">Tipo</Label>
-        <Select onValueChange={(value) => setData('type', value)} value={data.type.toString()}>
+        <Select onValueChange={(value) => setData('user_role_id', value)} value={data.user_role_id.toString()}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione um tipo" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="admin">Admin</SelectItem>
-            <SelectItem value="metrologist">Metrologista</SelectItem>
-            <SelectItem value="production">Produção</SelectItem>
+            <SelectItem value="1">Administrador</SelectItem>
+            <SelectItem value="2">Metrologista</SelectItem>
+            <SelectItem value="3">Operador</SelectItem>
           </SelectContent>
         </Select>
-        {errors.type && <p className="text-sm text-red-500">{errors.type}</p>}
+        {errors.user_role_id && <p className="text-sm text-red-500">{errors.user_role_id}</p>}
       </div>
 
       <Separator />

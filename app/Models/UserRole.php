@@ -15,6 +15,10 @@ class UserRole extends Model
         'updated_at',
     ];
 
+    protected $casts = [
+        'name' => 'string'
+    ];
+
     public function users()
     {
         return $this->hasMany(User::class);

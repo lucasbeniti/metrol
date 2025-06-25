@@ -19,7 +19,7 @@ class UpsertUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'identification' => 'required|string|max:255',
-            'type' => ['required', new Enum(UserType::class)],
+            'user_role_id' => 'required|exists:user_roles,id'
         ];
     }
 }

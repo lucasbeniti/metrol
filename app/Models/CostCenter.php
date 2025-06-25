@@ -13,8 +13,13 @@ class CostCenter extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at'
+    ];
+
+    protected $casts = [
+        'name' => 'string',
+        'code' => 'integer',
+        'client_id' => 'integer'
     ];
 
     public function client() 

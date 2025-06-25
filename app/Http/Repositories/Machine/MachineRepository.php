@@ -19,7 +19,7 @@ class MachineRepository implements MachineRepositoryInterface
 
     public function getAll(): Collection
     {
-        return $this->model->with(['operation', 'tool'])->get();
+        return $this->model->with(['operation'])->get();
     }
 
     public function getById(int $id): ?Machine

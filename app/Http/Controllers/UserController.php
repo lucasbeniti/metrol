@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use App\Http\Requests\UpsertUserRequest;
 use App\Http\Services\User\UserServiceInterface;

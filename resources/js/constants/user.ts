@@ -1,5 +1,9 @@
-export const TYPE_LABELS: Record<string, string> = {
-  admin: 'Admin',
-  metrologist: 'Metrologista',
-  production: 'Produção',
+export const getUserRoleLabel = (role: string): string => {
+  const rolesLabels: Record<string, string> = {
+    admin: 'Administrador',
+    operator: 'Operador',
+    metrologist: 'Metrologista',
+  };
+
+  return rolesLabels[role] || 'Desconhecido';
 };

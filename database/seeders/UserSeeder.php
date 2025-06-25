@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
                 'password' => '123',
                 'user_role_id' => 2
             ],
-            'Produção' => [
+            'Operador' => [
                 'identification' => '3',
                 'password' => '123',
                 'user_role_id' => 3

@@ -2,18 +2,16 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Separator } from '@/components/ui/separator';
 import { IUpsertMachine } from '@/types/machine';
 import { IOperation } from '@/types/operation';
-import { ITool } from '@/types/tool';
 import UpsertForm from './upsert-form';
 
 interface UpsertDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   operations: IOperation[];
-  tools: ITool[];
   existingMachine?: IUpsertMachine;
 }
 
-const UpsertDialog = ({ isOpen, setIsOpen, operations, tools, existingMachine }: UpsertDialogProps) => {
+const UpsertDialog = ({ isOpen, setIsOpen, operations, existingMachine }: UpsertDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       <DialogContent>
@@ -24,7 +22,7 @@ const UpsertDialog = ({ isOpen, setIsOpen, operations, tools, existingMachine }:
 
         <Separator />
 
-        <UpsertForm operations={operations} tools={tools} existingMachine={existingMachine} setIsOpen={setIsOpen} />
+        <UpsertForm operations={operations} existingMachine={existingMachine} setIsOpen={setIsOpen} />
       </DialogContent>
     </Dialog>
   );
