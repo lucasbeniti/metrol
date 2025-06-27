@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MetrologyCall extends Model
 {
@@ -30,32 +31,32 @@ class MetrologyCall extends Model
         'closed_at' => 'datetime',
     ];
 
-    public function operation()
+    public function operation(): BelongsTo
     {
         return $this->belongsTo(Operation::class);
     }
 
-    public function machine()
+    public function machine(): BelongsTo
     {
         return $this->belongsTo(Machine::class);
     }
 
-    public function openedByUser()
+    public function openedByUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'opened_by_user_id');
     }
 
-    public function closedByUser()
+    public function closedByUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'closed_by_user_id');
     }
 
-    public function metrologyCallType()
+    public function metrologyCallType(): BelongsTo
     {
         return $this->belongsTo(MetrologyCallType::class);
     }
 
-    public function metrologyCallStatus()
+    public function metrologyCallStatus(): BelongsTo
     {
         return $this->belongsTo(MetrologyCallStatus::class);
     }

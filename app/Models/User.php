@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -46,17 +48,17 @@ class User extends Authenticatable
         ];
     }
 
-    public function userRole()
+    public function userRole(): BelongsTo
     {
         return $this->belongsTo(UserRole::class, 'user_role_id', 'id');
     }
 
-    public function metrologyCalls()
+    public function metrologyCalls(): HasMany
     {
         return $this->hasMany(MetrologyCall::class, 'user_id', 'id');
     }
 
-    public function logs()
+    public function logs(): HasMany
     {
         return $this->hasMany(Log::class, 'user_id', 'id');
     }

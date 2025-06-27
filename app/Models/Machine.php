@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Machine extends Model
 {
@@ -18,16 +20,16 @@ class Machine extends Model
 
     protected $casts = [
         'name' => 'string',
-        'code' => 'integer',
+        'code' => 'string',
         'operation_id' => 'integer',
     ];
 
-    public function operation() 
+    public function operation(): BelongsTo
     {
         return $this->belongsTo(Operation::class);
     }
 
-    public function metrologyCalls()
+    public function metrologyCalls(): HasMany
     {
         return $this->hasMany(MetrologyCall::class);
     }

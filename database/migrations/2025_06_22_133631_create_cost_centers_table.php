@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cost_centers', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->integer('code')->unique();
+            $table->string('code', 20)->unique();
             $table->foreignId('client_id')->constrained('clients');
             $table->timestamps();
         });

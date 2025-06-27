@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MetrologyCallType extends Model
 {
@@ -18,7 +19,7 @@ class MetrologyCallType extends Model
         'name' => 'string',
     ];
 
-    public function metrologyCalls()
+    public function metrologyCalls(): HasMany
     {
         return $this->hasMany(MetrologyCall::class, 'metrology_call_type_id');
     }

@@ -13,6 +13,10 @@ export const clientColumns = (): ColumnDef<IClient>[] => [
     header: 'Nome',
   },
   {
+    accessorKey: 'code',
+    header: 'Código',
+  },
+  {
     accessorKey: 'created_at',
     header: 'Data de criação',
     cell: ({ row }) => new Date(row.original.created_at).toLocaleString('pt-br'),

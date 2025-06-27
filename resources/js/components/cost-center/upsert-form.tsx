@@ -32,7 +32,7 @@ const UpsertForm = ({ existingCostCenter, clients, setIsOpen }: UpsertFormProps)
         onSuccess: () => {
           reset();
           setIsOpen(false);
-          toast.success('Máquina atualizada com sucesso!');
+          toast.success('Centro de custo atualizado com sucesso!');
         },
         onError: (errors) => {
           console.error(errors);
@@ -43,7 +43,7 @@ const UpsertForm = ({ existingCostCenter, clients, setIsOpen }: UpsertFormProps)
         onSuccess: () => {
           reset();
           setIsOpen(false);
-          toast.success('Máquina criada com sucesso!');
+          toast.success('Centro de custo criado com sucesso!');
         },
         onError: (errors) => {
           console.error(errors);

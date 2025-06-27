@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Log extends Model
 {
@@ -24,17 +25,17 @@ class Log extends Model
         'table_id' => 'integer',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function action()
+    public function action(): BelongsTo
     {
         return $this->belongsTo(Action::class);
     }
 
-    public function table()
+    public function table(): BelongsTo
     {
         return $this->belongsTo(Table::class);
     }

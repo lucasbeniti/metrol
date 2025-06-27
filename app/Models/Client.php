@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Client extends Model
 {
@@ -17,10 +18,10 @@ class Client extends Model
 
     protected $casts = [
         'name' => 'string',
-        'code' => 'integer'
+        'code' => 'string'
     ];
 
-    public function costCenters() 
+    public function costCenters(): HasMany
     {
         return $this->hasMany(CostCenter::class);
     }

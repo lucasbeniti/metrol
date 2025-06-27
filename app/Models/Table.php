@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Table extends Model
 {
@@ -19,7 +20,7 @@ class Table extends Model
         'name' => 'string'
     ];
 
-    public function logs()
+    public function logs(): HasMany
     {
         return $this->hasMany(Log::class, 'table_id', 'id');
     }
