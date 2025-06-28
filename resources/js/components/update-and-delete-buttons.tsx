@@ -14,7 +14,7 @@ interface UpdateAndDeleteButtonsProps<T> {
   upsertDialogProps?: Record<string, any>;
 }
 
-const UpdateAndDeleteButtons = <T extends { id: string }>({
+const UpdateAndDeleteButtons = <T extends { id: number }>({
   row,
   description,
   deleteRoute,

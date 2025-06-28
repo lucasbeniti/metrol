@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 interface DestroyRowDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  id: string;
+  id: number;
   entityName: string;
   callRoute: string;
   description: string;

@@ -1,16 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IMachine {
-  id: string;
+  id: number;
   name: string;
   code: string;
-  operation_id: string;
-  tool_id: string | null;
-  created_at: Date;
+  operation_id: number;
+  created_at: string;
 }
 
 export interface IUpsertMachine {
   name: string;
   code: string;
-  operation_id: string;
-  [key: string]: any;
+  operation_id: number;
+  [key: string]: string | number;
 }

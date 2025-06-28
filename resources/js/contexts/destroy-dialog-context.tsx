@@ -2,11 +2,11 @@ import DestroyRowDialog from '@/components/destroy-row-dialog';
 import { createContext, useContext, useState } from 'react';
 
 interface DestroyDialogContextType {
-  openDeleteDialog: (params: { id: string; parentId?: string; description: string; callRoute: string; entityName: string }) => void;
+  openDeleteDialog: (params: { id: number; parentId?: string; description: string; callRoute: string; entityName: string }) => void;
 }
 
 interface DestroyDialogParams {
-  id: string;
+  id: number;
   parentId?: string;
   description: string;
   callRoute: string;

@@ -1,5 +1,5 @@
 export interface IClient {
-  id: string;
+  id: number;
   name: string;
   created_at: Date;
 }
@@ -7,5 +7,5 @@ export interface IClient {
 export interface IUpsertClient {
   name: string;
   code: string;
-  [key: string]: string;
+  [key: string]: number | string | Date;
 }

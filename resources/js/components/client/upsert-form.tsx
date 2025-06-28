@@ -24,7 +24,7 @@ const UpsertForm = ({ existingClient, setIsOpen }: UpsertFormProps) => {
     e.preventDefault();
 
     if (existingClient) {
-      put(route('clients.update', existingClient.id), {
+      put(route('clients.update', { id: existingClient.id }), {
         onSuccess: () => {
           reset();
           setIsOpen(false);

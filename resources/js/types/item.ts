@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IItem {
-  id: string;
+  id: number;
   name: string;
   code: string;
-  cost_center_id: string;
-  created_at: Date;
+  cost_center_id: number;
+  created_at: string;
 }
 
 export interface IUpsertItem {
   name: string;
   code: string;
-  cost_center_id: string;
-  [key: string]: any;
+  cost_center_id: number;
+  [key: string]: string | number;
 }
