@@ -56,8 +56,8 @@ const UpsertForm = ({ existingMetrologyCall, machines, operations, setIsOpen }: 
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8">
-      <div className="space-y-2">
+    <form onSubmit={onSubmit} className="space-y-4">
+      <div>
         <Label htmlFor="item_name">Nome do Item</Label>
         <Input
           id="item_name"
@@ -69,7 +69,7 @@ const UpsertForm = ({ existingMetrologyCall, machines, operations, setIsOpen }: 
         {errors.item_name && <p className="text-sm text-red-500">{errors.item_name}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div>
         <Label htmlFor="machine_id">Máquina</Label>
         <Select onValueChange={(value) => setData('machine_id', value)} value={data.machine_id.toString()}>
           <SelectTrigger>
@@ -86,7 +86,7 @@ const UpsertForm = ({ existingMetrologyCall, machines, operations, setIsOpen }: 
         {errors.machine_id && <p className="text-sm text-red-500">{errors.machine_id}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div>
         <Label htmlFor="operation_id">Operação</Label>
         <Select onValueChange={(value) => setData('operation_id', value)} value={data.operation_id.toString()}>
           <SelectTrigger>
@@ -103,7 +103,7 @@ const UpsertForm = ({ existingMetrologyCall, machines, operations, setIsOpen }: 
         {errors.operation_id && <p className="text-sm text-red-500">{errors.operation_id}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div>
         <Label htmlFor="type">Tipo</Label>
         <Select onValueChange={(value) => setData('type', value)} value={data.type.toString()}>
           <SelectTrigger>

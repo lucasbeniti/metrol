@@ -1,5 +1,5 @@
-import { getUserRoleLabel } from '@/constants/user';
 import { IUser } from '@/types/user';
+import { getUserRoleLabel } from '@/utils/user';
 import { ColumnDef } from '@tanstack/react-table';
 import UpdateAndDeleteButtons from '../update-and-delete-buttons';
 import UpsertDialog from './upsert-dialog';

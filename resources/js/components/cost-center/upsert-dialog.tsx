@@ -16,8 +16,8 @@ const UpsertDialog = ({ isOpen, setIsOpen, existingCostCenter, clients }: Upsert
     <Dialog open={isOpen} onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{existingCostCenter ? 'Editar Máquina' : 'Criar Máquina'}</DialogTitle>
-          <DialogDescription>Informe os dados para efetuar a {existingCostCenter ? 'edição' : 'criação'} de uma máquina.</DialogDescription>
+          <DialogTitle>{existingCostCenter ? 'Editar Centro de Custo' : 'Criar Centro de Custo'}</DialogTitle>
+          <DialogDescription>Informe os dados para efetuar a {existingCostCenter ? 'edição' : 'criação'} de um centro de custo.</DialogDescription>
         </DialogHeader>
 
         <Separator />

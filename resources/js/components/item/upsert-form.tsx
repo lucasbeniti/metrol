@@ -53,20 +53,20 @@ const UpsertForm = ({ existingItem, costCenters, setIsOpen }: UpsertFormProps) =
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8">
-      <div className="space-y-2">
+    <form onSubmit={onSubmit} className="space-y-4">
+      <div>
         <Label htmlFor="name">Nome</Label>
         <Input id="name" type="text" value={data.name} onChange={(e) => setData('name', e.target.value)} placeholder="Insira o nome do item" />
         {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div>
         <Label htmlFor="code">Código</Label>
         <Input id="code" type="text" value={data.code} onChange={(e) => setData('code', e.target.value)} placeholder="Insira o código do item" />
         {errors.code && <p className="text-sm text-red-500">{errors.code}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div>
         <Label htmlFor="cost_center_id">Centro de Custo</Label>
         <Select onValueChange={(value) => setData('cost_center_id', value)} value={data.cost_center_id.toString()}>
           <SelectTrigger>

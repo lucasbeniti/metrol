@@ -29,20 +29,20 @@ const UpsertForm = ({ existingCostCenter, clients, setIsOpen }: UpsertFormProps)
   });
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8">
-      <div className="space-y-2">
+    <form onSubmit={onSubmit} className="space-y-4">
+      <div>
         <Label htmlFor="name">Nome</Label>
         <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} placeholder="Insira o nome do centro de custo" />
         {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div>
         <Label htmlFor="code">Código</Label>
         <Input id="code" value={data.code} onChange={(e) => setData('code', e.target.value)} placeholder="Insira o código do centro de custo" />
         {errors.code && <p className="text-sm text-red-500">{errors.code}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div>
         <Label htmlFor="client_id">Cliente</Label>
         <Select onValueChange={(v) => setData('client_id', v)} value={data.client_id}>
           <SelectTrigger>

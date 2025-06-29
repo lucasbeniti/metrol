@@ -51,14 +51,14 @@ const UpsertForm = ({ existingUser, setIsOpen }: UpsertFormProps) => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8">
-      <div className="space-y-2">
+    <form onSubmit={onSubmit} className="space-y-4">
+      <div>
         <Label htmlFor="name">Nome</Label>
         <Input id="name" type="text" value={data.name} onChange={(e) => setData('name', e.target.value)} placeholder="Insira o nome do usuário" />
         {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div>
         <Label htmlFor="code">Identificação</Label>
         <Input
           id="identification"
@@ -70,7 +70,7 @@ const UpsertForm = ({ existingUser, setIsOpen }: UpsertFormProps) => {
         {errors.identification && <p className="text-sm text-red-500">{errors.identification}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div>
         <Label htmlFor="type">Tipo</Label>
         <Select onValueChange={(value) => setData('user_role_id', value)} value={data.user_role_id.toString()}>
           <SelectTrigger>
