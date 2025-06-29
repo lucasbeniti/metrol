@@ -4,10 +4,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { useUpsertForm } from '@/hooks/use-upsert';
 import { IUpsertUser } from '@/types/user';
-import { useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
 import { toast } from 'sonner';
 
 interface UpsertFormProps {
@@ -16,39 +15,20 @@ interface UpsertFormProps {
 }
 
 const UpsertForm = ({ existingUser, setIsOpen }: UpsertFormProps) => {
-  const { data, setData, post, put, processing, errors, reset } = useForm<IUpsertUser>({
-    name: existingUser?.name || '',
-    identification: existingUser?.identification || '',
-    user_role_id: existingUser?.user_role_id || '',
+  const { data, setData, errors, processing, onSubmit } = useUpsertForm<IUpsertUser>({
+    initialData: {
+      name: existingUser?.name || '',
+      identification: existingUser?.identification || '',
+      user_role_id: existingUser?.user_role_id || '',
+    },
+    existingId: existingUser?.id,
+    storeRoute: route('users.store'),
+    updateRoute: (id) => route('users.update', id),
+    onSuccess: () => {
+      setIsOpen(false);
+      toast.success(existingUser ? 'Usuário atualizado com sucesso!' : 'Usuário criado com sucesso!');
+    },
   });
-
-  const onSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
-
-    if (existingUser) {
-      put(route('users.update', existingUser.id), {
-        onSuccess: () => {
-          reset();
-          setIsOpen(false);
-          toast.success('Usuário atualizado com sucesso!');
-        },
-        onError: (errors) => {
-          console.error(errors);
-        },
-      });
-    } else {
-      post(route('users.store'), {
-        onSuccess: () => {
-          reset();
-          setIsOpen(false);
-          toast.success('Usuário criado com sucesso!');
-        },
-        onError: (errors) => {
-          console.error(errors);
-        },
-      });
-    }
-  };
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">

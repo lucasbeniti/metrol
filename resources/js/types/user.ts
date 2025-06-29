@@ -9,9 +9,8 @@ export interface IUser {
 }
 
 export interface IUpsertUser {
-  id?: string;
   name: string;
   identification: string;
   user_role_id: string;
-  [key: string]: string | undefined;
+  [key: string]: string;
 }
