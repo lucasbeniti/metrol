@@ -1,5 +1,6 @@
 import { handleExport } from '@/actions/export-file';
-import CreateAndExportButtons from '@/components/create-and-export-buttons';
+import CreateButton from '@/components/create-button';
+import ExportButton from '@/components/export-button';
 import MetrologyCallDataTable from '@/components/metrology-call/table';
 import UpsertDialog from '@/components/metrology-call/upsert-dialog';
 import { useUpsertDialog } from '@/contexts/upsert-dialog-context';
@@ -44,7 +45,11 @@ export default function MetrologyCalls({ metrologyCalls, machines, operations }:
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Chamados" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-        <CreateAndExportButtons handleCreateClick={handleOpenDialog} handleExportClick={handleExportClick} />
+        <div className="ml-auto flex gap-2">
+          <CreateButton handleCreateClick={handleOpenDialog} />
+          <ExportButton handleExportClick={handleExportClick} />
+        </div>
+
         <MetrologyCallDataTable metrologyCalls={metrologyCalls} machines={machines} operations={operations} />
       </div>
     </AppLayout>

@@ -1,7 +1,6 @@
-import { handleExport } from '@/actions/export-file';
 import CostCenterDataTable from '@/components/cost-center/table';
 import UpsertDialog from '@/components/cost-center/upsert-dialog';
-import CreateAndExportButtons from '@/components/create-and-export-buttons';
+import CreateButton from '@/components/create-button';
 import { useUpsertDialog } from '@/contexts/upsert-dialog-context';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
@@ -21,10 +20,6 @@ interface CostCenterProps {
   clients: IClient[];
 }
 export default function CostCenters({ costCenters, clients }: CostCenterProps) {
-  const handleExportClick = () => {
-    handleExport('cost-centers.export', 'centros_de_custo');
-  };
-
   const { openUpsertDialog } = useUpsertDialog();
 
   const handleOpenDialog = () => {
@@ -41,7 +36,10 @@ export default function CostCenters({ costCenters, clients }: CostCenterProps) {
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Centros de Custo" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-        <CreateAndExportButtons handleCreateClick={handleOpenDialog} handleExportClick={handleExportClick} />
+        <div className="ml-auto flex gap-2">
+          <CreateButton handleCreateClick={handleOpenDialog} />
+        </div>
+
         <CostCenterDataTable costCenters={costCenters} clients={clients} />
       </div>
     </AppLayout>

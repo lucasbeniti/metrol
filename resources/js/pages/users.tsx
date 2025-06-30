@@ -1,5 +1,6 @@
 import { handleExport } from '@/actions/export-file';
-import CreateAndExportButtons from '@/components/create-and-export-buttons';
+import CreateButton from '@/components/create-button';
+import ExportButton from '@/components/export-button';
 import UsersDataTable from '@/components/user/table';
 import UpsertDialog from '@/components/user/upsert-dialog';
 import { useUpsertDialog } from '@/contexts/upsert-dialog-context';
@@ -38,7 +39,11 @@ export default function Users({ users }: UsersProps) {
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Usuários" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-        <CreateAndExportButtons handleCreateClick={handleOpenDialog} handleExportClick={handleExportClick} />
+        <div className="ml-auto flex gap-2">
+          <CreateButton handleCreateClick={handleOpenDialog} />
+          <ExportButton handleExportClick={handleExportClick} />
+        </div>
+
         <UsersDataTable users={users} />
       </div>
     </AppLayout>

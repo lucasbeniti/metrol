@@ -1,5 +1,4 @@
-import { handleExport } from '@/actions/export-file';
-import CreateAndExportButtons from '@/components/create-and-export-buttons';
+import CreateButton from '@/components/create-button';
 import MachineDataTable from '@/components/machine/table';
 import UpsertDialog from '@/components/machine/upsert-dialog';
 import { useUpsertDialog } from '@/contexts/upsert-dialog-context';
@@ -21,10 +20,6 @@ interface MachinesProps {
 }
 
 export default function Machines({ machines, operations }: MachinesProps) {
-  const handleExportClick = () => {
-    handleExport('machines.export', 'máquinas');
-  };
-
   const { openUpsertDialog } = useUpsertDialog();
 
   const handleOpenDialog = () => {
@@ -41,7 +36,10 @@ export default function Machines({ machines, operations }: MachinesProps) {
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Máquinas" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-        <CreateAndExportButtons handleCreateClick={handleOpenDialog} handleExportClick={handleExportClick} />
+        <div className="ml-auto flex gap-2">
+          <CreateButton handleCreateClick={handleOpenDialog} />
+        </div>
+
         <MachineDataTable machines={machines} operations={operations} />
       </div>
     </AppLayout>

@@ -1,5 +1,4 @@
-import { handleExport } from '@/actions/export-file';
-import CreateAndExportButtons from '@/components/create-and-export-buttons';
+import CreateButton from '@/components/create-button';
 import ItemsDataTable from '@/components/item/table';
 import UpsertDialog from '@/components/item/upsert-dialog';
 import { useUpsertDialog } from '@/contexts/upsert-dialog-context';
@@ -21,10 +20,6 @@ interface ItemProps {
   costCenters: ICostCenter[];
 }
 export default function CostCenters({ items, costCenters }: ItemProps) {
-  const handleExportClick = () => {
-    handleExport('items.export', 'items');
-  };
-
   const { openUpsertDialog } = useUpsertDialog();
 
   const handleOpenDialog = () => {
@@ -41,7 +36,10 @@ export default function CostCenters({ items, costCenters }: ItemProps) {
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Peças" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-        <CreateAndExportButtons handleCreateClick={handleOpenDialog} handleExportClick={handleExportClick} />
+        <div className="ml-auto flex gap-2">
+          <CreateButton handleCreateClick={handleOpenDialog} />
+        </div>
+
         <ItemsDataTable costCenters={costCenters} items={items} />
       </div>
     </AppLayout>
