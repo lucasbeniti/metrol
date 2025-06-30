@@ -7,5 +7,5 @@ export interface IClient {
 export interface IUpsertClient {
   name: string;
   code: string;
-  [key: string]: number | string | Date;
+  [key: string]: string;
 }

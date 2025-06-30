@@ -3,10 +3,9 @@ import { DialogClose, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { useUpsertForm } from '@/hooks/use-upsert';
 import { IUpsertClient } from '@/types/client';
-import { useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
 import { toast } from 'sonner';
 
 interface UpsertFormProps {
@@ -15,38 +14,19 @@ interface UpsertFormProps {
 }
 
 const UpsertForm = ({ existingClient, setIsOpen }: UpsertFormProps) => {
-  const { data, setData, post, put, processing, errors, reset } = useForm<IUpsertClient>({
-    name: existingClient?.name ?? '',
-    code: existingClient?.code ?? '',
+  const { data, setData, errors, processing, onSubmit } = useUpsertForm<IUpsertClient>({
+    initialData: {
+      name: existingClient?.name || '',
+      code: existingClient?.code || '',
+    },
+    existingId: existingClient?.id,
+    storeRoute: route('clients.store'),
+    updateRoute: (id) => route('clients.update', id),
+    onSuccess: () => {
+      setIsOpen(false);
+      toast.success(existingClient ? 'Cliente atualizado com sucesso!' : 'Cliente criado com sucesso!');
+    },
   });
-
-  const onSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
-
-    if (existingClient) {
-      put(route('clients.update', { id: existingClient.id }), {
-        onSuccess: () => {
-          reset();
-          setIsOpen(false);
-          toast.success('Cliente atualizado com sucesso!');
-        },
-        onError: (errors) => {
-          console.error(errors);
-        },
-      });
-    } else {
-      post(route('clients.store'), {
-        onSuccess: () => {
-          reset();
-          setIsOpen(false);
-          toast.success('Cliente criado com sucesso!');
-        },
-        onError: (errors) => {
-          console.error(errors);
-        },
-      });
-    }
-  };
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
