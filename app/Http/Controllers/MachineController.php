@@ -8,7 +8,6 @@ use Inertia\Inertia;
 use App\Models\Operation;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class MachineController extends Controller
 {
@@ -45,10 +44,5 @@ class MachineController extends Controller
         $this->machineService->destroy($id);
 
         return redirect()->route('machines.index');
-    }
-
-    public function export(): BinaryFileResponse 
-    {
-        return $this->machineService->export();
     }
 }

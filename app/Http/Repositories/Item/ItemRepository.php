@@ -2,11 +2,8 @@
 
 namespace App\Http\Repositories\Item;
 
-use App\Exports\ItemExport;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Collection;
-use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ItemRepository implements ItemRepositoryInterface
 {
@@ -52,10 +49,5 @@ class ItemRepository implements ItemRepositoryInterface
         }
 
         return $item->delete();
-    }
-
-    public function export(): BinaryFileResponse
-    {
-        return Excel::download(new ItemExport, 'itens.xlsx');
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Repositories\CostCenter;
 
 use App\Models\CostCenter;
 use Illuminate\Database\Eloquent\Collection;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 interface CostCenterRepositoryInterface
 {
@@ -13,5 +12,4 @@ interface CostCenterRepositoryInterface
     public function store(array $data): CostCenter;
     public function update(int $id, array $data): bool;
     public function destroy(int $id): bool;
-    public function export(): BinaryFileResponse;
 }

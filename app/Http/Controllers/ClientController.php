@@ -7,7 +7,6 @@ use Inertia\Inertia;
 use App\Http\Services\Client\ClientServiceInterface;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ClientController extends Controller
 {
@@ -44,10 +43,5 @@ class ClientController extends Controller
         $this->clientService->destroy($id);
 
         return redirect()->route('clients.index');
-    }
-
-    public function export(): BinaryFileResponse
-    {
-        return $this->clientService->export();
     }
 }

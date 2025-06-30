@@ -5,7 +5,6 @@ namespace App\Http\Services\Item;
 use App\Http\Repositories\Item\ItemRepositoryInterface;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Collection;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ItemService implements ItemServiceInterface
 {
@@ -39,10 +38,5 @@ class ItemService implements ItemServiceInterface
     public function destroy(int $id): bool
     {
         return $this->itemRepository->destroy($id);
-    }
-
-    public function export(): BinaryFileResponse
-    {
-        return $this->itemRepository->export();
     }
 }

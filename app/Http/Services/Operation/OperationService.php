@@ -5,7 +5,6 @@ namespace App\Http\Services\Operation;
 use App\Http\Repositories\Operation\OperationRepositoryInterface;
 use App\Models\Operation;
 use Illuminate\Database\Eloquent\Collection;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class OperationService implements OperationServiceInterface
 {
@@ -39,10 +38,5 @@ class OperationService implements OperationServiceInterface
     public function destroy(int $itemId, int $operationId): bool
     {
         return $this->operationRepository->destroy($itemId, $operationId);
-    }
-
-    public function export(): BinaryFileResponse
-    {
-        return $this->operationRepository->export();
     }
 }

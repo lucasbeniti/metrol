@@ -2,11 +2,8 @@
 
 namespace App\Http\Repositories\Operation;
 
-use App\Exports\OperationExport;
 use App\Models\Operation;
 use Illuminate\Database\Eloquent\Collection;
-use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class OperationRepository implements OperationRepositoryInterface
 {
@@ -52,10 +49,5 @@ class OperationRepository implements OperationRepositoryInterface
         }
 
         return $operation->delete();
-    }
-
-    public function export(): BinaryFileResponse
-    {
-        return Excel::download(OperationExport::class, 'operações.xlsx');
     }
 }

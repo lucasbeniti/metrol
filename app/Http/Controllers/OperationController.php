@@ -8,7 +8,6 @@ use App\Http\Services\Item\ItemServiceInterface;
 use App\Http\Services\Operation\OperationServiceInterface;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class OperationController extends Controller
 {
@@ -54,10 +53,5 @@ class OperationController extends Controller
         return redirect()->route('items.operations.index', [
             'item' => $itemId
         ]);
-    }
-
-    public function export(): BinaryFileResponse 
-    {
-        return $this->operationService->export();
     }
 }

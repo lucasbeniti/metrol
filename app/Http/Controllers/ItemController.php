@@ -8,7 +8,6 @@ use App\Http\Services\Item\ItemServiceInterface;
 use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ItemController extends Controller
 {
@@ -48,10 +47,5 @@ class ItemController extends Controller
         $this->itemService->destroy($id);
 
         return redirect()->route('items.index');
-    }
-
-    public function export(): BinaryFileResponse
-    {
-        return $this->itemService->export();
     }
 }

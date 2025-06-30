@@ -5,7 +5,6 @@ namespace App\Http\Services\CostCenter;
 use App\Http\Repositories\CostCenter\CostCenterRepositoryInterface;
 use App\Models\CostCenter;
 use Illuminate\Database\Eloquent\Collection;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CostCenterService implements CostCenterServiceInterface
 {
@@ -39,10 +38,5 @@ class CostCenterService implements CostCenterServiceInterface
     public function destroy(int $id): bool
     {
         return $this->costCenterRepository->destroy($id);
-    }
-
-    public function export(): BinaryFileResponse
-    {
-        return $this->costCenterRepository->export();
     }
 }

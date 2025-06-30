@@ -8,7 +8,6 @@ use App\Http\Services\CostCenter\CostCenterServiceInterface;
 use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CostCenterController extends Controller
 {
@@ -48,10 +47,5 @@ class CostCenterController extends Controller
         $this->costCenterService->destroy($id);
 
         return redirect()->route('cost-centers.index');
-    }
-
-    public function export(): BinaryFileResponse
-    {
-        return $this->costCenterService->export();
     }
 }

@@ -5,7 +5,6 @@ namespace App\Http\Services\Machine;
 use App\Http\Repositories\Machine\MachineRepositoryInterface;
 use App\Models\Machine;
 use Illuminate\Database\Eloquent\Collection;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class MachineService implements MachineServiceInterface
 {
@@ -39,10 +38,5 @@ class MachineService implements MachineServiceInterface
     public function destroy(int $id): bool
     {
         return $this->machineRepository->destroy($id);
-    }
-
-    public function export(): BinaryFileResponse
-    {
-        return $this->machineRepository->export();
     }
 }

@@ -2,11 +2,8 @@
 
 namespace App\Http\Repositories\CostCenter;
 
-use App\Exports\CostCenterExport;
 use App\Models\CostCenter;
 use Illuminate\Database\Eloquent\Collection;
-use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CostCenterRepository implements CostCenterRepositoryInterface
 {
@@ -52,10 +49,5 @@ class CostCenterRepository implements CostCenterRepositoryInterface
         }
 
         return $costCenter->delete();
-    }
-
-    public function export(): BinaryFileResponse
-    {
-        return Excel::download(new CostCenterExport, 'centros_de_custos.xlsx');
     }
 }

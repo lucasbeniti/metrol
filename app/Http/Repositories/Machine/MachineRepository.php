@@ -2,11 +2,8 @@
 
 namespace App\Http\Repositories\Machine;
 
-use App\Exports\MachineExport;
 use App\Models\Machine;
 use Illuminate\Database\Eloquent\Collection;
-use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class MachineRepository implements MachineRepositoryInterface 
 {
@@ -52,10 +49,5 @@ class MachineRepository implements MachineRepositoryInterface
         }
 
         return $machine->delete();
-    }
-
-    public function export(): BinaryFileResponse
-    {
-        return Excel::download(new MachineExport, "máquinas.xlsx");
     }
 }

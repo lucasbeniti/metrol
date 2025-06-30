@@ -6,7 +6,6 @@ use App\Http\Repositories\Client\ClientRepositoryInterface;
 use App\Models\Client;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ClientService implements ClientServiceInterface
 {
@@ -42,10 +41,5 @@ class ClientService implements ClientServiceInterface
     public function destroy(int $id): bool
     {
         return $this->clientRepository->destroy($id);
-    }
-
-    public function export(): BinaryFileResponse
-    {
-        return $this->clientRepository->export();
     }
 }
