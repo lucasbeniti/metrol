@@ -1,56 +1,13 @@
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { SharedData, type NavItem } from '@/types';
+import { mainNavItems } from '@/constants/nav-items';
+import { SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
-import { LayoutGrid, MonitorCog, PackageSearch, Ruler, Theater, Users2Icon, UsersRound } from 'lucide-react';
-
-const mainNavItems: NavItem[] = [
-  {
-    title: 'Dashboard',
-    url: '/dashboard',
-    icon: LayoutGrid,
-  },
-  {
-    title: 'Chamados',
-    url: '/metrology-calls',
-    icon: Ruler,
-  },
-  {
-    title: 'Peças',
-    url: '/items',
-    icon: PackageSearch,
-  },
-  {
-    title: 'Máquinas',
-    url: '/machines',
-    icon: MonitorCog,
-  },
-  {
-    title: 'Centros de Custo',
-    url: '/cost-centers',
-    icon: Theater,
-  },
-  {
-    title: 'Clientes',
-    url: '/clients',
-    icon: UsersRound,
-  },
-  {
-    title: 'Usuários',
-    url: '/users',
-    icon: Users2Icon,
-  },
-];
 
 export function AppSidebar() {
   const page = usePage<SharedData>();
   const { auth } = page.props;
-
-  const filteredNavItems =
-    auth.user.type === 'metrologist' || auth.user.type === 'production'
-      ? mainNavItems.filter((item) => item.url === '/metrology-calls')
-      : mainNavItems;
 
   return (
     <Sidebar collapsible="icon" variant="inset">
@@ -63,7 +20,7 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent>
-        <NavMain items={filteredNavItems} />
+        <NavMain items={mainNavItems} userType={auth.user.user_role_id} />
       </SidebarContent>
 
       <SidebarFooter>
