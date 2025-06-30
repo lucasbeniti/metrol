@@ -31,14 +31,14 @@ export default function Operations({ operations, item }: OperationsProps) {
 
   const breadcrumbs: BreadcrumbItem[] = [
     {
-      title: `Operações do ${item.name}`,
+      title: `Operações`,
       href: '/operations',
     },
   ];
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
-      <Head title={`Operações do item ${item.name}`} />
+      <Head title="Operações" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
         <CreateAndExportButtons handleCreateClick={handleOpenDialog} handleExportClick={handleExportClick} />
         <OperationDataTable operations={operations} item={item} />
