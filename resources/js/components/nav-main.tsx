@@ -8,9 +8,9 @@ export function NavMain({ items = [], userType }: { items: NavItem[]; userType: 
 
   const isAdmin = userType === 1;
 
-  const dashboardItem = items.find((item) => item.url === '/dashboard');
-  const metrologyItem = items.find((item) => item.url === '/metrology-calls');
-  const otherItems = items.filter((item) => item.url !== '/dashboard' && item.url !== '/metrology-calls');
+  const dashboardItem = items.find((item) => item.title === 'Dashboard');
+  const metrologyItem = items.find((item) => item.title === 'Chamados');
+  const otherItems = items.filter((item) => item.title !== 'Dashboard' && item.title !== 'Chamados');
 
   return (
     <SidebarGroup className="px-2 py-0">
@@ -29,7 +29,7 @@ export function NavMain({ items = [], userType }: { items: NavItem[]; userType: 
           </SidebarMenuItem>
         )}
 
-        {isAdmin && dashboardItem && <Separator className="my-2" />}
+        {isAdmin && dashboardItem && <Separator />}
 
         {isAdmin &&
           otherItems.map((item) => (
