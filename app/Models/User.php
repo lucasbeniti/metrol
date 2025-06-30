@@ -53,9 +53,14 @@ class User extends Authenticatable
         return $this->belongsTo(UserRole::class, 'user_role_id', 'id');
     }
 
-    public function metrologyCalls(): HasMany
+    public function openedMetrologyCalls(): HasMany
     {
-        return $this->hasMany(MetrologyCall::class, 'user_id', 'id');
+        return $this->hasMany(MetrologyCall::class, 'opened_by_user_id', 'id');
+    }
+
+    public function closedMetrologyCalls(): HasMany
+    {
+        return $this->hasMany(MetrologyCall::class, 'closed_by_user_id', 'id');
     }
 
     public function logs(): HasMany

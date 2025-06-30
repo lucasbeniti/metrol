@@ -26,9 +26,9 @@ class UserExport implements FromCollection, WithMapping, WithHeadings
 
     public function map($user): array
     {
-        $USER_TYPE_MAP = [
-            'admin' => 'Admin',
-            'production' => 'Produção',
+        $user_type_map = [
+            'admin' => 'Administrador',
+            'operator' => 'Operador',
             'metrologist' => 'Metrologista'
         ];
 
@@ -36,7 +36,7 @@ class UserExport implements FromCollection, WithMapping, WithHeadings
             $user->id,
             $user->name,
             $user->identification,
-            $USER_TYPE_MAP[$user->type],
+            $user_type_map[$user->userRole->name] ?? 'Desconhecido',
             Carbon::parse($user->created_at)->format('d/m/Y H:i:s')
         ];
     }

@@ -24,6 +24,7 @@ const DestroyRowDialog = ({ isOpen, setIsOpen, id, description, entityName, call
           setIsOpen(false);
         },
         onError: (error) => {
+          toast.error(error.error);
           console.error(error);
         },
         onSuccess: () => {
@@ -38,6 +39,7 @@ const DestroyRowDialog = ({ isOpen, setIsOpen, id, description, entityName, call
           setIsOpen(false);
         },
         onError: (error) => {
+          toast.error(error.error);
           console.error(error);
         },
         onSuccess: () => {

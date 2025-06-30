@@ -58,4 +58,9 @@ class UserRepository implements UserRepositoryInterface
     {
         return Excel::download(new UserExport, 'usuários.xlsx');
     }
+
+    public function getByIdentification(string $identification): ?User
+    {
+        return $this->model->where('identification', $identification)->first();
+    }
 }
