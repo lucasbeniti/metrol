@@ -4,11 +4,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { useUpsertForm } from '@/hooks/use-upsert';
 import { ICostCenter } from '@/types/cost-center';
 import { IUpsertItem } from '@/types/item';
-import { useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
 import { toast } from 'sonner';
 
 interface UpsertFormProps {
@@ -18,39 +17,20 @@ interface UpsertFormProps {
 }
 
 const UpsertForm = ({ existingItem, costCenters, setIsOpen }: UpsertFormProps) => {
-  const { data, setData, post, put, processing, errors, reset } = useForm<IUpsertItem>({
-    name: existingItem?.name || '',
-    code: existingItem?.code || '',
-    cost_center_id: existingItem?.cost_center_id?.toString() || '',
+  const { data, setData, errors, processing, onSubmit } = useUpsertForm<IUpsertItem>({
+    initialData: {
+      name: existingItem?.name || '',
+      code: existingItem?.code || '',
+      cost_center_id: existingItem?.cost_center_id || 1,
+    },
+    existingId: existingItem?.id,
+    storeRoute: route('items.store'),
+    updateRoute: (id) => route('items.update', id),
+    onSuccess: () => {
+      setIsOpen(false);
+      toast.success(existingItem ? 'Item atualizado com sucesso!' : 'Item criado com sucesso!');
+    },
   });
-
-  const onSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
-
-    if (existingItem) {
-      put(route('items.update', existingItem.id), {
-        onSuccess: () => {
-          reset();
-          setIsOpen(false);
-          toast.success('Item atualizado com sucesso!');
-        },
-        onError: (errors) => {
-          console.error(errors);
-        },
-      });
-    } else {
-      post(route('items.store'), {
-        onSuccess: () => {
-          reset();
-          setIsOpen(false);
-          toast.success('Item criado com sucesso!');
-        },
-        onError: (errors) => {
-          console.error(errors);
-        },
-      });
-    }
-  };
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
@@ -68,7 +48,7 @@ const UpsertForm = ({ existingItem, costCenters, setIsOpen }: UpsertFormProps) =
 
       <div>
         <Label htmlFor="cost_center_id">Centro de Custo</Label>
-        <Select onValueChange={(value) => setData('cost_center_id', value)} value={data.cost_center_id.toString()}>
+        <Select onValueChange={(value) => setData('cost_center_id', Number(value))} value={data.cost_center_id.toString()}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione uma operação" />
           </SelectTrigger>
