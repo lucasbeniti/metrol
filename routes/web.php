@@ -49,11 +49,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/export', 'export')->name('export');
 
             // Subgrupo para operações do item selecionado
-            Route::controller(OperationController::class)->prefix('/{item}/operations')->name('operations.')->group(function () {
+            Route::controller(OperationController::class)->prefix('/{itemId}/operations')->name('operations.')->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::post('/', 'store')->name('store');
-                Route::put('/{operation}', 'update')->name('update'); 
-                Route::delete('/{operation}', 'destroy')->name('destroy');
+                Route::put('/{id}', 'update')->name('update'); 
+                Route::delete('/{id}', 'destroy')->name('destroy');
                 Route::get('/export', 'export')->name('export');
             });
         });

@@ -1,5 +1,4 @@
-import { handleExport } from '@/actions/export-file';
-import CreateAndExportButtons from '@/components/create-and-export-buttons';
+import CreateButton from '@/components/create-button';
 import OperationDataTable from '@/components/operation/table';
 import UpsertDialog from '@/components/operation/upsert-dialog';
 import { useUpsertDialog } from '@/contexts/upsert-dialog-context';
@@ -17,14 +16,12 @@ interface OperationsProps {
 export default function Operations({ operations, item }: OperationsProps) {
   const { openUpsertDialog } = useUpsertDialog();
 
-  const handleExportClick = () => handleExport('operations.export', 'operações');
-
   const handleOpenDialog = () => {
     openUpsertDialog({
       UpsertDialogComponent: UpsertDialog,
       props: {
-        item,
         operations,
+        item,
       },
     });
   };
@@ -40,7 +37,10 @@ export default function Operations({ operations, item }: OperationsProps) {
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Operações" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-        <CreateAndExportButtons handleCreateClick={handleOpenDialog} handleExportClick={handleExportClick} />
+        <div className="ml-auto flex gap-2">
+          <CreateButton handleCreateClick={handleOpenDialog} />
+        </div>
+
         <OperationDataTable operations={operations} item={item} />
       </div>
     </AppLayout>

@@ -24,7 +24,7 @@ class OperationController extends Controller
     {
         return Inertia::render('operations', [
             'operations' => $this->operationService->getAll($itemId),
-            'item' => $this->itemService->getAll()
+            'item' => $this->itemService->getById($itemId)
         ]);
     }
 
@@ -33,7 +33,7 @@ class OperationController extends Controller
         $this->operationService->store($request->validated());
         
         return redirect()->route('items.operations.index', [
-            'item' => $request['item_id']
+            'itemId' => $request['item_id']
         ]);
     }
 
@@ -42,7 +42,7 @@ class OperationController extends Controller
         $this->operationService->update($itemId, $operationId, $request->validated());
 
         return redirect()->route('items.operations.index', [
-            'item' => $itemId
+            'itemId' => $itemId
         ]);
     }
 
@@ -51,7 +51,7 @@ class OperationController extends Controller
         $this->operationService->destroy($itemId, $operationId);
 
         return redirect()->route('items.operations.index', [
-            'item' => $itemId
+            'itemId' => $itemId
         ]);
     }
 }

@@ -7,7 +7,6 @@ import { useUpsertForm } from '@/hooks/use-upsert';
 import { IItem } from '@/types/item';
 import { IUpsertOperation } from '@/types/operation';
 import { LoaderCircle } from 'lucide-react';
-import { useEffect } from 'react';
 import { toast } from 'sonner';
 
 interface UpsertFormProps {
@@ -24,20 +23,13 @@ const UpsertForm = ({ existingOperation, item, setIsOpen }: UpsertFormProps) => 
       item_id: existingOperation?.item_id || item.id,
     },
     existingId: existingOperation?.id,
-    storeRoute: route('items.operations.store', { item: item.id }),
-    updateRoute: (id) => route('items.operations.update', { item: item.id, operation: id }),
+    storeRoute: route('items.operations.store', { itemId: item.id }),
+    updateRoute: (id) => route('items.operations.update', { itemId: item.id, id: id }),
     onSuccess: () => {
       setIsOpen(false);
       toast.success(existingOperation ? 'Operação atualizada com sucesso!' : 'Operação criada com sucesso!');
     },
   });
-
-  useEffect(() => {
-    if (item.id) {
-      setData('item_id', item.id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item.id]);
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
