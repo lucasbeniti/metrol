@@ -4,6 +4,7 @@ namespace App\Http\Services\Client;
 
 use App\Http\Repositories\Client\ClientRepositoryInterface;
 use App\Models\Client;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 
@@ -28,6 +29,12 @@ class ClientService implements ClientServiceInterface
 
     public function store(array $data): Client
     {
+        $clientWithCodeAlreadyExists = $this->clientRepository->getByCode($data['code']);
+
+        if ($clientWithCodeAlreadyExists) {
+            throw new Exception('Já existe um cliente com esse código.');
+        }
+
         $data['password'] = Hash::make('123');
 
         return $this->clientRepository->store($data);
@@ -35,11 +42,23 @@ class ClientService implements ClientServiceInterface
 
     public function update(int $id, array $data): bool
     {
+        $clientWithCodeAlreadyExists = $this->clientRepository->getByCode($data['code']);
+
+        if ($clientWithCodeAlreadyExists) {
+            throw new Exception('Já existe um cliente com esse código.');
+        }
+
         return $this->clientRepository->update($id, $data);
     }
 
     public function destroy(int $id): bool
     {
+        $client = $this->clientRepository->getById($id);
+
+        if ($client->costCenters()->count() > 0) {
+            throw new Exception('Não é possível excluir um cliente que possui centros de custo associados.');
+        }
+
         return $this->clientRepository->destroy($id);
     }
 }

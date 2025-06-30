@@ -12,4 +12,5 @@ interface ClientRepositoryInterface
     public function store(array $data): Client;
     public function update(int $id, array $data): bool;
     public function destroy(int $id): bool;
+    public function getByCode(string $code): ?Client;
 }

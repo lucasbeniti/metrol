@@ -23,6 +23,6 @@ class Client extends Model
 
     public function costCenters(): HasMany
     {
-        return $this->hasMany(CostCenter::class);
+        return $this->hasMany(CostCenter::class, 'client_id', 'id');
     }
 }

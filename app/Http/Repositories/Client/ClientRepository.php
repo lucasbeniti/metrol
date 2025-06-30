@@ -51,4 +51,9 @@ class ClientRepository implements ClientRepositoryInterface
 
         return $client->delete();
     }
+
+    public function getByCode(string $code): ?Client
+    {
+        return $this->model->where('code', $code)->first();
+    }
 }
