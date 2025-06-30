@@ -4,11 +4,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { useUpsertForm } from '@/hooks/use-upsert';
 import { IUpsertMachine } from '@/types/machine';
 import { IOperation } from '@/types/operation';
-import { useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
 import { toast } from 'sonner';
 
 interface UpsertFormProps {
@@ -18,39 +17,20 @@ interface UpsertFormProps {
 }
 
 const UpsertForm = ({ existingMachine, operations, setIsOpen }: UpsertFormProps) => {
-  const { data, setData, post, put, processing, errors, reset } = useForm<IUpsertMachine>({
-    name: existingMachine?.name || '',
-    code: existingMachine?.code || '',
-    operation_id: existingMachine?.operation_id?.toString() || '',
+  const { data, setData, errors, processing, onSubmit } = useUpsertForm<IUpsertMachine>({
+    initialData: {
+      name: existingMachine?.name || '',
+      code: existingMachine?.code || '',
+      operation_id: existingMachine?.operation_id || 1,
+    },
+    existingId: existingMachine?.id,
+    storeRoute: route('machines.store'),
+    updateRoute: (id) => route('machines.update', id),
+    onSuccess: () => {
+      setIsOpen(false);
+      toast.success(existingMachine ? 'Máquina atualizada com sucesso!' : 'Máquina criada com sucesso!');
+    },
   });
-
-  const onSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
-
-    if (existingMachine) {
-      put(route('machines.update', existingMachine.id), {
-        onSuccess: () => {
-          reset();
-          setIsOpen(false);
-          toast.success('Máquina atualizada com sucesso!');
-        },
-        onError: (errors) => {
-          console.error(errors);
-        },
-      });
-    } else {
-      post(route('machines.store'), {
-        onSuccess: () => {
-          reset();
-          setIsOpen(false);
-          toast.success('Máquina criada com sucesso!');
-        },
-        onError: (errors) => {
-          console.error(errors);
-        },
-      });
-    }
-  };
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
@@ -68,7 +48,7 @@ const UpsertForm = ({ existingMachine, operations, setIsOpen }: UpsertFormProps)
 
       <div>
         <Label htmlFor="operation_id">Operação</Label>
-        <Select onValueChange={(value) => setData('operation_id', value)} value={data.operation_id.toString()}>
+        <Select onValueChange={(value) => setData('operation_id', Number(value))} value={data.operation_id.toString()}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione uma operação" />
           </SelectTrigger>
