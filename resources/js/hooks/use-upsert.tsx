@@ -1,6 +1,5 @@
 import { useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import { toast } from 'sonner';
 
 type SafeFormData = Record<string, string | number | boolean | null>;
 
@@ -21,7 +20,6 @@ export function useUpsertForm<T extends SafeFormData>({ initialData, existingId,
     if (existingId) {
       form.put(updateRoute(existingId), {
         onSuccess: () => {
-          toast.success('Atualizado com sucesso!');
           form.reset();
           onSuccess?.();
         },
@@ -30,7 +28,6 @@ export function useUpsertForm<T extends SafeFormData>({ initialData, existingId,
     } else {
       form.post(storeRoute, {
         onSuccess: () => {
-          toast.success('Criado com sucesso!');
           form.reset();
           onSuccess?.();
         },

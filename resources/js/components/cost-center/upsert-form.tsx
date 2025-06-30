@@ -8,6 +8,7 @@ import { useUpsertForm } from '@/hooks/use-upsert';
 import { IClient } from '@/types/client';
 import { IUpsertCostCenter } from '@/types/cost-center';
 import { LoaderCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface UpsertFormProps {
   existingCostCenter?: IUpsertCostCenter;
@@ -25,7 +26,10 @@ const UpsertForm = ({ existingCostCenter, clients, setIsOpen }: UpsertFormProps)
     existingId: existingCostCenter?.id,
     storeRoute: route('cost-centers.store'),
     updateRoute: (id) => route('cost-centers.update', id),
-    onSuccess: () => setIsOpen(false),
+    onSuccess: () => {
+      setIsOpen(false);
+      toast.success(existingCostCenter ? 'Centro de custo atualizado com sucesso!' : 'Centro de custo criado com sucesso!');
+    },
   });
 
   return (
