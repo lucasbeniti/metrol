@@ -9,6 +9,8 @@ use App\Http\Repositories\Client\ClientRepository;
 use App\Http\Repositories\CostCenter\CostCenterRepository;
 use App\Http\Repositories\Item\ItemRepository;
 use App\Http\Repositories\Item\ItemRepositoryInterface;
+use App\Http\Repositories\Log\LogRepository;
+use App\Http\Repositories\Log\LogRepositoryInterface;
 use App\Http\Repositories\Machine\MachineRepository;
 use App\Http\Repositories\Machine\MachineRepositoryInterface;
 use App\Http\Repositories\MetrologyCall\MetrologyCallRepository;
@@ -24,6 +26,8 @@ use App\Http\Services\CostCenter\CostCenterService;
 use App\Http\Services\CostCenter\CostCenterServiceInterface;
 use App\Http\Services\Item\ItemService;
 use App\Http\Services\Item\ItemServiceInterface;
+use App\Http\Services\Log\LogService;
+use App\Http\Services\Log\LogServiceInterface;
 use App\Http\Services\Machine\MachineService;
 use App\Http\Services\Machine\MachineServiceInterface;
 use App\Http\Services\MetrologyCall\MetrologyCallService;
@@ -61,6 +65,9 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(OperationRepositoryInterface::class, OperationRepository::class);
         $this->app->bind(OperationServiceInterface::class, OperationService::class);
+
+        $this->app->bind(LogRepositoryInterface::class, LogRepository::class);
+        $this->app->bind(LogServiceInterface::class, LogService::class);
     }
 
     /**
