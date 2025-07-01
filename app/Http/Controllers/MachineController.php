@@ -6,6 +6,7 @@ use App\Http\Requests\UpsertMachineRequest;
 use App\Http\Services\Machine\MachineServiceInterface;
 use Inertia\Inertia;
 use App\Models\Operation;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
@@ -27,22 +28,46 @@ class MachineController extends Controller
 
     public function store(UpsertMachineRequest $request): RedirectResponse
     {
-        $this->machineService->store($request->validated());
-        
-        return redirect()->route('machines.index');
+        try {
+            $this->machineService->store($request->validated());
+
+            return redirect()->route('machines.index');
+        } catch (Exception $e) {
+            if ($e->getMessage() === 'Já existe uma máquina com esse código.') {
+                return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
+            }
+
+            return redirect()->back()->withErrors(['error' => 'Erro interno do servidor. Tente novamente mais tarde.'])->withInput();
+        }
     }
 
     public function update($id, UpsertMachineRequest $request): RedirectResponse 
     {
-        $this->machineService->update($id, $request->validated());
+        try {
+            $this->machineService->update($id, $request->validated());
 
-        return redirect()->route('machines.index');
+            return redirect()->route('machines.index');
+        } catch (Exception $e) {
+            if ($e->getMessage() === 'Já existe uma máquina com esse código.') {
+                return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
+            }
+
+            return redirect()->back()->withErrors(['error' => 'Erro interno do servidor. Tente novamente mais tarde.'])->withInput();
+        }
     }
 
     public function destroy($id): RedirectResponse 
     {
-        $this->machineService->destroy($id);
+        try {
+            $this->machineService->destroy($id);
 
-        return redirect()->route('machines.index');
+            return redirect()->route('machines.index');
+        } catch (Exception $e) {
+            if ($e->getMessage() === 'Não é possível excluir uma máquina que possui chamados de metrologia associadas.') {
+                return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
+            }
+
+            return redirect()->back()->withErrors(['error' => 'Erro interno do servidor. Tente novamente mais tarde.'])->withInput();
+        }
     }
 }

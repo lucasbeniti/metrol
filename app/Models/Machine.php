@@ -32,6 +32,6 @@ class Machine extends Model
 
     public function metrologyCalls(): HasMany
     {
-        return $this->hasMany(MetrologyCall::class);
+        return $this->hasMany(MetrologyCall::class, 'machine_id', 'id');
     }
 }

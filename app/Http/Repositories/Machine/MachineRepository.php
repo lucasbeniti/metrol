@@ -50,4 +50,9 @@ class MachineRepository implements MachineRepositoryInterface
 
         return $machine->delete();
     }
+
+    public function getByCode(string $code): ?Machine
+    {
+        return $this->model->where('code', $code)->first();
+    }
 }

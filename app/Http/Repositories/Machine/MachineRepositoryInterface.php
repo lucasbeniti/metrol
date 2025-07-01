@@ -12,4 +12,5 @@ interface MachineRepositoryInterface
     public function store(array $data): Machine;
     public function update(int $id, array $data): bool;
     public function destroy(int $id): bool;
+    public function getByCode(string $code): ?Machine;
 }

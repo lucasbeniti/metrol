@@ -34,7 +34,7 @@ class ItemController extends Controller
         try {
             $this->itemService->store($request->validated());
 
-            return redirect()->route('cost-centers.index');
+            return redirect()->route('items.index');
         } catch (Exception $e) {
             if ($e->getMessage() === 'Já existe um item com esse código.') {
                 return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
