@@ -4,6 +4,10 @@ export interface ILog {
   description: string;
   table_id: number;
   created_at: string;
+  user: {
+    name: string;
+    identification: string;
+  };
   action: {
     name: string;
   };

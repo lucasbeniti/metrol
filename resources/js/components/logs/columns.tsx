@@ -23,8 +23,12 @@ export const logsColumns = (): ColumnDef<ILog>[] => [
     header: 'ID',
   },
   {
-    accessorKey: 'user.name',
+    accessorKey: 'user',
     header: 'Usuário',
+    cell: ({ row }) => {
+      const user = row.original.user;
+      return `${user.name} (${user.identification})`;
+    },
   },
   {
     accessorKey: 'action.name',
