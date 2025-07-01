@@ -24,7 +24,7 @@ export const logsColumns = (): ColumnDef<ILog>[] => [
   },
   {
     accessorKey: 'user',
-    header: 'Usuário',
+    header: 'Usuário (Identificação)',
     cell: ({ row }) => {
       const user = row.original.user;
       return `${user.name} (${user.identification})`;
