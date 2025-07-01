@@ -48,7 +48,7 @@ class MachineService implements MachineServiceInterface
             'user_id' => $authenticatedUser->id,
             'action_id' => LogActionsEnum::CREATE,
             'description' => 'O usuário ' . $authenticatedUser->name . ' criou a máquina: ' . $machine->name,
-            'table_id' => LogTablesEnum::OPERATIONS,
+            'table_id' => LogTablesEnum::MACHINES,
         ]);
 
         return $machine;
@@ -71,7 +71,7 @@ class MachineService implements MachineServiceInterface
                 'user_id' => $authenticatedUser->id,
                 'action_id' => LogActionsEnum::UPDATE,
                 'description' => 'O usuário ' . $authenticatedUser->name . ' atualizou a máquina: ' . $data['name'],
-                'table_id' => LogTablesEnum::OPERATIONS,
+                'table_id' => LogTablesEnum::MACHINES,
             ]);
         }
 
@@ -95,7 +95,7 @@ class MachineService implements MachineServiceInterface
                 'user_id' => $authenticatedUser->id,
                 'action_id' => LogActionsEnum::DELETE,
                 'description' => 'O usuário ' . $authenticatedUser->name . ' deletou a máquina: ' . $machine->name,
-                'table_id' => LogTablesEnum::OPERATIONS,
+                'table_id' => LogTablesEnum::MACHINES,
             ]);
         }
 
