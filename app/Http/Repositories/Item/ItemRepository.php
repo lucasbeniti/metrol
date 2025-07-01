@@ -50,4 +50,9 @@ class ItemRepository implements ItemRepositoryInterface
 
         return $item->delete();
     }
+
+    public function getByCode(string $code): ?Item
+    {
+        return $this->model->where('code', $code)->first();
+    }
 }

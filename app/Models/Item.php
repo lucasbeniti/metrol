@@ -31,6 +31,6 @@ class Item extends Model
 
     public function operations(): HasMany
     {
-        return $this->hasMany(Operation::class);
+        return $this->hasMany(Operation::class, 'item_id', 'id');
     }
 }

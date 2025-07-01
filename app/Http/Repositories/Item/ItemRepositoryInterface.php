@@ -12,4 +12,5 @@ interface ItemRepositoryInterface
     public function store(array $data): Item;
     public function update(int $id, array $data): bool;
     public function destroy(int $id): bool;
+    public function getByCode(string $code): ?Item;
 }
