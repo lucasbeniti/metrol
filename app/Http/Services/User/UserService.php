@@ -104,7 +104,7 @@ class UserService implements UserServiceInterface
             $this->logService->store([
                 'user_id' => $authenticatedUser->id,
                 'action_id' => LogActionsEnum::DELETE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' atualizou o usuário: ' . $user->name,
+                'description' => 'O usuário ' . $authenticatedUser->name . ' deletou o usuário: ' . $user->name,
                 'table_id' => LogTablesEnum::USERS,
             ]);
         }
