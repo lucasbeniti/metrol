@@ -4,13 +4,31 @@ import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 
 export function NavMain({ items = [], userType }: { items: NavItem[]; userType: number }) {
-  const page = usePage();
-
+  const { url } = usePage();
   const isAdmin = userType === 1;
 
-  const dashboardItem = items.find((item) => item.title === 'Dashboard');
-  const metrologyItem = items.find((item) => item.title === 'Chamados');
-  const otherItems = items.filter((item) => item.title !== 'Dashboard' && item.title !== 'Chamados');
+  const getItem = (title: string) => items.find((item) => item.title === title);
+  const dashboardItem = getItem('Dashboard');
+  const logsItem = getItem('Logs');
+  const reportsItem = getItem('Relatórios');
+  const metrologyItem = getItem('Chamados');
+
+  const otherItems = items.filter((item) => !['Dashboard', 'Logs', 'Relatórios', 'Chamados'].includes(item.title));
+
+  const renderMenuItem = (item: NavItem) => {
+    const Icon = item.icon;
+
+    return (
+      <SidebarMenuItem key={item.title}>
+        <SidebarMenuButton asChild isActive={item.url === url}>
+          <Link href={item.url} prefetch>
+            {Icon && <Icon />}
+            <span>{item.title}</span>
+          </Link>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    );
+  };
 
   return (
     <SidebarGroup className="px-2 py-0">
@@ -18,43 +36,16 @@ export function NavMain({ items = [], userType }: { items: NavItem[]; userType: 
       <Separator className="my-2" />
 
       <SidebarMenu className="space-y-2">
-        {isAdmin && dashboardItem && (
-          <SidebarMenuItem key={dashboardItem.title}>
-            <SidebarMenuButton asChild isActive={dashboardItem.url === page.url}>
-              <Link href={dashboardItem.url} prefetch>
-                {dashboardItem.icon && <dashboardItem.icon />}
-                <span>{dashboardItem.title}</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+        {isAdmin && (
+          <>
+            {([dashboardItem, logsItem, reportsItem].filter(Boolean) as NavItem[]).map(renderMenuItem)}
+            {(dashboardItem || logsItem || reportsItem) && <Separator />}
+            {otherItems.map(renderMenuItem)}
+            {metrologyItem && <Separator className="my-2" />}
+          </>
         )}
 
-        {isAdmin && dashboardItem && <Separator />}
-
-        {isAdmin &&
-          otherItems.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild isActive={item.url === page.url}>
-                <Link href={item.url} prefetch>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
-
-        {isAdmin && metrologyItem && <Separator className="my-2" />}
-
-        {metrologyItem && (
-          <SidebarMenuItem key={metrologyItem.title}>
-            <SidebarMenuButton asChild isActive={metrologyItem.url === page.url}>
-              <Link href={metrologyItem.url} prefetch>
-                {metrologyItem.icon && <metrologyItem.icon />}
-                <span>{metrologyItem.title}</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        )}
+        {metrologyItem && renderMenuItem(metrologyItem)}
       </SidebarMenu>
     </SidebarGroup>
   );

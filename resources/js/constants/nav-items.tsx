@@ -1,11 +1,21 @@
 import { type NavItem } from '@/types';
-import { LayoutGrid, MonitorCog, PackageSearch, Ruler, Theater, Users2Icon, UsersRound } from 'lucide-react';
+import { ChartNoAxesCombined, LayoutGrid, Logs, MonitorCog, PackageSearch, Ruler, Theater, Users2Icon, UsersRound } from 'lucide-react';
 
 export const mainNavItems: NavItem[] = [
   {
     title: 'Dashboard',
     url: '/dashboard',
     icon: LayoutGrid,
+  },
+  {
+    title: 'Logs',
+    url: '/logs',
+    icon: Logs,
+  },
+  {
+    title: 'Relatórios',
+    url: '/reports',
+    icon: ChartNoAxesCombined,
   },
   {
     title: 'Usuários',
