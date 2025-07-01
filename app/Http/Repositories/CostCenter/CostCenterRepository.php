@@ -50,4 +50,9 @@ class CostCenterRepository implements CostCenterRepositoryInterface
 
         return $costCenter->delete();
     }
+
+    public function getByCode(string $code): ?CostCenter
+    {
+        return $this->model->where('code', $code)->first();
+    }
 }

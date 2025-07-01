@@ -44,7 +44,7 @@ class ClientService implements ClientServiceInterface
     {
         $clientWithCodeAlreadyExists = $this->clientRepository->getByCode($data['code']);
 
-        if ($clientWithCodeAlreadyExists) {
+        if ($clientWithCodeAlreadyExists && $clientWithCodeAlreadyExists->id !== $id) {
             throw new Exception('Já existe um cliente com esse código.');
         }
 

@@ -12,4 +12,5 @@ interface CostCenterRepositoryInterface
     public function store(array $data): CostCenter;
     public function update(int $id, array $data): bool;
     public function destroy(int $id): bool;
+    public function getByCode(string $code): ?CostCenter;
 }

@@ -31,6 +31,6 @@ class CostCenter extends Model
 
     public function items(): HasMany
     {
-        return $this->hasMany(Item::class);
+        return $this->hasMany(Item::class, 'cost_center_id', 'id');
     }
 }
