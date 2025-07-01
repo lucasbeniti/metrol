@@ -2,20 +2,26 @@
 
 namespace App\Http\Services\User;
 
+use App\Enums\LogActionsEnum;
+use App\Enums\LogTablesEnum;
 use App\Http\Repositories\User\UserRepositoryInterface;
+use App\Http\Services\Log\LogServiceInterface;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class UserService implements UserServiceInterface
 {
     protected UserRepositoryInterface $userRepository;
+    protected LogServiceInterface $logService;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository, LogServiceInterface $logService)
     {
         $this->userRepository = $userRepository;
+        $this->logService = $logService;
     }
 
     public function getAll(): Collection
@@ -38,7 +44,18 @@ class UserService implements UserServiceInterface
 
         $data['password'] = Hash::make('123');
 
-        return $this->userRepository->store($data);
+        $user = $this->userRepository->store($data);
+
+        $authenticatedUser = Auth::user();
+
+        $this->logService->store([
+            'user_id' => $authenticatedUser->id,
+            'action_id' => LogActionsEnum::CREATE,
+            'description' => 'O usuário ' . $authenticatedUser->name . ' criou o usuário: ' . $user->name,
+            'table_id' => LogTablesEnum::USERS,
+        ]);
+
+        return $user;
     }
 
     public function update(int $id, array $data): bool
@@ -49,7 +66,20 @@ class UserService implements UserServiceInterface
             throw new Exception('Já existe um usuário com essa identificação.');
         }
 
-        return $this->userRepository->update($id, $data);
+        $success = $this->userRepository->update($id, $data);
+
+        if ($success) {
+            $authenticatedUser = Auth::user();
+
+            $this->logService->store([
+                'user_id' => $authenticatedUser->id,
+                'action_id' => LogActionsEnum::UPDATE,
+                'description' => 'O usuário ' . $authenticatedUser->name . ' atualizou o usuário: ' . $data['name'],
+                'table_id' => LogTablesEnum::USERS,
+            ]);
+        }
+
+        return $success;
     }
 
     public function destroy(int $id): bool
@@ -66,7 +96,20 @@ class UserService implements UserServiceInterface
             throw new Exception('Não é possível excluir um usuário que possui registros de logs ou chamados de metrologia.');
         }
         
-        return $this->userRepository->destroy($id);
+        $success = $this->userRepository->destroy($id);
+
+        if ($success) {
+            $authenticatedUser = Auth::user();
+
+            $this->logService->store([
+                'user_id' => $authenticatedUser->id,
+                'action_id' => LogActionsEnum::DELETE,
+                'description' => 'O usuário ' . $authenticatedUser->name . ' atualizou o usuário: ' . $user->name,
+                'table_id' => LogTablesEnum::USERS,
+            ]);
+        }
+
+        return $success;
     }
 
     public function export(): BinaryFileResponse

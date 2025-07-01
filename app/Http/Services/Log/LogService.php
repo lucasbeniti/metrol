@@ -18,4 +18,9 @@ class LogService implements LogServiceInterface
     {
         return $this->logRepository->getAll();
     }
+
+    public function store(array $data): void
+    {
+        $this->logRepository->store($data);
+    }
 }

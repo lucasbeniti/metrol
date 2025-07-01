@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\Log\LogServiceInterface;
-use App\Models\Log;
 use Inertia\Response;
 use Inertia\Inertia;
 
@@ -21,5 +20,10 @@ class LogController extends Controller
         return Inertia::render('logs', [
             'logs' => $this->logService->getAll()
         ]);
+    }
+
+    public function store(array $data): void
+    {
+        $this->logService->store($data);
     }
 }

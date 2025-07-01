@@ -18,4 +18,9 @@ class LogRepository implements LogRepositoryInterface
     {
         return $this->model->with(['user', 'action', 'table'])->get();
     }
+
+    public function store(array $data): void
+    {
+        $this->model->create($data);
+    }
 }
