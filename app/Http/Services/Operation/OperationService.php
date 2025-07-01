@@ -2,18 +2,24 @@
 
 namespace App\Http\Services\Operation;
 
+use App\Enums\LogActionsEnum;
+use App\Enums\LogTablesEnum;
 use App\Http\Repositories\Operation\OperationRepositoryInterface;
+use App\Http\Services\Log\LogServiceInterface;
 use App\Models\Operation;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class OperationService implements OperationServiceInterface
 {
     protected OperationRepositoryInterface $operationRepository;
+    protected LogServiceInterface $logService;
 
-    public function __construct(OperationRepositoryInterface $operationRepository)
+    public function __construct(OperationRepositoryInterface $operationRepository, LogServiceInterface $logService)
     {
         $this->operationRepository = $operationRepository;
+        $this->logService = $logService;
     }
 
     public function getAll(int $itemId): Collection
@@ -34,7 +40,18 @@ class OperationService implements OperationServiceInterface
             throw new Exception('Já existe uma operação com esse código.');
         }
 
-        return $this->operationRepository->store($data);
+        $operation = $this->operationRepository->store($data);
+
+        $authenticatedUser = Auth::user();
+
+        $this->logService->store([
+            'user_id' => $authenticatedUser->id,
+            'action_id' => LogActionsEnum::CREATE,
+            'description' => 'O usuário ' . $authenticatedUser->name . ' criou a operação: ' . $operation->name,
+            'table_id' => LogTablesEnum::OPERATIONS,
+        ]);
+
+        return $operation;
     }
 
     public function update(int $itemId, int $operationId, array $data): bool
@@ -45,7 +62,20 @@ class OperationService implements OperationServiceInterface
             throw new Exception('Já existe uma operação com esse código.');
         }
 
-        return $this->operationRepository->update($itemId, $operationId, $data);
+        $success = $this->operationRepository->update($itemId, $operationId, $data);
+
+        if ($success) {
+            $authenticatedUser = Auth::user();
+
+            $this->logService->store([
+                'user_id' => $authenticatedUser->id,
+                'action_id' => LogActionsEnum::UPDATE,
+                'description' => 'O usuário ' . $authenticatedUser->name . ' atualizou a operação: ' . $data['name'],
+                'table_id' => LogTablesEnum::OPERATIONS,
+            ]);
+        }
+
+        return $success;
     }
 
     public function destroy(int $itemId, int $operationId): bool
@@ -56,6 +86,19 @@ class OperationService implements OperationServiceInterface
             throw new Exception('Não é possível excluir uma operação que possui chamados de metrologia ou máquinas associadas.');
         }
 
-        return $this->operationRepository->destroy($itemId, $operationId);
+        $success = $this->operationRepository->destroy($itemId, $operationId);
+        
+        if ($success) {
+            $authenticatedUser = Auth::user();
+
+            $this->logService->store([
+                'user_id' => $authenticatedUser->id,
+                'action_id' => LogActionsEnum::DELETE,
+                'description' => 'O usuário ' . $authenticatedUser->name . ' deletou a operação: ' . $operation->name,
+                'table_id' => LogTablesEnum::OPERATIONS,
+            ]);
+        }
+
+        return $success;
     }
 }
