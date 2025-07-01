@@ -50,4 +50,9 @@ class OperationRepository implements OperationRepositoryInterface
 
         return $operation->delete();
     }
+
+    public function getByCode(int $itemId, string $code): ?Operation
+    {
+        return $this->model->where('item_id', $itemId)->where('code', $code)->first();
+    }
 }

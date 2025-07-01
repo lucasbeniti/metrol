@@ -12,4 +12,5 @@ interface OperationRepositoryInterface
     public function store(array $data): Operation;
     public function update(int $itemId, int $operationId, array $data): bool;
     public function destroy(int $itemId, int $operationId): bool;
+    public function getByCode(int $itemId, string $code): ?Operation;
 }
