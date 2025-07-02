@@ -14,12 +14,12 @@ class TablesSeeder extends Seeder
     {
         $tables = [
             'users',
-            'metrology_calls',
-            'machines',
             'clients',
             'cost_centers',
+            'items',
             'operations',
-            'items'
+            'machines',
+            'metrology_calls',
         ];
 
         foreach ($tables as $table) {
