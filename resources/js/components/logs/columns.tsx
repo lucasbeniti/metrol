@@ -1,21 +1,8 @@
+import { ACTIONS_MAP, TABLES_MAP } from '@/constants/logs';
 import { ILog } from '@/types/logs';
+import { getBadgeClassesFromLogAction } from '@/utils/logs';
 import { ColumnDef } from '@tanstack/react-table';
-
-const ACTIONS_MAP: Record<string, string> = {
-  create: 'Criação',
-  update: 'Atualização',
-  delete: 'Exclusão',
-};
-
-const TABLES_MAP: Record<string, string> = {
-  users: 'Usuários',
-  metrologyCalls: 'Chamados de Metrologia',
-  machines: 'Máquinas',
-  clients: 'Clientes',
-  cost_centers: 'Centros de Custo',
-  operations: 'Operações',
-  items: 'Peças',
-};
+import { Badge } from '../ui/badge';
 
 export const logsColumns = (): ColumnDef<ILog>[] => [
   {
@@ -35,7 +22,7 @@ export const logsColumns = (): ColumnDef<ILog>[] => [
     header: 'Ação',
     cell: ({ row }) => {
       const action = row.original.action.name;
-      return ACTIONS_MAP[action] || action;
+      return <Badge className={`text-white ${getBadgeClassesFromLogAction(action)}`}>{ACTIONS_MAP[action] || action}</Badge>;
     },
   },
   {
@@ -47,7 +34,7 @@ export const logsColumns = (): ColumnDef<ILog>[] => [
     header: 'Tabela alterada',
     cell: ({ row }) => {
       const table = row.original.table.name;
-      return TABLES_MAP[table] || table;
+      return <Badge>{TABLES_MAP[table] || table}</Badge>;
     },
   },
   {
