@@ -12,13 +12,29 @@ class LogSeeder extends Seeder
      */
     public function run(): void
     {
-        $log = [
-            'user_id' => 1,
-            'action_id' => 1,
-            'description' => 'Log de teste',
-            'table_id' => 1,
+        $logs = [
+            'create' => [
+                'user_id' => 1,
+                'action_id' => 1,
+                'description' => 'Criação teste',
+                'table_id' => 1,
+            ],
+            'update' => [
+                'user_id' => 1,
+                'action_id' => 2,
+                'description' => 'Atualiação teste',
+                'table_id' => 1,
+            ],
+            'delete' => [
+                'user_id' => 1,
+                'action_id' => 3,
+                'description' => 'Deleção teste',
+                'table_id' => 1,
+            ]
         ];
 
-        Log::create($log);
+        foreach ($logs as $log) {
+            Log::create($log);
+        }
     }
 }
