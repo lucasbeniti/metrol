@@ -21,8 +21,8 @@ export const logsColumns = (): ColumnDef<ILog>[] => [
     accessorKey: 'action.name',
     header: 'Ação',
     cell: ({ row }) => {
-      const action = row.original.action.name;
-      return <Badge className={`text-white ${getBadgeClassesFromLogAction(action)}`}>{ACTIONS_MAP[action] || action}</Badge>;
+      const actionId = row.original.action?.id;
+      return <Badge className={`text-white ${getBadgeClassesFromLogAction(actionId)}`}>{ACTIONS_MAP[actionId] || actionId}</Badge>;
     },
   },
   {
@@ -33,8 +33,8 @@ export const logsColumns = (): ColumnDef<ILog>[] => [
     accessorKey: 'table.name',
     header: 'Tabela alterada',
     cell: ({ row }) => {
-      const table = row.original.table.name;
-      return <Badge>{TABLES_MAP[table] || table}</Badge>;
+      const tableId = row.original.table?.id;
+      return <Badge>{TABLES_MAP[tableId] || tableId}</Badge>;
     },
   },
   {

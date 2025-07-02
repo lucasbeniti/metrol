@@ -9,9 +9,16 @@ export interface ILog {
     identification: string;
   };
   action: {
-    name: string;
+    id: number;
   };
   table: {
-    name: string;
+    id: number;
   };
+}
+
+export interface IFilterLog {
+  user_id: string;
+  action_id: string;
+  table_id: string;
+  [key: string]: string;
 }

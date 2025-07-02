@@ -6,22 +6,25 @@ import { Input } from './input';
 interface DataTableProps<T> {
   table: TableType<T>;
   data: T[];
-  filterBy: string;
-  placeholder: string;
+  filterBy?: string;
+  placeholder?: string;
 }
 
 const DataTable = <T,>({ table, data, filterBy, placeholder }: DataTableProps<T>) => {
   const colspan = data.length == 0 ? table.getHeaderGroups()[0].headers.length : data.length
+
   return (
     <div>
-      <div className="flex items-center py-4">
-        <Input
-          placeholder={`Pesquise pelo ${placeholder}`}
-          value={(table.getColumn(filterBy)?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn(filterBy)?.setFilterValue(event.target.value)}
-          className="max-w-sm"
-        />
-      </div>
+      {filterBy && placeholder && (
+        <div className="flex items-center py-4">
+          <Input
+            placeholder={`Pesquise pelo ${placeholder}`}
+            value={(table.getColumn(filterBy)?.getFilterValue() as string) ?? ''}
+            onChange={(event) => table.getColumn(filterBy)?.setFilterValue(event.target.value)}
+            className="max-w-sm"
+          />
+        </div>
+      )}
       <div className="flex items-center rounded-lg border shadow-md">
         <Table>
           <TableHeader>

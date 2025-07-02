@@ -9,5 +9,5 @@ export default function LogsDataTable({ logs }: { logs: ILog[] }) {
     data: logs,
   });
 
-  return <DataTable table={table} data={logs} filterBy="a" placeholder="a" />;
+  return <DataTable table={table} data={logs} />;
 }
