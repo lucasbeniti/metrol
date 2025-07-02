@@ -7,14 +7,16 @@ use App\Enums\LogTablesEnum;
 use App\Http\Repositories\User\UserRepositoryInterface;
 use App\Http\Services\Log\LogServiceInterface;
 use App\Models\User;
+use App\Traits\LogsTrait;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class UserService implements UserServiceInterface
 {
+    use LogsTrait;
+
     protected UserRepositoryInterface $userRepository;
     protected LogServiceInterface $logService;
 
@@ -46,14 +48,13 @@ class UserService implements UserServiceInterface
 
         $user = $this->userRepository->store($data);
 
-        $authenticatedUser = Auth::user();
-
-        $this->logService->store([
-            'user_id' => $authenticatedUser->id,
-            'action_id' => LogActionsEnum::CREATE,
-            'description' => 'O usuário ' . $authenticatedUser->name . ' criou o usuário: ' . $user->name,
-            'table_id' => LogTablesEnum::USERS,
-        ]);
+        $this->storeLog(
+            $this->logService,
+            LogActionsEnum::CREATE,
+            'usuário',
+            $user->name,
+            LogTablesEnum::USERS
+        );
 
         return $user;
     }
@@ -69,14 +70,13 @@ class UserService implements UserServiceInterface
         $success = $this->userRepository->update($id, $data);
 
         if ($success) {
-            $authenticatedUser = Auth::user();
-
-            $this->logService->store([
-                'user_id' => $authenticatedUser->id,
-                'action_id' => LogActionsEnum::UPDATE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' atualizou o usuário: ' . $data['name'],
-                'table_id' => LogTablesEnum::USERS,
-            ]);
+            $this->storeLog(
+                $this->logService,
+                LogActionsEnum::UPDATE,
+                'usuário',
+                $data['name'],
+                LogTablesEnum::USERS
+            );
         }
 
         return $success;
@@ -99,14 +99,13 @@ class UserService implements UserServiceInterface
         $success = $this->userRepository->destroy($id);
 
         if ($success) {
-            $authenticatedUser = Auth::user();
-
-            $this->logService->store([
-                'user_id' => $authenticatedUser->id,
-                'action_id' => LogActionsEnum::DELETE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' deletou o usuário: ' . $user->name,
-                'table_id' => LogTablesEnum::USERS,
-            ]);
+            $this->storeLog(
+                $this->logService,
+                LogActionsEnum::DELETE,
+                'usuário',
+                $user->name,
+                LogTablesEnum::USERS
+            );
         }
 
         return $success;

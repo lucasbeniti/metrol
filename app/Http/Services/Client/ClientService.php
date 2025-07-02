@@ -7,13 +7,15 @@ use App\Enums\LogTablesEnum;
 use App\Http\Repositories\Client\ClientRepositoryInterface;
 use App\Http\Services\Log\LogServiceInterface;
 use App\Models\Client;
+use App\Traits\LogsTrait;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class ClientService implements ClientServiceInterface
 {
+    use LogsTrait;
+
     protected ClientRepositoryInterface $clientRepository;
     protected LogServiceInterface $logService;
 
@@ -45,14 +47,13 @@ class ClientService implements ClientServiceInterface
 
         $client = $this->clientRepository->store($data);
 
-        $authenticatedUser = Auth::user();
-
-        $this->logService->store([
-            'user_id' => $authenticatedUser->id,
-            'action_id' => LogActionsEnum::CREATE,
-            'description' => 'O usuário ' . $authenticatedUser->name . ' criou o cliente: ' . $client->name,
-            'table_id' => LogTablesEnum::CLIENTS,
-        ]);
+        $this->storeLog(
+            $this->logService,
+            LogActionsEnum::CREATE,
+            'cliente',
+            $client->name,
+            LogTablesEnum::CLIENTS
+        );
 
         return $client;
     }
@@ -68,14 +69,13 @@ class ClientService implements ClientServiceInterface
         $success = $this->clientRepository->update($id, $data);
 
         if ($success) {
-            $authenticatedUser = Auth::user();
-
-            $this->logService->store([
-                'user_id' => $authenticatedUser->id,
-                'action_id' => LogActionsEnum::UPDATE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' atualizou o cliente: ' . $data['name'],
-                'table_id' => LogTablesEnum::CLIENTS,
-            ]);
+            $this->storeLog(
+                $this->logService,
+                LogActionsEnum::UPDATE,
+                'cliente',
+                $data['name'],
+                LogTablesEnum::CLIENTS
+            );
         }
 
         return $success;
@@ -92,14 +92,13 @@ class ClientService implements ClientServiceInterface
         $success = $this->clientRepository->destroy($id);
 
         if ($success) {
-            $authenticatedUser = Auth::user();
-
-            $this->logService->store([
-                'user_id' => $authenticatedUser->id,
-                'action_id' => LogActionsEnum::DELETE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' deletou o cliente: ' . $client->name,
-                'table_id' => LogTablesEnum::CLIENTS,
-            ]);
+            $this->storeLog(
+                $this->logService,
+                LogActionsEnum::DELETE,
+                'cliente',
+                $client->name,
+                LogTablesEnum::CLIENTS
+            );
         }
 
         return $success;

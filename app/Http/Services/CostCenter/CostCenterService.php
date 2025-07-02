@@ -7,12 +7,14 @@ use App\Enums\LogTablesEnum;
 use App\Http\Repositories\CostCenter\CostCenterRepositoryInterface;
 use App\Http\Services\Log\LogServiceInterface;
 use App\Models\CostCenter;
+use App\Traits\LogsTrait;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class CostCenterService implements CostCenterServiceInterface
 {
+    use LogsTrait;
+
     protected CostCenterRepositoryInterface $costCenterRepository;
     protected LogServiceInterface $logService;
 
@@ -42,14 +44,13 @@ class CostCenterService implements CostCenterServiceInterface
 
         $costCenter = $this->costCenterRepository->store($data);
 
-        $authenticatedUser = Auth::user();
-
-        $this->logService->store([
-            'user_id' => $authenticatedUser->id,
-            'action_id' => LogActionsEnum::CREATE,
-            'description' => 'O usuário ' . $authenticatedUser->name . ' criou o centro de custo: ' . $costCenter->name,
-            'table_id' => LogTablesEnum::COST_CENTERS,
-        ]);
+        $this->storeLog(
+            $this->logService,
+            LogActionsEnum::CREATE,
+            'centro de custo',
+            $costCenter->name,
+            LogTablesEnum::COST_CENTERS
+        );
 
         return $costCenter;
     }
@@ -65,14 +66,13 @@ class CostCenterService implements CostCenterServiceInterface
         $success = $this->costCenterRepository->update($id, $data);
 
         if ($success) {
-            $authenticatedUser = Auth::user();
-
-            $this->logService->store([
-                'user_id' => $authenticatedUser->id,
-                'action_id' => LogActionsEnum::UPDATE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' atualizou o centro de custo: ' . $data['name'],
-                'table_id' => LogTablesEnum::COST_CENTERS,
-            ]);
+            $this->storeLog(
+                $this->logService,
+                LogActionsEnum::UPDATE,
+                'centro de custo',
+                $data['name'],
+                LogTablesEnum::COST_CENTERS
+            );
         }
         
         return $success;
@@ -89,14 +89,13 @@ class CostCenterService implements CostCenterServiceInterface
         $success = $this->costCenterRepository->destroy($id);
 
         if ($success) {
-            $authenticatedUser = Auth::user();
-
-            $this->logService->store([
-                'user_id' => $authenticatedUser->id,
-                'action_id' => LogActionsEnum::DELETE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' deletou o centro de custo: ' . $costCenter->name,
-                'table_id' => LogTablesEnum::COST_CENTERS,
-            ]);
+            $this->storeLog(
+                $this->logService,
+                LogActionsEnum::DELETE,
+                'centro de custo',
+                $costCenter->name,
+                LogTablesEnum::COST_CENTERS
+            );
         }
 
         return $success;

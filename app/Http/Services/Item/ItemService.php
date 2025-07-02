@@ -7,12 +7,14 @@ use App\Enums\LogTablesEnum;
 use App\Http\Repositories\Item\ItemRepositoryInterface;
 use App\Http\Services\Log\LogServiceInterface;
 use App\Models\Item;
+use App\Traits\LogsTrait;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class ItemService implements ItemServiceInterface
 {
+    use LogsTrait;
+
     protected ItemRepositoryInterface $itemRepository;
     protected LogServiceInterface $logService;
 
@@ -42,14 +44,13 @@ class ItemService implements ItemServiceInterface
 
         $item = $this->itemRepository->store($data);
 
-        $authenticatedUser = Auth::user();
-
-        $this->logService->store([
-            'user_id' => $authenticatedUser->id,
-            'action_id' => LogActionsEnum::CREATE,
-            'description' => 'O usuário ' . $authenticatedUser->name . ' criou o item: ' . $item->name,
-            'table_id' => LogTablesEnum::ITEMS,
-        ]);
+        $this->storeLog(
+            $this->logService,
+            LogActionsEnum::CREATE,
+            'item',
+            $item->name,
+            LogTablesEnum::ITEMS
+        );
 
         return $item;
     }
@@ -65,14 +66,13 @@ class ItemService implements ItemServiceInterface
         $success = $this->itemRepository->update($id, $data);
 
         if ($success) {
-            $authenticatedUser = Auth::user();
-
-            $this->logService->store([
-                'user_id' => $authenticatedUser->id,
-                'action_id' => LogActionsEnum::UPDATE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' atualizou o item: ' . $data['name'],
-                'table_id' => LogTablesEnum::ITEMS,
-            ]);
+            $this->storeLog(
+                $this->logService,
+                LogActionsEnum::UPDATE,
+                'item',
+                $data['name'],
+                LogTablesEnum::ITEMS
+            );
         }
 
         return $success;
@@ -89,14 +89,13 @@ class ItemService implements ItemServiceInterface
         $success = $this->itemRepository->destroy($id);
 
         if ($success) {
-            $authenticatedUser = Auth::user();
-
-            $this->logService->store([
-                'user_id' => $authenticatedUser->id,
-                'action_id' => LogActionsEnum::DELETE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' deletou o item: ' . $item->name,
-                'table_id' => LogTablesEnum::ITEMS,
-            ]);
+            $this->storeLog(
+                $this->logService,
+                LogActionsEnum::DELETE,
+                'item',
+                $item->name,
+                LogTablesEnum::ITEMS
+            );
         }
 
         return $success;

@@ -7,12 +7,14 @@ use App\Enums\LogTablesEnum;
 use App\Http\Repositories\Machine\MachineRepositoryInterface;
 use App\Http\Services\Log\LogServiceInterface;
 use App\Models\Machine;
+use App\Traits\LogsTrait;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class MachineService implements MachineServiceInterface
 {
+    use LogsTrait;
+
     protected MachineRepositoryInterface $machineRepository;
     protected LogServiceInterface $logService;
 
@@ -42,14 +44,13 @@ class MachineService implements MachineServiceInterface
 
         $machine = $this->machineRepository->store($data);
 
-        $authenticatedUser = Auth::user();
-
-        $this->logService->store([
-            'user_id' => $authenticatedUser->id,
-            'action_id' => LogActionsEnum::CREATE,
-            'description' => 'O usuário ' . $authenticatedUser->name . ' criou a máquina: ' . $machine->name,
-            'table_id' => LogTablesEnum::MACHINES,
-        ]);
+        $this->storeLog(
+            $this->logService,
+            LogActionsEnum::CREATE,
+            'máquina',
+            $machine->name,
+            LogTablesEnum::MACHINES
+        );
 
         return $machine;
     }
@@ -58,21 +59,20 @@ class MachineService implements MachineServiceInterface
     {
         $machineWithCodeAlreadyExists = $this->machineRepository->getByCode($data['code']);
 
-        if ($machineWithCodeAlreadyExists) {
+        if ($machineWithCodeAlreadyExists && $machineWithCodeAlreadyExists->id !== $id) {
             throw new Exception('Já existe uma máquina com esse código.');
         }
 
         $success = $this->machineRepository->update($id, $data);
 
         if ($success) {
-            $authenticatedUser = Auth::user();
-
-            $this->logService->store([
-                'user_id' => $authenticatedUser->id,
-                'action_id' => LogActionsEnum::UPDATE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' atualizou a máquina: ' . $data['name'],
-                'table_id' => LogTablesEnum::MACHINES,
-            ]);
+            $this->storeLog(
+                $this->logService,
+                LogActionsEnum::UPDATE,
+                'máquina',
+                $data['name'],
+                LogTablesEnum::MACHINES
+            );
         }
 
         return $success;
@@ -89,14 +89,13 @@ class MachineService implements MachineServiceInterface
         $success = $this->machineRepository->destroy($id);
 
         if ($success) {
-            $authenticatedUser = Auth::user();
-
-            $this->logService->store([
-                'user_id' => $authenticatedUser->id,
-                'action_id' => LogActionsEnum::DELETE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' deletou a máquina: ' . $machine->name,
-                'table_id' => LogTablesEnum::MACHINES,
-            ]);
+            $this->storeLog(
+                $this->logService,
+                LogActionsEnum::DELETE,
+                'máquina',
+                $machine->name,
+                LogTablesEnum::MACHINES
+            );
         }
 
         return $success;

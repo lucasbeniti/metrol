@@ -7,12 +7,14 @@ use App\Enums\LogTablesEnum;
 use App\Http\Repositories\Operation\OperationRepositoryInterface;
 use App\Http\Services\Log\LogServiceInterface;
 use App\Models\Operation;
+use App\Traits\LogsTrait;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class OperationService implements OperationServiceInterface
 {
+    use LogsTrait;
+
     protected OperationRepositoryInterface $operationRepository;
     protected LogServiceInterface $logService;
 
@@ -42,14 +44,13 @@ class OperationService implements OperationServiceInterface
 
         $operation = $this->operationRepository->store($data);
 
-        $authenticatedUser = Auth::user();
-
-        $this->logService->store([
-            'user_id' => $authenticatedUser->id,
-            'action_id' => LogActionsEnum::CREATE,
-            'description' => 'O usuário ' . $authenticatedUser->name . ' criou a operação: ' . $operation->name,
-            'table_id' => LogTablesEnum::OPERATIONS,
-        ]);
+        $this->storeLog(
+            $this->logService,
+            LogActionsEnum::CREATE,
+            'operação',
+            $operation->name,
+            LogTablesEnum::OPERATIONS
+        );
 
         return $operation;
     }
@@ -58,21 +59,20 @@ class OperationService implements OperationServiceInterface
     {
         $operationWithCodeAlreadyExists = $this->operationRepository->getByCode($data['item_id'], $data['code']);
 
-        if ($operationWithCodeAlreadyExists) {
+        if ($operationWithCodeAlreadyExists && $operationWithCodeAlreadyExists->id !== $operationId) {
             throw new Exception('Já existe uma operação com esse código.');
         }
 
         $success = $this->operationRepository->update($itemId, $operationId, $data);
 
         if ($success) {
-            $authenticatedUser = Auth::user();
-
-            $this->logService->store([
-                'user_id' => $authenticatedUser->id,
-                'action_id' => LogActionsEnum::UPDATE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' atualizou a operação: ' . $data['name'],
-                'table_id' => LogTablesEnum::OPERATIONS,
-            ]);
+            $this->storeLog(
+                $this->logService,
+                LogActionsEnum::UPDATE,
+                'operação',
+                $data['name'],
+                LogTablesEnum::OPERATIONS
+            );
         }
 
         return $success;
@@ -89,14 +89,13 @@ class OperationService implements OperationServiceInterface
         $success = $this->operationRepository->destroy($itemId, $operationId);
         
         if ($success) {
-            $authenticatedUser = Auth::user();
-
-            $this->logService->store([
-                'user_id' => $authenticatedUser->id,
-                'action_id' => LogActionsEnum::DELETE,
-                'description' => 'O usuário ' . $authenticatedUser->name . ' deletou a operação: ' . $operation->name,
-                'table_id' => LogTablesEnum::OPERATIONS,
-            ]);
+            $this->storeLog(
+                $this->logService,
+                LogActionsEnum::DELETE,
+                'operação',
+                $operation->name,
+                LogTablesEnum::OPERATIONS
+            );
         }
 
         return $success;
