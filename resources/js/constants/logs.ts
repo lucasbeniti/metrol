@@ -29,3 +29,13 @@ export const TABLES_OPTIONS = [
   { value: 6, label: TABLES_MAP[6] },
   { value: 7, label: TABLES_MAP[7] },
 ];
+
+export const ENTITY_NAME_MAP: Record<string, string> = {
+  1: 'usuário',
+  2: 'chamado de metrologia',
+  3: 'máquina',
+  4: 'cliente',
+  5: 'centro de custo',
+  6: 'operação',
+  7: 'peça',
+};

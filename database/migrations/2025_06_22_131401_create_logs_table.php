@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('action_id')->constrained();
             $table->string('description');
             $table->foreignId('table_id')->constrained();
+            $table->json('details');
             $table->timestamps();
         });
     }

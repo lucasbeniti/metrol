@@ -14,6 +14,7 @@ export interface ILog {
   table: {
     id: number;
   };
+  details: Record<string, unknown>;
 }
 
 export interface IFilterLog {

@@ -11,7 +11,8 @@ class Log extends Model
         'user_id',
         'action_id',
         'description',
-        'table_id'
+        'table_id',
+        'details'
     ];
 
     protected $hidden = [
@@ -23,6 +24,7 @@ class Log extends Model
         'action_id' => 'integer',
         'description' => 'string',
         'table_id' => 'integer',
+        'details' => 'json',
     ];
 
     public function user(): BelongsTo

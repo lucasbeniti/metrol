@@ -44,7 +44,9 @@ const FilterDialog = ({ users, isOpen, onOpenChange, filters }: FilterDialogProp
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Filtrar os logs</DialogTitle>
-          <DialogDescription>Selecione os dados que deseja.</DialogDescription>
+          <DialogDescription>
+            Tenha uma separação de dados conforme o usuário que realizou a ação, a ação que foi realizada e a tabela que sofreu alteração.
+          </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={onSubmit} id="filter-form">
