@@ -7,7 +7,6 @@ import { ILog } from '@/types/logs';
 import { IUser } from '@/types/user';
 import { Head, router } from '@inertiajs/react';
 import { Filter, FilterX } from 'lucide-react';
-import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -16,6 +15,7 @@ const breadcrumbs: BreadcrumbItem[] = [
   },
 ];
 
+import { useUpsertDialog } from '@/contexts/upsert-dialog-context';
 import { IFilterLog } from '@/types/logs';
 import { toast } from 'sonner';
 
@@ -26,10 +26,17 @@ interface LogsProps {
 }
 
 const Logs = ({ logs, users, filters }: LogsProps) => {
-  const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
+  const { openUpsertDialog } = useUpsertDialog();
 
   const handleOpenFilterClick = () => {
-    setIsFilterDialogOpen(true);
+    openUpsertDialog({
+      UpsertDialogComponent: FilterDialog,
+      props: {
+        logs,
+        users,
+        filters,
+      },
+    });
   };
 
   const handleClearFilters = () => {
@@ -66,6 +73,7 @@ const Logs = ({ logs, users, filters }: LogsProps) => {
             <Filter />
             Filtrar
           </Button>
+
           <Button variant={'outline'} onClick={handleClearFilters} disabled={!hasActiveFilters()}>
             <FilterX />
             Limpar Filtros
@@ -73,8 +81,6 @@ const Logs = ({ logs, users, filters }: LogsProps) => {
         </div>
         <LogsDataTable logs={logs} />
       </div>
-
-      {isFilterDialogOpen && <FilterDialog users={users} isOpen={isFilterDialogOpen} onOpenChange={setIsFilterDialogOpen} filters={filters} />}
     </AppLayout>
   );
 };

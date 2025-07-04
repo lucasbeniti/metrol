@@ -67,8 +67,11 @@ const UpsertForm = ({ existingItem, costCenters, setIsOpen }: UpsertFormProps) =
 
       <DialogFooter>
         <DialogClose asChild>
-          <Button variant={'ghost'}>Cancelar</Button>
+          <Button variant={'ghost'} disabled={processing}>
+            Cancelar
+          </Button>
         </DialogClose>
+
         <Button type="submit" disabled={processing}>
           {processing && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
           {existingItem ? 'Atualizar' : 'Criar'}
