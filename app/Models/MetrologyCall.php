@@ -18,7 +18,6 @@ class MetrologyCall extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at',
     ];
 
@@ -52,13 +51,13 @@ class MetrologyCall extends Model
         return $this->belongsTo(User::class, 'closed_by_user_id');
     }
 
-    public function metrologyCallType(): BelongsTo
+    public function type(): BelongsTo
     {
-        return $this->belongsTo(MetrologyCallType::class);
+        return $this->belongsTo(MetrologyCallType::class, 'metrology_call_type_id', 'id');
     }
 
-    public function metrologyCallStatus(): BelongsTo
+    public function status(): BelongsTo
     {
-        return $this->belongsTo(MetrologyCallStatus::class);
+        return $this->belongsTo(MetrologyCallStatus::class, 'metrology_call_status_id', 'id');
     }
 }

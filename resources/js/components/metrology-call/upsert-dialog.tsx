@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
+import { IItem } from '@/types/item';
 import { IMachine } from '@/types/machine';
 import { IUpsertMetrologyCall } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
@@ -11,9 +12,10 @@ interface UpsertDialogProps {
   machines: IMachine[];
   operations: IOperation[];
   existingMetrologyCall?: IUpsertMetrologyCall;
+  items: IItem[];
 }
 
-const UpsertDialog = ({ isOpen, setIsOpen, machines, operations, existingMetrologyCall }: UpsertDialogProps) => {
+const UpsertDialog = ({ isOpen, setIsOpen, existingMetrologyCall, items, machines, operations }: UpsertDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       <DialogContent>
@@ -24,7 +26,7 @@ const UpsertDialog = ({ isOpen, setIsOpen, machines, operations, existingMetrolo
 
         <Separator />
 
-        <UpsertForm machines={machines} operations={operations} existingMetrologyCall={existingMetrologyCall} setIsOpen={setIsOpen} />
+        <UpsertForm items={items} existingMetrologyCall={existingMetrologyCall} setIsOpen={setIsOpen} machines={machines} operations={operations} />
       </DialogContent>
     </Dialog>
   );

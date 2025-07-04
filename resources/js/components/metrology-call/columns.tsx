@@ -1,18 +1,20 @@
-import { STATUS_LABELS, TYPE_LABELS } from '@/constants/metrology-call';
+import { STATUS_MAP, TYPES_MAP } from '@/constants/metrology-call';
+import { IItem } from '@/types/item';
 import { IMachine } from '@/types/machine';
-import { IMetrologyCall, MetrologyCallStatus } from '@/types/metrology-call';
+import { IMetrologyCall } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
+import { isEditableStatus } from '@/utils/metrology_calls';
 import { ColumnDef } from '@tanstack/react-table';
 import UpdateAndDeleteButtons from '../update-and-delete-buttons';
 import UpsertDialog from './upsert-dialog';
 
-export const metrologyCallColumns = (machines: IMachine[], operations: IOperation[]): ColumnDef<IMetrologyCall>[] => [
+export const metrologyCallColumns = (items: IItem[], machines: IMachine[], operations: IOperation[]): ColumnDef<IMetrologyCall>[] => [
   {
     accessorKey: 'id',
     header: 'ID',
   },
   {
-    accessorKey: 'item_name',
+    accessorKey: 'operation.item.name',
     header: 'Nome do item',
   },
   {
@@ -26,12 +28,14 @@ export const metrologyCallColumns = (machines: IMachine[], operations: IOperatio
   {
     accessorKey: 'type',
     header: 'Tipo',
-    cell: ({ row }) => TYPE_LABELS[row.original.type] || row.original.type,
+    cell: ({ row }) => {
+      return TYPES_MAP[row.original.metrology_call_type_id];
+    },
   },
   {
     accessorKey: 'status',
     header: 'Status',
-    cell: ({ row }) => STATUS_LABELS[row.original.status] || row.original.status,
+    cell: ({ row }) => STATUS_MAP[row.original.metrology_call_status_id],
   },
   {
     accessorKey: 'created_at',
@@ -42,13 +46,15 @@ export const metrologyCallColumns = (machines: IMachine[], operations: IOperatio
     accessorKey: 'actions',
     header: 'Ações',
     cell: ({ row }) =>
-      row.original.status === ('waiting_receive' as MetrologyCallStatus) ? (
+      isEditableStatus(row.original.metrology_call_status_id) ? (
         <UpdateAndDeleteButtons
           row={row.original}
           description="Após deletar o chamado, não será possível recuperá-lo."
           entityName="chamado"
           deleteRoute="metrology-calls.destroy"
-          UpsertDialog={(props) => <UpsertDialog {...props} machines={machines} operations={operations} existingMetrologyCall={row.original} />}
+          UpsertDialog={(props) => (
+            <UpsertDialog {...props} items={items} existingMetrologyCall={row.original} machines={machines} operations={operations} />
+          )}
         />
       ) : (
         <div className="flex h-8 items-center">Não disponível</div>

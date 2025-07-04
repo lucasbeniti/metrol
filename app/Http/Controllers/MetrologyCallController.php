@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Operation;
 use Inertia\Inertia;
 use App\Http\Requests\UpsertMetrologyCallRequest;
+use App\Http\Services\Item\ItemServiceInterface;
 use App\Http\Services\Machine\MachineServiceInterface;
 use App\Http\Services\MetrologyCall\MetrologyCallServiceInterface;
+use App\Http\Services\Operation\OperationServiceInterface;
+use App\Models\Item;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -15,19 +18,31 @@ class MetrologyCallController extends Controller
 {
     protected MetrologyCallServiceInterface $metrologyCallService;
     protected MachineServiceInterface $machineService;
+    protected OperationServiceInterface $operationService;
+    protected ItemServiceInterface $itemService;
 
-    public function __construct(MetrologyCallServiceInterface $metrologyCallService, MachineServiceInterface $machineService)
-    {
+    public function __construct(
+        MetrologyCallServiceInterface $metrologyCallService,
+        MachineServiceInterface $machineService,
+        OperationServiceInterface $operationService,
+        ItemServiceInterface $itemService
+    ) {
         $this->metrologyCallService = $metrologyCallService;
         $this->machineService = $machineService;
+        $this->operationService = $operationService;
+        $this->itemService = $itemService;
     }
 
     public function index(): Response 
     {
+        $items = $this->itemService->getAll();
+        $firstItem = $items->first();
+
         return Inertia::render('metrology-calls', [
             'metrologyCalls' => $this->metrologyCallService->getAll(),
             'machines' => $this->machineService->getAll(),
-            'operations' => Operation::all()
+            'operations' => $this->operationService->getAll($firstItem->id),
+            'items' => $items
         ]);
     }
 

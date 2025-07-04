@@ -19,7 +19,8 @@ class MetrologyCallRepository implements MetrologyCallRepositoryInterface
 
     public function getAll(): Collection
     {
-        return $this->model->with(['machine', 'operation'])->orderBy('id', 'desc')->get();
+        
+        return $this->model->with(['machine', 'operation.item', 'type', 'status'])->orderBy('id', 'desc')->get();
     }
 
     public function getById(int $id): ?MetrologyCall

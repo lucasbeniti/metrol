@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             ItemSeeder::class,
             OperationSeeder::class,
             MachineSeeder::class,
-            LogSeeder::class
+            LogSeeder::class,
+            MetrologyCallSeeder::class
         ]);
 
         $this->command->info('Os seeders foram executados com sucesso!');

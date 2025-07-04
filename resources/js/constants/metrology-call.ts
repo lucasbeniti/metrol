@@ -1,21 +1,25 @@
-import { MetrologyCallStatus } from "@/types/metrology-call";
+export enum MetrologyCallType {
+  SETUP = 1,
+  PRODUCTION = 2,
+  ADJUSTMENT = 3,
+}
 
-export const TYPE_LABELS: Record<string, string> = {
-  setup: 'Setup',
-  production: 'Produção',
-  adjust: 'Ajuste',
+export enum MetrologyCallStatus {
+  APPROVED = 1,
+  REJECTED = 2,
+  WAITING_RECEIVE = 3,
+  WAITING_MEASUREMENT = 4,
+}
+
+export const TYPES_MAP: Record<number, string> = {
+  1: 'Setup',
+  2: 'Produção',
+  3: 'Ajuste',
 };
 
-export const STATUS_LABELS: Record<string, string> = {
-  ok: 'Aprovado',
-  nok: 'Reprovado',
-  waiting_receive: 'Aguardando Recebimento',
-  waiting_measurement: 'Aguardando Medição',
-};
-
-export const STATUS_MAP: Record<MetrologyCallStatus, string> = {
-  [MetrologyCallStatus.OK]: 'ok',
-  [MetrologyCallStatus.NOK]: 'nok',
-  [MetrologyCallStatus.WAITING_RECEIVE]: 'waiting_receive',
-  [MetrologyCallStatus.WAITING_MEASUREMENT]: 'waiting_measurement'
+export const STATUS_MAP: Record<number, string> = {
+  1: 'Aprovado',
+  2: 'Rejeitado',
+  3: 'Aguardando Recebimento',
+  4: 'Aguardando Medição',
 };

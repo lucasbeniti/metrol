@@ -6,6 +6,7 @@ import UpsertDialog from '@/components/metrology-call/upsert-dialog';
 import { useUpsertDialog } from '@/contexts/upsert-dialog-context';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
+import { IItem } from '@/types/item';
 import { IMachine } from '@/types/machine';
 import { IMetrologyCall } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
@@ -22,8 +23,10 @@ interface MetrologyCallProps {
   metrologyCalls: IMetrologyCall[];
   machines: IMachine[];
   operations: IOperation[];
+  items: IItem[];
 }
-export default function MetrologyCalls({ metrologyCalls, machines, operations }: MetrologyCallProps) {
+
+export default function MetrologyCalls({ metrologyCalls, items, machines, operations }: MetrologyCallProps) {
   const handleExportClick = () => {
     handleExport('metrology-calls.export', 'chamados_metrologia');
   };
@@ -35,6 +38,7 @@ export default function MetrologyCalls({ metrologyCalls, machines, operations }:
       UpsertDialogComponent: UpsertDialog,
       props: {
         metrologyCalls,
+        items,
         machines,
         operations,
       },
@@ -50,7 +54,7 @@ export default function MetrologyCalls({ metrologyCalls, machines, operations }:
           <ExportButton handleExportClick={handleExportClick} />
         </div>
 
-        <MetrologyCallDataTable metrologyCalls={metrologyCalls} machines={machines} operations={operations} />
+        <MetrologyCallDataTable metrologyCalls={metrologyCalls} items={items} machines={machines} operations={operations} />
       </div>
     </AppLayout>
   );

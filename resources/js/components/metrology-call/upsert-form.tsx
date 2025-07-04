@@ -1,15 +1,14 @@
 import { Button } from '@/components/ui/button';
 import { DialogClose, DialogFooter } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { useUpsertForm } from '@/hooks/use-upsert';
+import { IItem } from '@/types/item';
 import { IMachine } from '@/types/machine';
 import { IUpsertMetrologyCall } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
-import { useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
 import { toast } from 'sonner';
 
 interface UpsertFormProps {
@@ -17,61 +16,48 @@ interface UpsertFormProps {
   machines: IMachine[];
   operations: IOperation[];
   setIsOpen: (isOpen: boolean) => void;
+  items: IItem[];
 }
 
-const UpsertForm = ({ existingMetrologyCall, machines, operations, setIsOpen }: UpsertFormProps) => {
-  const { data, setData, post, put, processing, errors, reset } = useForm<IUpsertMetrologyCall>({
-    item_name: existingMetrologyCall?.item_name || '',
-    machine_id: existingMetrologyCall?.machine_id?.toString() || '',
-    operation_id: existingMetrologyCall?.operation_id?.toString() || '',
-    type: existingMetrologyCall?.type || '',
+const UpsertForm = ({ existingMetrologyCall, setIsOpen, items, machines, operations }: UpsertFormProps) => {
+  const { data, setData, errors, processing, onSubmit } = useUpsertForm<IUpsertMetrologyCall>({
+    initialData: {
+      item_id: existingMetrologyCall?.item_id || 1,
+      machine_id: existingMetrologyCall?.machine_id || 1,
+      operation_id: existingMetrologyCall?.operation_id || 1,
+      metrology_call_type_id: existingMetrologyCall?.metrology_call_type_id || 1,
+    },
+    existingId: existingMetrologyCall?.id || 1,
+    storeRoute: route('metrology-calls.store'),
+    updateRoute: (id) => route('metrology-calls.update', id),
+    onSuccess: () => {
+      setIsOpen(false);
+      toast.success(existingMetrologyCall ? 'Chamado atualizado com sucesso!' : 'Chamado criado com sucesso!');
+    },
   });
-
-  const onSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
-
-    if (existingMetrologyCall) {
-      put(route('metrology-calls.update', existingMetrologyCall.id), {
-        onSuccess: () => {
-          reset();
-          setIsOpen(false);
-          toast.success('Chamado atualizado com sucesso!');
-        },
-        onError: (errors) => {
-          console.error(errors);
-        },
-      });
-    } else {
-      post(route('metrology-calls.store'), {
-        onSuccess: () => {
-          reset();
-          setIsOpen(false);
-          toast.success('Chamado criado com sucesso!');
-        },
-        onError: (errors) => {
-          console.error(errors);
-        },
-      });
-    }
-  };
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <div>
-        <Label htmlFor="item_name">Nome do Item</Label>
-        <Input
-          id="item_name"
-          type="text"
-          value={data.item_name}
-          onChange={(e) => setData('item_name', e.target.value)}
-          placeholder="Insira o nome do item"
-        />
-        {errors.item_name && <p className="text-sm text-red-500">{errors.item_name}</p>}
+        <Label htmlFor="item_id">Item</Label>
+        <Select onValueChange={(value) => setData('item_id', Number(value))} value={data.item_id.toString()}>
+          <SelectTrigger>
+            <SelectValue placeholder="Selecione um item" />
+          </SelectTrigger>
+          <SelectContent>
+            {items.map((item) => (
+              <SelectItem key={item.id} value={item.id.toString()}>
+                {item.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {errors.item_id && <p className="text-sm text-red-500">{errors.item_id}</p>}
       </div>
 
       <div>
         <Label htmlFor="machine_id">Máquina</Label>
-        <Select onValueChange={(value) => setData('machine_id', value)} value={data.machine_id.toString()}>
+        <Select onValueChange={(value) => setData('machine_id', Number(value))} value={data.machine_id.toString()}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione uma máquina" />
           </SelectTrigger>
@@ -88,7 +74,7 @@ const UpsertForm = ({ existingMetrologyCall, machines, operations, setIsOpen }: 
 
       <div>
         <Label htmlFor="operation_id">Operação</Label>
-        <Select onValueChange={(value) => setData('operation_id', value)} value={data.operation_id.toString()}>
+        <Select onValueChange={(value) => setData('operation_id', Number(value))} value={data.operation_id.toString()}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione uma operação" />
           </SelectTrigger>
@@ -104,18 +90,18 @@ const UpsertForm = ({ existingMetrologyCall, machines, operations, setIsOpen }: 
       </div>
 
       <div>
-        <Label htmlFor="type">Tipo</Label>
-        <Select onValueChange={(value) => setData('type', value)} value={data.type.toString()}>
+        <Label htmlFor="metrology_call_type_id">Tipo</Label>
+        <Select onValueChange={(value) => setData('metrology_call_type_id', Number(value))} value={data.metrology_call_type_id.toString()}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione um tipo" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="setup">Setup</SelectItem>
-            <SelectItem value="production">Produção</SelectItem>
-            <SelectItem value="adjust">Ajuste</SelectItem>
+            <SelectItem value="1">Setup</SelectItem>
+            <SelectItem value="2">Produção</SelectItem>
+            <SelectItem value="3">Ajuste</SelectItem>
           </SelectContent>
         </Select>
-        {errors.type && <p className="text-sm text-red-500">{errors.type}</p>}
+        {errors.metrology_call_type_id && <p className="text-sm text-red-500">{errors.metrology_call_type_id}</p>}
       </div>
 
       <Separator />
