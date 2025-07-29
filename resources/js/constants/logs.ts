@@ -11,7 +11,7 @@ export const TABLES_MAP: Record<number, string> = {
   4: 'Clientes',
   5: 'Centros de Custo',
   6: 'Operações',
-  7: 'Peças',
+  7: 'Items',
 };
 
 export const ACTIONS_OPTIONS = [
@@ -37,5 +37,5 @@ export const ENTITY_NAME_MAP: Record<string, string> = {
   4: 'cliente',
   5: 'centro de custo',
   6: 'operação',
-  7: 'peça',
+  7: 'item',
 };

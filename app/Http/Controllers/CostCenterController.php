@@ -66,7 +66,7 @@ class CostCenterController extends Controller
 
             return redirect()->route('cost-centers.index');
         } catch (Exception $e) {
-            if ($e->getMessage() === 'Não é possível excluir um centro de custo que possui peças associadas.') {
+            if ($e->getMessage() === 'Não é possível excluir um centro de custo que possui items associadas.') {
                 return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
             }
 

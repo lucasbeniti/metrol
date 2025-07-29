@@ -3,8 +3,9 @@ import { IItem } from '@/types/item';
 import { IMachine } from '@/types/machine';
 import { IMetrologyCall } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
-import { isEditableStatus } from '@/utils/metrology_calls';
+import { getBadgeClassesFromMetrologyCallStatus, getBadgeClassesFromMetrologyCallType, isEditableStatus } from '@/utils/metrology_calls';
 import { ColumnDef } from '@tanstack/react-table';
+import { Badge } from '../ui/badge';
 import UpdateAndDeleteButtons from '../update-and-delete-buttons';
 import UpsertDialog from './upsert-dialog';
 
@@ -15,6 +16,7 @@ export const metrologyCallColumns = (items: IItem[], machines: IMachine[], opera
   },
   {
     accessorKey: 'operation.item.name',
+    id: 'operation.item.name',
     header: 'Nome do item',
   },
   {
@@ -28,14 +30,20 @@ export const metrologyCallColumns = (items: IItem[], machines: IMachine[], opera
   {
     accessorKey: 'type',
     header: 'Tipo',
-    cell: ({ row }) => {
-      return TYPES_MAP[row.original.metrology_call_type_id];
-    },
+    cell: ({ row }) => (
+      <Badge className={`${getBadgeClassesFromMetrologyCallType(row.original.metrology_call_type_id)}`}>
+        {TYPES_MAP[row.original.metrology_call_type_id]}
+      </Badge>
+    ),
   },
   {
     accessorKey: 'status',
     header: 'Status',
-    cell: ({ row }) => STATUS_MAP[row.original.metrology_call_status_id],
+    cell: ({ row }) => (
+      <Badge className={`${getBadgeClassesFromMetrologyCallStatus(row.original.metrology_call_status_id)}`}>
+        {STATUS_MAP[row.original.metrology_call_status_id]}
+      </Badge>
+    ),
   },
   {
     accessorKey: 'created_at',

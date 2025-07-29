@@ -83,7 +83,7 @@ class CostCenterService implements CostCenterServiceInterface
         $costCenter = $this->costCenterRepository->getById($id);
 
         if ($costCenter->items()->count() > 0) {
-            throw new Exception('Não é possível excluir um centro de custo que possui peças associadas.');
+            throw new Exception('Não é possível excluir um centro de custo que possui items associadas.');
         }
 
         $success = $this->costCenterRepository->destroy($id);

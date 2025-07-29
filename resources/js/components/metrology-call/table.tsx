@@ -22,5 +22,5 @@ export default function MetrologyCallDataTable({
     data: metrologyCalls,
   });
 
-  return <DataTable table={table} data={metrologyCalls} filterBy="item_name" placeholder="nome do item" />;
+  return <DataTable table={table} data={metrologyCalls} filterBy="operation.item.name" placeholder="nome do item" />;
 }
