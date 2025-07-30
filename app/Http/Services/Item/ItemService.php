@@ -49,7 +49,8 @@ class ItemService implements ItemServiceInterface
             LogActionsEnum::CREATE,
             'item',
             $item->name,
-            LogTablesEnum::ITEMS
+            LogTablesEnum::ITEMS,
+            $this->getItemLogDetails($item)
         );
 
         return $item;
@@ -65,13 +66,16 @@ class ItemService implements ItemServiceInterface
 
         $success = $this->itemRepository->update($id, $data);
 
+        $item = $this->getById($id);
+
         if ($success) {
             $this->storeLog(
                 $this->logService,
                 LogActionsEnum::UPDATE,
                 'item',
                 $data['name'],
-                LogTablesEnum::ITEMS
+                LogTablesEnum::ITEMS,
+                $this->getItemLogDetails($item)
             );
         }
 
@@ -99,5 +103,14 @@ class ItemService implements ItemServiceInterface
         }
 
         return $success;
+    }
+
+    private function getItemLogDetails(Item $item): array
+    {
+        return [
+            'name' => $item->name,
+            'code' => $item->code,
+            'cost_center_id' => $item->cost_center_id
+        ];
     }
 }

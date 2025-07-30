@@ -49,7 +49,8 @@ class CostCenterService implements CostCenterServiceInterface
             LogActionsEnum::CREATE,
             'centro de custo',
             $costCenter->name,
-            LogTablesEnum::COST_CENTERS
+            LogTablesEnum::COST_CENTERS,
+            $this->getCostCenterLogDetails($costCenter)
         );
 
         return $costCenter;
@@ -65,13 +66,16 @@ class CostCenterService implements CostCenterServiceInterface
 
         $success = $this->costCenterRepository->update($id, $data);
 
+        $costCenter = $this->getById($id);
+
         if ($success) {
             $this->storeLog(
                 $this->logService,
                 LogActionsEnum::UPDATE,
                 'centro de custo',
                 $data['name'],
-                LogTablesEnum::COST_CENTERS
+                LogTablesEnum::COST_CENTERS,
+                $this->getCostCenterLogDetails($costCenter)
             );
         }
         
@@ -99,5 +103,14 @@ class CostCenterService implements CostCenterServiceInterface
         }
 
         return $success;
+    }
+
+    private function getCostCenterLogDetails(CostCenter $costCenter): array
+    {
+        return [
+            'name' => $costCenter->name,
+            'code' => $costCenter->code,
+            'client_id' => $costCenter->client_id
+        ];
     }
 }

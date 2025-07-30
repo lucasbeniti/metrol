@@ -49,7 +49,8 @@ class OperationService implements OperationServiceInterface
             LogActionsEnum::CREATE,
             'operação',
             $operation->name,
-            LogTablesEnum::OPERATIONS
+            LogTablesEnum::OPERATIONS,
+            $this->getOperationLogDetails($operation)
         );
 
         return $operation;
@@ -65,13 +66,16 @@ class OperationService implements OperationServiceInterface
 
         $success = $this->operationRepository->update($itemId, $operationId, $data);
 
+        $operation = $this->getById($itemId, $operationId);
+
         if ($success) {
             $this->storeLog(
                 $this->logService,
                 LogActionsEnum::UPDATE,
                 'operação',
                 $data['name'],
-                LogTablesEnum::OPERATIONS
+                LogTablesEnum::OPERATIONS,
+                $this->getOperationLogDetails($operation)
             );
         }
 
@@ -99,5 +103,14 @@ class OperationService implements OperationServiceInterface
         }
 
         return $success;
+    }
+
+    private function getOperationLogDetails(Operation $operation): array
+    {
+        return [
+            'name' => $operation->name,
+            'code' => $operation->code,
+            'item_id' => $operation->item_id
+        ];
     }
 }

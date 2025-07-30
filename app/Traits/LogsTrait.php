@@ -12,7 +12,8 @@ trait LogsTrait
         int $actionId,
         string $entityName,
         string $entityValue,
-        int $tableId
+        int $tableId,
+        array $details = []
     ): void {
         $isEntityMachineOrOperation = in_array($entityName, ['máquina', 'operação']);
 
@@ -37,7 +38,8 @@ trait LogsTrait
             'user_id' => $authenticatedUser->id,
             'action_id' => $actionId,
             'description' => $description,
-            'table_id' => $tableId
+            'table_id' => $tableId,
+            'details' => $details
         ]);
     }
 }

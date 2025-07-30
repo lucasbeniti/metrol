@@ -53,7 +53,8 @@ class UserService implements UserServiceInterface
             LogActionsEnum::CREATE,
             'usuário',
             $user->name,
-            LogTablesEnum::USERS
+            LogTablesEnum::USERS,
+            $this->getUserLogDetails($user)
         );
 
         return $user;
@@ -69,13 +70,16 @@ class UserService implements UserServiceInterface
 
         $success = $this->userRepository->update($id, $data);
 
+        $user = $this->getById($id);
+
         if ($success) {
             $this->storeLog(
                 $this->logService,
                 LogActionsEnum::UPDATE,
                 'usuário',
                 $data['name'],
-                LogTablesEnum::USERS
+                LogTablesEnum::USERS,
+                $this->getUserLogDetails($user)
             );
         }
 
@@ -114,5 +118,14 @@ class UserService implements UserServiceInterface
     public function export(): BinaryFileResponse
     {
         return $this->userRepository->export();
+    }
+
+    private function getUserLogDetails(User $user): array
+    {
+        return [
+            'name' => $user->name,
+            'identification' => $user->identification,
+            'user_role_id' => $user->user_role_id
+        ];
     }
 }

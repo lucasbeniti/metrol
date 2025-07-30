@@ -52,7 +52,8 @@ class ClientService implements ClientServiceInterface
             LogActionsEnum::CREATE,
             'cliente',
             $client->name,
-            LogTablesEnum::CLIENTS
+            LogTablesEnum::CLIENTS,
+            $this->getClientLogDetails($client)
         );
 
         return $client;
@@ -67,6 +68,8 @@ class ClientService implements ClientServiceInterface
         }
 
         $success = $this->clientRepository->update($id, $data);
+        
+        $client = $this->getById($id);
 
         if ($success) {
             $this->storeLog(
@@ -74,7 +77,8 @@ class ClientService implements ClientServiceInterface
                 LogActionsEnum::UPDATE,
                 'cliente',
                 $data['name'],
-                LogTablesEnum::CLIENTS
+                LogTablesEnum::CLIENTS,
+                $this->getClientLogDetails($client)
             );
         }
 
@@ -102,5 +106,13 @@ class ClientService implements ClientServiceInterface
         }
 
         return $success;
+    }
+
+    private function getClientLogDetails(Client $client): array
+    {
+        return [
+            'name' => $client->name,
+            'code' => $client->code
+        ];
     }
 }

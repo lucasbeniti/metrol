@@ -49,7 +49,8 @@ class MachineService implements MachineServiceInterface
             LogActionsEnum::CREATE,
             'máquina',
             $machine->name,
-            LogTablesEnum::MACHINES
+            LogTablesEnum::MACHINES,
+            $this->getMachineLogDetails($machine)
         );
 
         return $machine;
@@ -65,13 +66,16 @@ class MachineService implements MachineServiceInterface
 
         $success = $this->machineRepository->update($id, $data);
 
+        $machine = $this->getById($id);
+
         if ($success) {
             $this->storeLog(
                 $this->logService,
                 LogActionsEnum::UPDATE,
                 'máquina',
                 $data['name'],
-                LogTablesEnum::MACHINES
+                LogTablesEnum::MACHINES,
+                $this->getMachineLogDetails($machine)
             );
         }
 
@@ -99,5 +103,14 @@ class MachineService implements MachineServiceInterface
         }
 
         return $success;
+    }
+
+    private function getMachineLogDetails(Machine $machine): array
+    {
+        return [
+            'name' => $machine->name,
+            'code' => $machine->code,
+            'operation_id' => $machine->operation_id
+        ];
     }
 }
