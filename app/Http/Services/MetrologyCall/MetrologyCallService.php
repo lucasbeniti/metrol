@@ -8,6 +8,7 @@ use App\Http\Repositories\MetrologyCall\MetrologyCallRepositoryInterface;
 use App\Http\Services\Log\LogServiceInterface;
 use App\Models\MetrologyCall;
 use App\Traits\LogsTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -95,13 +96,13 @@ class MetrologyCallService implements MetrologyCallServiceInterface
     private function getMetrologyCallLogDetails(MetrologyCall $metrologyCall): array
     {
         return [
-            'machine_id' => $metrologyCall->machine_id,
-            'operation_id' => $metrologyCall->operation_id,
-            'opened_by_user_id' => $metrologyCall->opened_by_user_id,
-            'metrology_call_type_id' => $metrologyCall->metrology_call_type_id,
-            'closed_by_user_id' => $metrologyCall->closed_by_user_id,
-            'metrology_call_status_id' => $metrologyCall->metrology_call_status_id,
-            'closed_at' => $metrologyCall->closed_at
+            'machine' => $metrologyCall->machine->name,
+            'operation' => $metrologyCall->operation->name,
+            'opened_by_user' => $metrologyCall->openedByUser->name,
+            'metrology_call_type' => $metrologyCall->type->name,
+            'closed_by_user' => $metrologyCall->closed_by_user_id ? $metrologyCall->closedByUser->name : 'N/A',
+            'metrology_call_status' => $metrologyCall->status->name,
+            'closed_at' => $metrologyCall->closed_at ? Carbon::parse($metrologyCall->closed_at)->format('d/m/y H:i:s') : 'N/A'
         ];
     }
 }

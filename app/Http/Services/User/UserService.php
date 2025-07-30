@@ -127,7 +127,7 @@ class UserService implements UserServiceInterface
         return [
             'name' => $user->name,
             'identification' => $user->identification,
-            'user_role_id' => $user->user_role_id
+            'user_role' => $user->userRole->name
         ];
     }
 }

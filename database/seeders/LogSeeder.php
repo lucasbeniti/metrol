@@ -23,7 +23,8 @@ class LogSeeder extends Seeder
                 'table_id' => 1,
                 'details' => [
                     'name' => $user->name,
-                    'identification' => $user->identification
+                    'identification' => $user->identification,
+                    'user_role' => $user->userRole->name
                 ],
             ],
             'update' => [
@@ -33,7 +34,8 @@ class LogSeeder extends Seeder
                 'table_id' => 1,
                 'details' => [
                     'name' => $user->name,
-                    'identification' => $user->identification
+                    'identification' => $user->identification,
+                    'user_role' => $user->userRole->name
                 ],
             ],
             'delete' => [
@@ -43,7 +45,8 @@ class LogSeeder extends Seeder
                 'table_id' => 1,
                 'details' => [
                     'name' => $user->name,
-                    'identification' => $user->identification
+                    'identification' => $user->identification,
+                    'user_role' => $user->userRole->name
                 ],
             ]
         ];

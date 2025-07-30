@@ -112,7 +112,7 @@ class MachineService implements MachineServiceInterface
         return [
             'name' => $machine->name,
             'code' => $machine->code,
-            'operation_id' => $machine->operation_id
+            'operation' => $machine->operation->name
         ];
     }
 }

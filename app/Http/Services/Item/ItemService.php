@@ -112,7 +112,7 @@ class ItemService implements ItemServiceInterface
         return [
             'name' => $item->name,
             'code' => $item->code,
-            'cost_center_id' => $item->cost_center_id
+            'cost_center' => $item->costCenter->name
         ];
     }
 }

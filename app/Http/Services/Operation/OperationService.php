@@ -112,7 +112,7 @@ class OperationService implements OperationServiceInterface
         return [
             'name' => $operation->name,
             'code' => $operation->code,
-            'item_id' => $operation->item_id
+            'item' => $operation->item->name
         ];
     }
 }

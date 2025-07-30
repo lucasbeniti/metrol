@@ -39,3 +39,33 @@ export const ENTITY_NAME_MAP: Record<string, string> = {
   6: 'máquina',
   7: 'chamado de metrologia',
 };
+
+export const COLUMN_NAME_FROM_LOG_DETAILS: Record<string, string> = {
+  name: 'Nome',
+  identification: 'Identificação',
+  code: 'Código',
+  user_role: 'Tipo',
+  item: 'Item',
+  machine: 'Máquina',
+  operation: 'Operação',
+  opened_by_user: 'Aberto por',
+  closed_by_user: 'Fechado por',
+  metrology_call_status: 'Status',
+  metrology_call_type: 'Tipo',
+  closed_at: 'Data de Fechamento',
+  cost_center: 'Centro de Custo',
+  client: 'Cliente',
+};
+
+export const COLUMN_VALUE_FROM_LOGS_DETAILS: Record<string, string> = {
+  admin: 'Administrador',
+  metrologist: 'Metrologista',
+  operator: 'Operador',
+  approved: 'Aprovado',
+  reproved: 'Reprovado',
+  waiting_receive: 'Aguardando Recebimento',
+  waiting_measurement: 'Aguardando Medição',
+  setup: 'Setup',
+  production: 'Produção',
+  adjustment: 'Ajuste',
+};

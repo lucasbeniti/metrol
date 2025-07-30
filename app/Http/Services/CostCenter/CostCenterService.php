@@ -112,7 +112,7 @@ class CostCenterService implements CostCenterServiceInterface
         return [
             'name' => $costCenter->name,
             'code' => $costCenter->code,
-            'client_id' => $costCenter->client_id
+            'client' => $costCenter->client->name
         ];
     }
 }
