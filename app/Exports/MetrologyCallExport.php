@@ -2,6 +2,8 @@
 
 namespace App\Exports;
 
+use App\Enums\MetrologyCallStatusesEnum;
+use App\Enums\MetrologyCallTypesEnum;
 use App\Models\MetrologyCall;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -20,22 +22,22 @@ class MetrologyCallExport implements FromCollection, WithHeadings, WithMapping
 
     public function headings(): array
     {
-        return ['ID', 'Nome do item', 'Máquina', 'Operação', 'Tipo', 'Status', 'Criado por', 'Fechado por', 'Data de Criação'];
+        return ['ID', 'Nome do item', 'Máquina', 'Operação', 'Tipo', 'Status', 'Criado por', 'Fechado por', 'Data de Criação', 'Data de Fechamento'];
     }
     
     public function map($metrologyCall): array
     {
         $STATUS_MAP = [
-            1 => 'Aprovado',
-            2 => 'Reprovado',
-            3 => 'Aguardando Recebimento',
-            4 => 'Aguardando Medição'
+            MetrologyCallStatusesEnum::APPROVED => 'Aprovado',
+            MetrologyCallStatusesEnum::REJECTED => 'Reprovado',
+            MetrologyCallStatusesEnum::WAITING_RECEIVE => 'Aguardando Recebimento',
+            MetrologyCallStatusesEnum::WAITING_MEASUREMENT => 'Aguardando Medição'
         ];
 
         $TYPE_MAP = [
-            1 => 'Setup',
-            2 => 'Produção',
-            3 => 'Adjustment'
+            MetrologyCallTypesEnum::SETUP => 'Setup',
+            MetrologyCallTypesEnum::PRODUCTION => 'Produção',
+            MetrologyCallTypesEnum::ADJUSTMENT => 'Adjustment'
         ];
 
         return [
@@ -47,7 +49,8 @@ class MetrologyCallExport implements FromCollection, WithHeadings, WithMapping
             $STATUS_MAP[$metrologyCall->metrology_call_status_id] ?? 'Desconhecido',
             $metrologyCall->openedByUser->name ?? 'N/A',
             $metrologyCall->closed_by_user_id ? $metrologyCall->closedByUser->name : 'N/A',
-            Carbon::parse($metrologyCall->created_at)->format('d/m/Y H:i:s')
+            Carbon::parse($metrologyCall->created_at)->format('d/m/Y H:i:s'),
+            $metrologyCall->closed_at ? Carbon::parse($metrologyCall->closed_at)->format('d/m/y H:i:s') : 'N/A'
         ];
     }
 }

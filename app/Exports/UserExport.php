@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Enums\UserType;
+use App\Enums\UserRolesEnum;
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -27,9 +27,9 @@ class UserExport implements FromCollection, WithMapping, WithHeadings
     public function map($user): array
     {
         $USER_TYPE_MAP = [
-            1 => 'Administrador',
-            2 => 'Metrologista',
-            3 => 'Operador'
+            UserRolesEnum::ADMIN => 'Administrador',
+            UserRolesEnum::METROLOGIST => 'Metrologista',
+            UserRolesEnum::OPERATOR => 'Operador'
         ];
 
         return [
