@@ -57,6 +57,6 @@ class MetrologyCallRepository implements MetrologyCallRepositoryInterface
 
     public function export(): BinaryFileResponse
     {
-        return Excel::download(MetrologyCallExport::class, 'chamados_de_metrologia.xlsx');
+        return Excel::download(new MetrologyCallExport, 'chamados_de_metrologia.xlsx');
     }
 }

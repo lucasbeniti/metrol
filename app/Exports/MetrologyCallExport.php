@@ -20,31 +20,33 @@ class MetrologyCallExport implements FromCollection, WithHeadings, WithMapping
 
     public function headings(): array
     {
-        return ['ID', 'Nome do item', 'Máquina', 'Operação', 'Tipo', 'Status', 'Data de Criação'];
+        return ['ID', 'Nome do item', 'Máquina', 'Operação', 'Tipo', 'Status', 'Criado por', 'Fechado por', 'Data de Criação'];
     }
     
     public function map($metrologyCall): array
     {
         $STATUS_MAP = [
-            'ok' => 'Ok',
-            'nok' => 'Não ok',
-            'waiting_receive' => 'Aguardando Recebimento',
-            'waiting_measurement' => 'Aguardando Medição'
+            1 => 'Aprovado',
+            2 => 'Reprovado',
+            3 => 'Aguardando Recebimento',
+            4 => 'Aguardando Medição'
         ];
 
         $TYPE_MAP = [
-            'setup' => 'Setup',
-            'adjust' => 'Ajuste',
-            'production' => 'Produção'
+            1 => 'Setup',
+            2 => 'Produção',
+            3 => 'Adjustment'
         ];
 
         return [
             $metrologyCall->id,
-            $metrologyCall->item_name,
-            $metrologyCall->machine->name,
-            $metrologyCall->operation->name,
-            $TYPE_MAP[$metrologyCall->type],
-            $STATUS_MAP[$metrologyCall->status],
+            $metrologyCall->operation->item->name ?? 'N/A',
+            $metrologyCall->machine->name ?? 'N/A',
+            $metrologyCall->operation->name ?? 'N/A',
+            $TYPE_MAP[$metrologyCall->metrology_call_type_id] ?? 'Desconhecido',
+            $STATUS_MAP[$metrologyCall->metrology_call_status_id] ?? 'Desconhecido',
+            $metrologyCall->openedByUser->name ?? 'N/A',
+            $metrologyCall->closed_by_user_id ? $metrologyCall->closedByUser->name : 'N/A',
             Carbon::parse($metrologyCall->created_at)->format('d/m/Y H:i:s')
         ];
     }

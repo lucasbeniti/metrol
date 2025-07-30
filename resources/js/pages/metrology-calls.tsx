@@ -11,6 +11,7 @@ import { IMachine } from '@/types/machine';
 import { IMetrologyCall } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
 import { Head } from '@inertiajs/react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -27,8 +28,14 @@ interface MetrologyCallProps {
 }
 
 export default function MetrologyCalls({ metrologyCalls, items, machines, operations }: MetrologyCallProps) {
-  const handleExportClick = () => {
-    handleExport('metrology-calls.export', 'chamados_metrologia');
+  const [isExporting, setIsExporting] = useState(false);
+
+  const handleExportClick = async () => {
+    setIsExporting(true);
+
+    await handleExport('metrology-calls.export', 'chamados_metrologia');
+
+    setIsExporting(false);
   };
 
   const { openUpsertDialog } = useUpsertDialog();
@@ -51,7 +58,7 @@ export default function MetrologyCalls({ metrologyCalls, items, machines, operat
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
         <div className="ml-auto flex gap-2">
           <CreateButton handleCreateClick={handleOpenDialog} />
-          <ExportButton handleExportClick={handleExportClick} />
+          <ExportButton handleExportClick={handleExportClick} isExporting={isExporting} />
         </div>
 
         <MetrologyCallDataTable metrologyCalls={metrologyCalls} items={items} machines={machines} operations={operations} />

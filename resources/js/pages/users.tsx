@@ -8,6 +8,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { IUser } from '@/types/user';
 import { Head } from '@inertiajs/react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -20,8 +21,14 @@ interface UsersProps {
   users: IUser[];
 }
 export default function Users({ users }: UsersProps) {
-  const handleExportClick = () => {
-    handleExport('users.export', 'usuários');
+  const [isExporting, setIsExporting] = useState(false);
+
+  const handleExportClick = async () => {
+    setIsExporting(true);
+
+    await handleExport('users.export', 'usuários');
+
+    setIsExporting(false);
   };
 
   const { openUpsertDialog } = useUpsertDialog();
@@ -41,7 +48,7 @@ export default function Users({ users }: UsersProps) {
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
         <div className="ml-auto flex gap-2">
           <CreateButton handleCreateClick={handleOpenDialog} />
-          <ExportButton handleExportClick={handleExportClick} />
+          <ExportButton handleExportClick={handleExportClick} isExporting={isExporting} />
         </div>
 
         <UsersDataTable users={users} />
