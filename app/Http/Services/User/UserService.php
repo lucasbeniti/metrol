@@ -90,6 +90,8 @@ class UserService implements UserServiceInterface
     {
         $user = $this->userRepository->getById($id);
 
+        $userName = $user->name;
+
         $hasMetrologyCalls = false;
 
         if ($user->userRole->name === 'Metrologista' || $user->userRole->name === 'Operador') {
@@ -107,7 +109,7 @@ class UserService implements UserServiceInterface
                 $this->logService,
                 LogActionsEnum::DELETE,
                 'usuário',
-                $user->name,
+                $userName,
                 LogTablesEnum::USERS
             );
         }

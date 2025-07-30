@@ -9,6 +9,6 @@ export interface IMachine {
 export interface IUpsertMachine {
   name: string;
   code: string;
-  operation_id: number;
-  [key: string]: string | number;
+  operation_id: string;
+  [key: string]: string;
 }

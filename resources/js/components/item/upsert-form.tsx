@@ -21,7 +21,7 @@ const UpsertForm = ({ existingItem, costCenters, setIsOpen }: UpsertFormProps) =
     initialData: {
       name: existingItem?.name || '',
       code: existingItem?.code || '',
-      cost_center_id: existingItem?.cost_center_id || 1,
+      cost_center_id: existingItem?.cost_center_id || '',
     },
     existingId: existingItem?.id,
     storeRoute: route('items.store'),
@@ -48,7 +48,7 @@ const UpsertForm = ({ existingItem, costCenters, setIsOpen }: UpsertFormProps) =
 
       <div>
         <Label htmlFor="cost_center_id">Centro de Custo</Label>
-        <Select onValueChange={(value) => setData('cost_center_id', Number(value))} value={data.cost_center_id.toString()}>
+        <Select onValueChange={(value) => setData('cost_center_id', value)} value={data.cost_center_id.toString()}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione uma operação" />
           </SelectTrigger>

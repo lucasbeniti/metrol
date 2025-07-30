@@ -10,5 +10,5 @@ export interface IUpsertCostCenter {
   name: string;
   code: string;
   client_id: string;
-  [key: string]: string | number;
+  [key: string]: string;
 }

@@ -21,7 +21,7 @@ const UpsertForm = ({ existingMachine, operations, setIsOpen }: UpsertFormProps)
     initialData: {
       name: existingMachine?.name || '',
       code: existingMachine?.code || '',
-      operation_id: existingMachine?.operation_id || 1,
+      operation_id: existingMachine?.operation_id || '',
     },
     existingId: existingMachine?.id,
     storeRoute: route('machines.store'),
@@ -48,7 +48,7 @@ const UpsertForm = ({ existingMachine, operations, setIsOpen }: UpsertFormProps)
 
       <div>
         <Label htmlFor="operation_id">Operação</Label>
-        <Select onValueChange={(value) => setData('operation_id', Number(value))} value={data.operation_id.toString()}>
+        <Select onValueChange={(value) => setData('operation_id', value)} value={data.operation_id.toString()}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione uma operação" />
           </SelectTrigger>

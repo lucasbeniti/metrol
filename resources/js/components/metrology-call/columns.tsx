@@ -61,7 +61,13 @@ export const metrologyCallColumns = (items: IItem[], machines: IMachine[], opera
           entityName="chamado"
           deleteRoute="metrology-calls.destroy"
           UpsertDialog={(props) => (
-            <UpsertDialog {...props} items={items} existingMetrologyCall={row.original} machines={machines} operations={operations} />
+            <UpsertDialog
+              {...props}
+              items={items}
+              existingMetrologyCall={{ ...row.original, item_id: row.original.operation?.item_id }}
+              machines={machines}
+              operations={operations}
+            />
           )}
         />
       ) : (

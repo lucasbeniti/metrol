@@ -89,6 +89,8 @@ class ClientService implements ClientServiceInterface
     {
         $client = $this->clientRepository->getById($id);
 
+        $clientName = $client->name;
+
         if ($client->costCenters()->count() > 0) {
             throw new Exception('Não é possível excluir um cliente que possui centros de custo associados.');
         }
@@ -100,7 +102,7 @@ class ClientService implements ClientServiceInterface
                 $this->logService,
                 LogActionsEnum::DELETE,
                 'cliente',
-                $client->name,
+                $clientName,
                 LogTablesEnum::CLIENTS
             );
         }

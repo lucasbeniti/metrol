@@ -9,6 +9,6 @@ export interface IItem {
 export interface IUpsertItem {
   name: string;
   code: string;
-  cost_center_id: number;
-  [key: string]: string | number;
+  cost_center_id: string;
+  [key: string]: string;
 }

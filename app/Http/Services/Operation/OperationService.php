@@ -86,6 +86,8 @@ class OperationService implements OperationServiceInterface
     {
         $operation = $this->getById($itemId, $operationId);
 
+        $operationName = $operation->name;
+
         if ($operation->metrologyCalls()->count() > 0 || $operation->machines()->count() > 0) {
             throw new Exception('Não é possível excluir uma operação que possui chamados de metrologia ou máquinas associadas.');
         }
@@ -97,7 +99,7 @@ class OperationService implements OperationServiceInterface
                 $this->logService,
                 LogActionsEnum::DELETE,
                 'operação',
-                $operation->name,
+                $operationName,
                 LogTablesEnum::OPERATIONS
             );
         }

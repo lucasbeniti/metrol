@@ -6,12 +6,12 @@ export const ACTIONS_MAP: Record<number, string> = {
 
 export const TABLES_MAP: Record<number, string> = {
   1: 'Usuários',
-  2: 'Chamados de Metrologia',
-  3: 'Máquinas',
-  4: 'Clientes',
-  5: 'Centros de Custo',
-  6: 'Operações',
-  7: 'Items',
+  2: 'Clientes',
+  3: 'Centro de Custos',
+  4: 'Items',
+  5: 'Operações',
+  6: 'Máquinas',
+  7: 'Chamados de Metrologia',
 };
 
 export const ACTIONS_OPTIONS = [
@@ -32,10 +32,10 @@ export const TABLES_OPTIONS = [
 
 export const ENTITY_NAME_MAP: Record<string, string> = {
   1: 'usuário',
-  2: 'chamado de metrologia',
-  3: 'máquina',
-  4: 'cliente',
-  5: 'centro de custo',
-  6: 'operação',
-  7: 'item',
+  2: 'cliente',
+  3: 'centro de custo',
+  4: 'item',
+  5: 'operação',
+  6: 'máquina',
+  7: 'chamado de metrologia',
 };

@@ -15,10 +15,9 @@ class UpsertMetrologyCallRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'item_name' => 'required|string|max:255',
             'machine_id' => 'required|exists:machines,id',
             'operation_id' => 'required|exists:operations,id',
-            'type' => 'required|in:setup,production,adjust'
+            'metrology_call_type_id' => 'required|exists:metrology_call_types,id'
         ];
     }
 }

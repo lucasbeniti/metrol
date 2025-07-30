@@ -86,6 +86,8 @@ class MachineService implements MachineServiceInterface
     {
         $machine = $this->getById($id);
 
+        $machineName = $machine->name;
+
         if ($machine->metrologyCalls()->count() > 0) {
             throw new Exception('Não é possível excluir uma máquina que possui chamados de metrologia associadas.');
         }
@@ -97,7 +99,7 @@ class MachineService implements MachineServiceInterface
                 $this->logService,
                 LogActionsEnum::DELETE,
                 'máquina',
-                $machine->name,
+                $machineName,
                 LogTablesEnum::MACHINES
             );
         }

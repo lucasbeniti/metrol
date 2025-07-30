@@ -22,12 +22,12 @@ interface UpsertFormProps {
 const UpsertForm = ({ existingMetrologyCall, setIsOpen, items, machines, operations }: UpsertFormProps) => {
   const { data, setData, errors, processing, onSubmit } = useUpsertForm<IUpsertMetrologyCall>({
     initialData: {
-      item_id: existingMetrologyCall?.item_id || 1,
-      machine_id: existingMetrologyCall?.machine_id || 1,
-      operation_id: existingMetrologyCall?.operation_id || 1,
-      metrology_call_type_id: existingMetrologyCall?.metrology_call_type_id || 1,
+      item_id: existingMetrologyCall?.item_id ?? '',
+      machine_id: existingMetrologyCall?.machine_id ?? '',
+      operation_id: existingMetrologyCall?.operation_id ?? '',
+      metrology_call_type_id: existingMetrologyCall?.metrology_call_type_id ?? '',
     },
-    existingId: existingMetrologyCall?.id || 1,
+    existingId: existingMetrologyCall?.id,
     storeRoute: route('metrology-calls.store'),
     updateRoute: (id) => route('metrology-calls.update', id),
     onSuccess: () => {
@@ -40,7 +40,7 @@ const UpsertForm = ({ existingMetrologyCall, setIsOpen, items, machines, operati
     <form onSubmit={onSubmit} className="space-y-4">
       <div>
         <Label htmlFor="item_id">Item</Label>
-        <Select onValueChange={(value) => setData('item_id', Number(value))} value={data.item_id.toString()}>
+        <Select onValueChange={(value) => setData('item_id', value)} value={data.item_id.toString()}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione um item" />
           </SelectTrigger>
@@ -57,7 +57,7 @@ const UpsertForm = ({ existingMetrologyCall, setIsOpen, items, machines, operati
 
       <div>
         <Label htmlFor="machine_id">Máquina</Label>
-        <Select onValueChange={(value) => setData('machine_id', Number(value))} value={data.machine_id.toString()}>
+        <Select onValueChange={(value) => setData('machine_id', value)} value={data.machine_id.toString()}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione uma máquina" />
           </SelectTrigger>
@@ -74,7 +74,7 @@ const UpsertForm = ({ existingMetrologyCall, setIsOpen, items, machines, operati
 
       <div>
         <Label htmlFor="operation_id">Operação</Label>
-        <Select onValueChange={(value) => setData('operation_id', Number(value))} value={data.operation_id.toString()}>
+        <Select onValueChange={(value) => setData('operation_id', value)} value={data.operation_id.toString()}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione uma operação" />
           </SelectTrigger>
@@ -91,7 +91,7 @@ const UpsertForm = ({ existingMetrologyCall, setIsOpen, items, machines, operati
 
       <div>
         <Label htmlFor="metrology_call_type_id">Tipo</Label>
-        <Select onValueChange={(value) => setData('metrology_call_type_id', Number(value))} value={data.metrology_call_type_id.toString()}>
+        <Select onValueChange={(value) => setData('metrology_call_type_id', value)} value={data.metrology_call_type_id.toString()}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione um tipo" />
           </SelectTrigger>

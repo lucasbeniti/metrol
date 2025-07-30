@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Operation;
 use Inertia\Inertia;
 use App\Http\Requests\UpsertMetrologyCallRequest;
 use App\Http\Services\Item\ItemServiceInterface;
 use App\Http\Services\Machine\MachineServiceInterface;
 use App\Http\Services\MetrologyCall\MetrologyCallServiceInterface;
 use App\Http\Services\Operation\OperationServiceInterface;
-use App\Models\Item;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -49,7 +47,6 @@ class MetrologyCallController extends Controller
     public function store(UpsertMetrologyCallRequest $request): RedirectResponse 
     {
         $data = $request->validated();
-        $data['status'] = 'waiting_receive';
         
         $this->metrologyCallService->store($data);
         

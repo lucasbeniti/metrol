@@ -86,6 +86,8 @@ class CostCenterService implements CostCenterServiceInterface
     {
         $costCenter = $this->costCenterRepository->getById($id);
 
+        $costCenterName = $costCenter->name;
+
         if ($costCenter->items()->count() > 0) {
             throw new Exception('Não é possível excluir um centro de custo que possui items associadas.');
         }
@@ -97,7 +99,7 @@ class CostCenterService implements CostCenterServiceInterface
                 $this->logService,
                 LogActionsEnum::DELETE,
                 'centro de custo',
-                $costCenter->name,
+                $costCenterName,
                 LogTablesEnum::COST_CENTERS
             );
         }

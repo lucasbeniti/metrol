@@ -86,6 +86,8 @@ class ItemService implements ItemServiceInterface
     {
         $item = $this->itemRepository->getById($id);
 
+        $itemName = $item->name;
+
         if ($item->operations()->count() > 0) {
             throw new Exception('Não é possível excluir um item que possui operações associadas.');
         }
@@ -97,7 +99,7 @@ class ItemService implements ItemServiceInterface
                 $this->logService,
                 LogActionsEnum::DELETE,
                 'item',
-                $item->name,
+                $itemName,
                 LogTablesEnum::ITEMS
             );
         }
