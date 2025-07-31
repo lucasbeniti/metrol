@@ -8,6 +8,7 @@ import { IItem } from '@/types/item';
 import { IMachine } from '@/types/machine';
 import { IUpsertMetrologyCall } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
+import { router } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { useMemo } from 'react';
 import { toast } from 'sonner';
@@ -34,6 +35,8 @@ const UpsertForm = ({ existingMetrologyCall, setIsOpen, items, machines, operati
     onSuccess: () => {
       setIsOpen(false);
       toast.success(existingMetrologyCall ? 'Chamado atualizado com sucesso!' : 'Chamado criado com sucesso!');
+
+      router.reload({ only: ['metrologyCalls'] });
     },
   });
 

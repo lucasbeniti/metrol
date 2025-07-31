@@ -6,6 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { useUpsertForm } from '@/hooks/use-upsert';
 import { IItem } from '@/types/item';
 import { IUpsertOperation } from '@/types/operation';
+import { router } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -28,6 +29,8 @@ const UpsertForm = ({ existingOperation, item, setIsOpen }: UpsertFormProps) => 
     onSuccess: () => {
       setIsOpen(false);
       toast.success(existingOperation ? 'Operação atualizada com sucesso!' : 'Operação criada com sucesso!');
+
+      router.reload({ only: ['operations'] });
     },
   });
 

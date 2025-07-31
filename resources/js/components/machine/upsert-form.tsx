@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import { useUpsertForm } from '@/hooks/use-upsert';
 import { IUpsertMachine } from '@/types/machine';
 import { IOperation } from '@/types/operation';
+import { router } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -29,6 +30,8 @@ const UpsertForm = ({ existingMachine, operations, setIsOpen }: UpsertFormProps)
     onSuccess: () => {
       setIsOpen(false);
       toast.success(existingMachine ? 'Máquina atualizada com sucesso!' : 'Máquina criada com sucesso!');
+
+      router.reload({ only: ['machines'] });
     },
   });
 

@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/ui/separator';
 import { useUpsertForm } from '@/hooks/use-upsert';
 import { IUpsertUser } from '@/types/user';
+import { router } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -27,6 +28,8 @@ const UpsertForm = ({ existingUser, setIsOpen }: UpsertFormProps) => {
     onSuccess: () => {
       setIsOpen(false);
       toast.success(existingUser ? 'Usuário atualizado com sucesso!' : 'Usuário criado com sucesso!');
+
+      router.reload({ only: ['users'] });
     },
   });
 

@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import { useUpsertForm } from '@/hooks/use-upsert';
 import { IClient } from '@/types/client';
 import { IUpsertCostCenter } from '@/types/cost-center';
+import { router } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -29,6 +30,8 @@ const UpsertForm = ({ existingCostCenter, clients, setIsOpen }: UpsertFormProps)
     onSuccess: () => {
       setIsOpen(false);
       toast.success(existingCostCenter ? 'Centro de custo atualizado com sucesso!' : 'Centro de custo criado com sucesso!');
+
+      router.reload({ only: ['costCenters'] });
     },
   });
 

@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import { useUpsertForm } from '@/hooks/use-upsert';
 import { ICostCenter } from '@/types/cost-center';
 import { IUpsertItem } from '@/types/item';
+import { router } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -29,6 +30,8 @@ const UpsertForm = ({ existingItem, costCenters, setIsOpen }: UpsertFormProps) =
     onSuccess: () => {
       setIsOpen(false);
       toast.success(existingItem ? 'Item atualizado com sucesso!' : 'Item criado com sucesso!');
+
+      router.reload({ only: ['items'] });
     },
   });
 

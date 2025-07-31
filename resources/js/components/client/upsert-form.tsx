@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { useUpsertForm } from '@/hooks/use-upsert';
 import { IUpsertClient } from '@/types/client';
+import { router } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -25,6 +26,8 @@ const UpsertForm = ({ existingClient, setIsOpen }: UpsertFormProps) => {
     onSuccess: () => {
       setIsOpen(false);
       toast.success(existingClient ? 'Cliente atualizado com sucesso!' : 'Cliente criado com sucesso!');
+
+      router.reload({ only: ['clients'] });
     },
   });
 
