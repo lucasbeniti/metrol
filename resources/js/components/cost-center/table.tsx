@@ -10,5 +10,5 @@ export default function CostCenterDataTable({ costCenters, clients }: { costCent
     data: costCenters,
   });
 
-  return <DataTable table={table} data={costCenters} filterBy="name" placeholder="nome do centro de custo" />;
+  return <DataTable table={table} filterBy="name" placeholder="nome do centro de custo" />;
 }

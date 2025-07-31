@@ -9,5 +9,5 @@ export default function ClientsDataTable({ clients }: { clients: IClient[] }) {
     data: clients,
   });
 
-  return <DataTable table={table} data={clients} filterBy="name" placeholder="nome do cliente" />;
+  return <DataTable table={table} filterBy="name" placeholder="nome do cliente" />;
 }

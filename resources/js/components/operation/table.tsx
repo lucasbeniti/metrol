@@ -10,5 +10,5 @@ export default function OperationDataTable({ operations, item }: { operations: I
     data: operations,
   });
 
-  return <DataTable table={table} data={operations} filterBy="id" placeholder="nome da operação" />;
+  return <DataTable table={table} filterBy="id" placeholder="nome da operação" />;
 }

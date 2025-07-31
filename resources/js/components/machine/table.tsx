@@ -10,5 +10,5 @@ export default function MachineDataTable({ machines, operations }: { machines: I
     data: machines,
   });
 
-  return <DataTable table={table} data={machines} filterBy="name" placeholder="nome da máquina" />;
+  return <DataTable table={table} filterBy="name" placeholder="nome da máquina" />;
 }

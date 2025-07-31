@@ -9,5 +9,5 @@ export default function UsersDataTable({ users }: { users: IUser[] }) {
     data: users,
   });
 
-  return <DataTable table={table} data={users} filterBy="name" placeholder="nome do usuário" />;
+  return <DataTable table={table} filterBy="name" placeholder="nome do usuário" />;
 }

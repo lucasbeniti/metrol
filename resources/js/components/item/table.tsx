@@ -10,5 +10,5 @@ export default function ItemsDataTable({ costCenters, items }: { costCenters: IC
     data: items,
   });
 
-  return <DataTable table={table} data={items} filterBy="name" placeholder="nome do item" />;
+  return <DataTable table={table} filterBy="name" placeholder="nome do item" />;
 }

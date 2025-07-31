@@ -5,13 +5,11 @@ import { Input } from './input';
 
 interface DataTableProps<T> {
   table: TableType<T>;
-  data: T[];
   filterBy?: string;
   placeholder?: string;
 }
 
-const DataTable = <T,>({ table, data, filterBy, placeholder }: DataTableProps<T>) => {
-  const colspan = data.length == 0 ? table.getHeaderGroups()[0].headers.length : data.length
+const DataTable = <T,>({ table, filterBy, placeholder }: DataTableProps<T>) => {
 
   return (
     <div>
@@ -47,7 +45,7 @@ const DataTable = <T,>({ table, data, filterBy, placeholder }: DataTableProps<T>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={colspan} className="py-4 text-center">
+                <TableCell colSpan={table.getVisibleFlatColumns().length} className="py-4 text-center">
                   Nenhum dado encontrado.
                 </TableCell>
               </TableRow>
