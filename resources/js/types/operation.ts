@@ -2,6 +2,7 @@ export interface IOperation {
   id: number;
   name: string;
   code: string;
+  item_id?: number;
   created_at: Date;
 }
 

@@ -31,7 +31,7 @@ export const metrologyCallColumns = (items: IItem[], machines: IMachine[], opera
     accessorKey: 'type',
     header: 'Tipo',
     cell: ({ row }) => (
-      <Badge className={`${getBadgeClassesFromMetrologyCallType(row.original.metrology_call_type_id)}`}>
+      <Badge className={`dark:text-white ${getBadgeClassesFromMetrologyCallType(row.original.metrology_call_type_id)}`}>
         {TYPES_MAP[row.original.metrology_call_type_id]}
       </Badge>
     ),
@@ -40,7 +40,7 @@ export const metrologyCallColumns = (items: IItem[], machines: IMachine[], opera
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => (
-      <Badge className={`${getBadgeClassesFromMetrologyCallStatus(row.original.metrology_call_status_id)}`}>
+      <Badge className={`dark:text-white ${getBadgeClassesFromMetrologyCallStatus(row.original.metrology_call_status_id)}`}>
         {STATUS_MAP[row.original.metrology_call_status_id]}
       </Badge>
     ),

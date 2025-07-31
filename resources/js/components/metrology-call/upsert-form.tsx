@@ -9,6 +9,7 @@ import { IMachine } from '@/types/machine';
 import { IUpsertMetrologyCall } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
 import { LoaderCircle } from 'lucide-react';
+import { useMemo } from 'react';
 import { toast } from 'sonner';
 
 interface UpsertFormProps {
@@ -36,11 +37,26 @@ const UpsertForm = ({ existingMetrologyCall, setIsOpen, items, machines, operati
     },
   });
 
+  const filteredOperations = useMemo(() => {
+    return operations.filter((op) => op.item_id === Number(data.item_id));
+  }, [operations, data.item_id]);
+
+  const filteredMachines = useMemo(() => {
+    return machines.filter((mac) => mac.operation_id === Number(data.operation_id));
+  }, [machines, data.operation_id]);
+
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <div>
         <Label htmlFor="item_id">Item</Label>
-        <Select onValueChange={(value) => setData('item_id', value)} value={data.item_id.toString()}>
+        <Select
+          onValueChange={(value) => {
+            setData('item_id', value);
+            setData('operation_id', '');
+            setData('machine_id', '');
+          }}
+          value={data.item_id?.toString() ?? ''}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Selecione um item" />
           </SelectTrigger>
@@ -56,30 +72,20 @@ const UpsertForm = ({ existingMetrologyCall, setIsOpen, items, machines, operati
       </div>
 
       <div>
-        <Label htmlFor="machine_id">Máquina</Label>
-        <Select onValueChange={(value) => setData('machine_id', value)} value={data.machine_id.toString()}>
-          <SelectTrigger>
-            <SelectValue placeholder="Selecione uma máquina" />
-          </SelectTrigger>
-          <SelectContent>
-            {machines.map((machine) => (
-              <SelectItem key={machine.id} value={machine.id.toString()}>
-                {machine.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        {errors.machine_id && <p className="text-sm text-red-500">{errors.machine_id}</p>}
-      </div>
-
-      <div>
         <Label htmlFor="operation_id">Operação</Label>
-        <Select onValueChange={(value) => setData('operation_id', value)} value={data.operation_id.toString()}>
+        <Select
+          onValueChange={(value) => {
+            setData('operation_id', value);
+            setData('machine_id', '');
+          }}
+          value={data.operation_id?.toString() ?? ''}
+          disabled={!data.item_id}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Selecione uma operação" />
           </SelectTrigger>
           <SelectContent>
-            {operations.map((operation) => (
+            {filteredOperations.map((operation) => (
               <SelectItem key={operation.id} value={operation.id.toString()}>
                 {operation.name}
               </SelectItem>
@@ -90,8 +96,25 @@ const UpsertForm = ({ existingMetrologyCall, setIsOpen, items, machines, operati
       </div>
 
       <div>
+        <Label htmlFor="machine_id">Máquina</Label>
+        <Select onValueChange={(value) => setData('machine_id', value)} value={data.machine_id?.toString() ?? ''} disabled={!data.operation_id}>
+          <SelectTrigger>
+            <SelectValue placeholder="Selecione uma máquina" />
+          </SelectTrigger>
+          <SelectContent>
+            {filteredMachines.map((machine) => (
+              <SelectItem key={machine.id} value={machine.id.toString()}>
+                {machine.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {errors.machine_id && <p className="text-sm text-red-500">{errors.machine_id}</p>}
+      </div>
+
+      <div>
         <Label htmlFor="metrology_call_type_id">Tipo</Label>
-        <Select onValueChange={(value) => setData('metrology_call_type_id', value)} value={data.metrology_call_type_id.toString()}>
+        <Select onValueChange={(value) => setData('metrology_call_type_id', value)} value={data.metrology_call_type_id?.toString() ?? ''}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione um tipo" />
           </SelectTrigger>
@@ -108,7 +131,7 @@ const UpsertForm = ({ existingMetrologyCall, setIsOpen, items, machines, operati
 
       <DialogFooter>
         <DialogClose asChild>
-          <Button variant={'ghost'}>Cancelar</Button>
+          <Button variant="ghost">Cancelar</Button>
         </DialogClose>
         <Button type="submit" disabled={processing}>
           {processing && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
