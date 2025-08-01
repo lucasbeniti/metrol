@@ -1,15 +1,29 @@
 import { STATUS_MAP, TYPES_MAP } from '@/constants/metrology-call';
+import { UserRole } from '@/constants/user-roles';
 import { IItem } from '@/types/item';
 import { IMachine } from '@/types/machine';
 import { IMetrologyCall } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
-import { getBadgeClassesFromMetrologyCallStatus, getBadgeClassesFromMetrologyCallType, isEditableStatus } from '@/utils/metrology_calls';
+import {
+  getBadgeClassesFromMetrologyCallStatus,
+  getBadgeClassesFromMetrologyCallType,
+  isEditableByMetrologist,
+  isEditableByOperator,
+  isWaitingReceive,
+} from '@/utils/metrology_calls';
 import { ColumnDef } from '@tanstack/react-table';
+import { CheckCheckIcon, UserRoundCheckIcon } from 'lucide-react';
+import TooltipButton from '../tooltip-button';
 import { Badge } from '../ui/badge';
 import UpdateAndDeleteButtons from '../update-and-delete-buttons';
 import UpsertDialog from './upsert-dialog';
 
-export const metrologyCallColumns = (items: IItem[], machines: IMachine[], operations: IOperation[]): ColumnDef<IMetrologyCall>[] => [
+export const metrologyCallColumns = (
+  items: IItem[],
+  machines: IMachine[],
+  operations: IOperation[],
+  userRole: UserRole,
+): ColumnDef<IMetrologyCall>[] => [
   {
     accessorKey: 'id',
     header: 'ID',
@@ -53,25 +67,47 @@ export const metrologyCallColumns = (items: IItem[], machines: IMachine[], opera
   {
     accessorKey: 'actions',
     header: 'Ações',
-    cell: ({ row }) =>
-      isEditableStatus(row.original.metrology_call_status_id) ? (
-        <UpdateAndDeleteButtons
-          row={row.original}
-          description="Após deletar o chamado, não será possível recuperá-lo."
-          entityName="chamado"
-          deleteRoute="metrology-calls.destroy"
-          UpsertDialog={(props) => (
-            <UpsertDialog
-              {...props}
-              items={items}
-              existingMetrologyCall={{ ...row.original, item_id: row.original.operation?.item_id }}
-              machines={machines}
-              operations={operations}
+    cell: ({ row }) => {
+      const statusId = row.original.metrology_call_status_id;
+
+      if (userRole === UserRole.OPERATOR) {
+        if (isEditableByOperator(statusId)) {
+          return (
+            <UpdateAndDeleteButtons
+              row={row.original}
+              description="Após deletar o chamado, não será possível recuperá-lo."
+              entityName="chamado"
+              deleteRoute="metrology-calls.destroy"
+              UpsertDialog={(props) => (
+                <UpsertDialog
+                  {...props}
+                  items={items}
+                  existingMetrologyCall={{ ...row.original, item_id: row.original.operation?.item_id }}
+                  machines={machines}
+                  operations={operations}
+                />
+              )}
             />
-          )}
-        />
-      ) : (
-        <div className="flex h-8 items-center">Não disponível</div>
-      ),
+          );
+        } else {
+          return <div className="flex h-8 items-center">Não disponível</div>;
+        }
+      }
+
+      if (userRole === UserRole.METROLOGIST) {
+        if (isEditableByMetrologist(statusId)) {
+          console.log('oi');
+          if (isWaitingReceive(statusId)) {
+            return <TooltipButton variant={'ghost'} icon={<UserRoundCheckIcon />} text="Receber Item"></TooltipButton>;
+          } else {
+            return <TooltipButton variant={'ghost'} icon={<CheckCheckIcon className="text-green-600" />} text="Finalizar Medição"></TooltipButton>;
+          }
+        } else {
+          return <div className="flex h-8 items-center">Não disponível</div>;
+        }
+      }
+
+      return <div className="flex h-8 items-center">Não disponível</div>;
+    },
   },
 ];

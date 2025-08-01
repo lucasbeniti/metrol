@@ -1,6 +1,6 @@
 import { MetrologyCallStatus, MetrologyCallType } from '@/constants/metrology-call';
 
-export const isEditableStatus = (id: number): boolean => {
+export const isEditableByOperator = (id: number): boolean => {
   return id === MetrologyCallStatus.WAITING_RECEIVE;
 };
 
@@ -30,4 +30,12 @@ export const getBadgeClassesFromMetrologyCallType = (typeId: number) => {
   }
 
   return 'bg-blue-600';
+};
+
+export const isEditableByMetrologist = (statusId: number): boolean => {
+  return statusId === MetrologyCallStatus.WAITING_MEASUREMENT;
+};
+
+export const isWaitingReceive = (statusId: number): boolean => {
+  return statusId === MetrologyCallStatus.WAITING_RECEIVE;
 };

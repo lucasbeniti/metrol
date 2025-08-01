@@ -2,9 +2,11 @@
 
 namespace App\Http\Repositories\MetrologyCall;
 
+use App\Enums\UserRolesEnum;
 use App\Exports\MetrologyCallExport;
 use App\Models\MetrologyCall;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -19,8 +21,18 @@ class MetrologyCallRepository implements MetrologyCallRepositoryInterface
 
     public function getAll(): Collection
     {
-        
-        return $this->model->with(['machine', 'operation.item', 'type', 'status'])->orderBy('id', 'desc')->get();
+        $authenticatedUser = Auth::user();
+
+        return $this->model->with(['machine', 'operation.item', 'type', 'status'])
+            ->when($authenticatedUser->user_role_id === UserRolesEnum::METROLOGIST, function ($query) {
+                $query->orderByRaw("
+                    FIELD(metrology_call_status_id, 3, 4) DESC
+                ")->orderByRaw("
+                    FIELD(metrology_call_type_id, 2) ASC
+                ");
+            })
+            ->orderBy('id', 'desc')
+            ->get();
     }
 
     public function getById(int $id): ?MetrologyCall

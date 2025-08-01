@@ -1,4 +1,5 @@
 import { metrologyCallColumns } from '@/components/metrology-call/columns';
+import { UserRole } from '@/constants/user-roles';
 import { useCustomTable } from '@/hooks/use-custom-table';
 import { IItem } from '@/types/item';
 import { IMachine } from '@/types/machine';
@@ -11,14 +12,16 @@ export default function MetrologyCallDataTable({
   items,
   machines,
   operations,
+  userRole,
 }: {
   metrologyCalls: IMetrologyCall[];
   items: IItem[];
   machines: IMachine[];
   operations: IOperation[];
+  userRole: UserRole;
 }) {
   const { table } = useCustomTable<IMetrologyCall>({
-    columns: metrologyCallColumns(items, machines, operations),
+    columns: metrologyCallColumns(items, machines, operations, userRole),
     data: metrologyCalls,
   });
 
