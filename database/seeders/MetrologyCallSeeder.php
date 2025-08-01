@@ -27,6 +27,7 @@ class MetrologyCallSeeder extends Seeder
             'metrology_call_type_id' => 1,
             'closed_by_user_id' => 1,
             'metrology_call_status_id' => 1,
+            'received_at' => now(),
             'closed_at' => now()
         ];
 

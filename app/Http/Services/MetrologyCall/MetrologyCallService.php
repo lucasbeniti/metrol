@@ -102,6 +102,7 @@ class MetrologyCallService implements MetrologyCallServiceInterface
             'metrology_call_type' => $metrologyCall->type->name,
             'closed_by_user' => $metrologyCall->closed_by_user_id ? $metrologyCall->closedByUser->name : 'N/A',
             'metrology_call_status' => $metrologyCall->status->name,
+            'received_at' => $metrologyCall->received_at ? Carbon::parse($metrologyCall->received_at)->format('d/m/y H:i:s') : 'N/A',
             'closed_at' => $metrologyCall->closed_at ? Carbon::parse($metrologyCall->closed_at)->format('d/m/y H:i:s') : 'N/A'
         ];
     }

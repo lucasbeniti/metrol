@@ -55,6 +55,7 @@ export const COLUMN_NAME_FROM_LOG_DETAILS: Record<string, string> = {
   closed_at: 'Data de Fechamento',
   cost_center: 'Centro de Custo',
   client: 'Cliente',
+  received_at: 'Data de Recebimento',
 };
 
 export const COLUMN_VALUE_FROM_LOGS_DETAILS: Record<string, string> = {

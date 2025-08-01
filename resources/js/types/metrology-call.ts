@@ -10,6 +10,7 @@ export interface IMetrologyCall {
   operation?: {
     item_id: string;
   };
+  received_at?: string;
 }
 
 export interface IUpsertMetrologyCall {

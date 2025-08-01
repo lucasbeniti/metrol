@@ -22,7 +22,7 @@ class MetrologyCallExport implements FromCollection, WithHeadings, WithMapping
 
     public function headings(): array
     {
-        return ['ID', 'Nome do item', 'Máquina', 'Operação', 'Tipo', 'Status', 'Criado por', 'Fechado por', 'Data de Criação', 'Data de Fechamento'];
+        return ['ID', 'Nome do item', 'Máquina', 'Operação', 'Tipo', 'Status', 'Criado por', 'Fechado por', 'Data de Criação', 'Data de Recebimento', 'Data de Fechamento'];
     }
     
     public function map($metrologyCall): array
@@ -50,6 +50,7 @@ class MetrologyCallExport implements FromCollection, WithHeadings, WithMapping
             $metrologyCall->openedByUser->name ?? 'N/A',
             $metrologyCall->closed_by_user_id ? $metrologyCall->closedByUser->name : 'N/A',
             Carbon::parse($metrologyCall->created_at)->format('d/m/Y H:i:s'),
+            $metrologyCall->received_at ? Carbon::parse($metrologyCall->received_at)->format('d/m/y H:i:s') : 'N/A',
             $metrologyCall->closed_at ? Carbon::parse($metrologyCall->closed_at)->format('d/m/y H:i:s') : 'N/A'
         ];
     }

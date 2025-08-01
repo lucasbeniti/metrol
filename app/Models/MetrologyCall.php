@@ -14,6 +14,7 @@ class MetrologyCall extends Model
         'metrology_call_type_id',
         'closed_by_user_id',
         'metrology_call_status_id',
+        'received_at',
         'closed_at',
     ];
 
@@ -28,6 +29,7 @@ class MetrologyCall extends Model
         'metrology_call_type_id' => 'integer',
         'closed_by_user_id' => 'integer',
         'metrology_call_status_id' => 'integer',
+        'received_at' => 'datetime',
         'closed_at' => 'datetime',
     ];
 

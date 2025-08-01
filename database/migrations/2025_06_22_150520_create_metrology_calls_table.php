@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('metrology_call_type_id')->constrained('metrology_call_types');
             $table->foreignId('closed_by_user_id')->nullable()->constrained('users');
             $table->foreignId('metrology_call_status_id')->constrained('metrology_call_statuses');
+            $table->timestamp('received_at')->nullable();
             $table->timestamp('closed_at')->nullable();
             $table->timestamps();
         });
