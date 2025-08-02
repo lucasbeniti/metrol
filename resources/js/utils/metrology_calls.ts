@@ -33,7 +33,7 @@ export const getBadgeClassesFromMetrologyCallType = (typeId: number) => {
 };
 
 export const isEditableByMetrologist = (statusId: number): boolean => {
-  return statusId === MetrologyCallStatus.WAITING_MEASUREMENT;
+  return statusId === MetrologyCallStatus.WAITING_MEASUREMENT || statusId === MetrologyCallStatus.WAITING_RECEIVE;
 };
 
 export const isWaitingReceive = (statusId: number): boolean => {

@@ -106,4 +106,9 @@ class MetrologyCallService implements MetrologyCallServiceInterface
             'closed_at' => $metrologyCall->closed_at ? Carbon::parse($metrologyCall->closed_at)->format('d/m/y H:i:s') : 'N/A'
         ];
     }
+
+    public function receiveItem(int $id): bool
+    {
+        return $this->metrologyCallRepository->receiveItem($id);
+    }
 }

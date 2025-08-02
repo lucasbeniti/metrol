@@ -74,10 +74,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(MetrologyCallController::class)->prefix('/metrology-calls')->name('metrology-calls.')->group(function() {
         Route::get('/', 'index')->name('index');
+        
+        // Rotas do operador
         Route::post('/', 'store')->name('store');
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'destroy')->name('destroy');
+
+        // Rotas do administrador
         Route::get('/export', 'export')->name('export');
+
+        // Rotas do metrologista
+        Route::put('/receive-item/{id}', 'receiveItem')->name('receiveItem');
     });
 });
 

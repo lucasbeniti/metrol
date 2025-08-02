@@ -2,6 +2,7 @@
 
 namespace App\Http\Repositories\MetrologyCall;
 
+use App\Enums\MetrologyCallStatusesEnum;
 use App\Enums\UserRolesEnum;
 use App\Exports\MetrologyCallExport;
 use App\Models\MetrologyCall;
@@ -70,5 +71,22 @@ class MetrologyCallRepository implements MetrologyCallRepositoryInterface
     public function export(): BinaryFileResponse
     {
         return Excel::download(new MetrologyCallExport, 'chamados_de_metrologia.xlsx');
+    }
+
+    public function receiveItem(int $id): bool
+    {
+        $metrologyCall = $this->getById($id);
+
+        if (!$metrologyCall) {
+            return false;
+        }
+
+        $authenticatedUser = Auth::user();
+        
+        return $metrologyCall->update([
+            'metrology_call_status_id' => MetrologyCallStatusesEnum::WAITING_MEASUREMENT,
+            'closed_by_user_id' => $authenticatedUser->id,
+            'received_at' => now()
+        ]);
     }
 }

@@ -9,6 +9,9 @@ export interface IMetrologyCall {
   created_at: string;
   operation?: {
     item_id: string;
+    item?: {
+      name: string;
+    };
   };
   received_at?: string;
 }

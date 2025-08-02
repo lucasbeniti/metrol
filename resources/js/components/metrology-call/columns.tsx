@@ -4,16 +4,9 @@ import { IItem } from '@/types/item';
 import { IMachine } from '@/types/machine';
 import { IMetrologyCall } from '@/types/metrology-call';
 import { IOperation } from '@/types/operation';
-import {
-  getBadgeClassesFromMetrologyCallStatus,
-  getBadgeClassesFromMetrologyCallType,
-  isEditableByMetrologist,
-  isEditableByOperator,
-  isWaitingReceive,
-} from '@/utils/metrology_calls';
+import { getBadgeClassesFromMetrologyCallStatus, getBadgeClassesFromMetrologyCallType, isEditableByOperator } from '@/utils/metrology_calls';
 import { ColumnDef } from '@tanstack/react-table';
-import { CheckCheckIcon, UserRoundCheckIcon } from 'lucide-react';
-import TooltipButton from '../tooltip-button';
+import MetrologistActionsButtonsProps from '../metrologist-action-buttons';
 import { Badge } from '../ui/badge';
 import UpdateAndDeleteButtons from '../update-and-delete-buttons';
 import UpsertDialog from './upsert-dialog';
@@ -95,16 +88,7 @@ export const metrologyCallColumns = (
       }
 
       if (userRole === UserRole.METROLOGIST) {
-        if (isEditableByMetrologist(statusId)) {
-          console.log('oi');
-          if (isWaitingReceive(statusId)) {
-            return <TooltipButton variant={'ghost'} icon={<UserRoundCheckIcon />} text="Receber Item"></TooltipButton>;
-          } else {
-            return <TooltipButton variant={'ghost'} icon={<CheckCheckIcon className="text-green-600" />} text="Finalizar Medição"></TooltipButton>;
-          }
-        } else {
-          return <div className="flex h-8 items-center">Não disponível</div>;
-        }
+        return <MetrologistActionsButtonsProps call={row.original} />;
       }
 
       return <div className="flex h-8 items-center">Não disponível</div>;

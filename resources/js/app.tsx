@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import '../css/app.css';
 import { Toaster } from './components/ui/sonner';
 import { DestroyDialogProvider } from './contexts/destroy-dialog-context';
+import { ReceiveItemDialogProvider } from './contexts/receive-item-context';
 import { UpsertDialogProvider } from './contexts/upsert-dialog-context';
 import { initializeTheme } from './hooks/use-appearance';
 
@@ -17,12 +18,14 @@ createInertiaApp({
 
     root.render(
       <>
-        <DestroyDialogProvider>
-          <UpsertDialogProvider>
-            <App {...props} />
-            <Toaster position="top-right" richColors />
-          </UpsertDialogProvider>
-        </DestroyDialogProvider>
+        <ReceiveItemDialogProvider>
+          <DestroyDialogProvider>
+            <UpsertDialogProvider>
+              <App {...props} />
+              <Toaster position="top-right" richColors />
+            </UpsertDialogProvider>
+          </DestroyDialogProvider>
+        </ReceiveItemDialogProvider>
       </>,
     );
   },

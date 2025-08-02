@@ -71,4 +71,11 @@ class MetrologyCallController extends Controller
     {
         return $this->metrologyCallService->export();
     }
+
+    public function receiveItem($id): RedirectResponse
+    {
+        $this->metrologyCallService->receiveItem($id);
+
+        return redirect()->route('metrology-calls.index');
+    }
 }

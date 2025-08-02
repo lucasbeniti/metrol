@@ -14,4 +14,5 @@ interface MetrologyCallServiceInterface
     public function update(int $id, array $data): bool;
     public function destroy(int $id): bool;
     public function export(): BinaryFileResponse;
+    public function receiveItem(int $id): bool;
 }
