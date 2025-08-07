@@ -4,10 +4,10 @@ namespace App\Exports;
 
 use App\Enums\UserRolesEnum;
 use App\Models\User;
+use App\Utils\DateUtils;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Carbon\Carbon;
 
 class UserExport implements FromCollection, WithMapping, WithHeadings
 {
@@ -37,7 +37,7 @@ class UserExport implements FromCollection, WithMapping, WithHeadings
             $user->name,
             $user->identification,
             $USER_TYPE_MAP[$user->user_role_id] ?? 'Desconhecido',
-            Carbon::parse($user->created_at)->format('d/m/Y H:i:s')
+            DateUtils::formatDate($user->created_at)
         ];
     }
 }

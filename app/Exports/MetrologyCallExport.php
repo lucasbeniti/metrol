@@ -5,6 +5,7 @@ namespace App\Exports;
 use App\Enums\MetrologyCallStatusesEnum;
 use App\Enums\MetrologyCallTypesEnum;
 use App\Models\MetrologyCall;
+use App\Utils\DateUtils;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -22,7 +23,19 @@ class MetrologyCallExport implements FromCollection, WithHeadings, WithMapping
 
     public function headings(): array
     {
-        return ['ID', 'Nome do item', 'Máquina', 'Operação', 'Tipo', 'Status', 'Criado por', 'Fechado por', 'Data de Criação', 'Data de Recebimento', 'Data de Fechamento'];
+        return [
+            'ID', 
+            'Nome do item', 
+            'Máquina', 
+            'Operação', 
+            'Tipo', 
+            'Status', 
+            'Criado por', 
+            'Fechado por', 
+            'Data de Criação', 
+            'Data de Recebimento', 
+            'Data de Fechamento'
+        ];
     }
     
     public function map($metrologyCall): array
@@ -37,7 +50,7 @@ class MetrologyCallExport implements FromCollection, WithHeadings, WithMapping
         $TYPE_MAP = [
             MetrologyCallTypesEnum::SETUP => 'Setup',
             MetrologyCallTypesEnum::PRODUCTION => 'Produção',
-            MetrologyCallTypesEnum::ADJUSTMENT => 'Adjustment'
+            MetrologyCallTypesEnum::ADJUSTMENT => 'Ajuste'
         ];
 
         return [
@@ -49,9 +62,9 @@ class MetrologyCallExport implements FromCollection, WithHeadings, WithMapping
             $STATUS_MAP[$metrologyCall->metrology_call_status_id] ?? 'Desconhecido',
             $metrologyCall->openedByUser->name ?? 'N/A',
             $metrologyCall->closed_by_user_id ? $metrologyCall->closedByUser->name : 'N/A',
-            Carbon::parse($metrologyCall->created_at)->format('d/m/Y H:i:s'),
-            $metrologyCall->received_at ? Carbon::parse($metrologyCall->received_at)->format('d/m/y H:i:s') : 'N/A',
-            $metrologyCall->closed_at ? Carbon::parse($metrologyCall->closed_at)->format('d/m/y H:i:s') : 'N/A'
+            DateUtils::formatDate($metrologyCall->created_at),
+            DateUtils::formatDate($metrologyCall->received_at),
+            DateUtils::formatDate($metrologyCall->closed_at)
         ];
     }
 }

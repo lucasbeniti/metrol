@@ -45,29 +45,29 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
-        $this->app->bind(UserServiceInterface::class, UserService::class);
+        $bindings = [
+            UserRepositoryInterface::class => UserRepository::class,
+            ClientRepositoryInterface::class => ClientRepository::class,
+            CostCenterRepositoryInterface::class => CostCenterRepository::class,
+            ItemRepositoryInterface::class => ItemRepository::class,
+            MachineRepositoryInterface::class => MachineRepository::class,
+            MetrologyCallRepositoryInterface::class => MetrologyCallRepository::class,
+            OperationRepositoryInterface::class => OperationRepository::class,
+            LogRepositoryInterface::class => LogRepository::class,
 
-        $this->app->bind(ClientRepositoryInterface::class, ClientRepository::class);
-        $this->app->bind(ClientServiceInterface::class, ClientService::class);
+            UserServiceInterface::class => UserService::class,
+            ClientServiceInterface::class => ClientService::class,
+            CostCenterServiceInterface::class => CostCenterService::class,
+            ItemServiceInterface::class => ItemService::class,
+            MachineServiceInterface::class => MachineService::class,
+            MetrologyCallServiceInterface::class => MetrologyCallService::class,
+            OperationServiceInterface::class => OperationService::class,
+            LogServiceInterface::class => LogService::class,
+        ];
 
-        $this->app->bind(CostCenterRepositoryInterface::class, CostCenterRepository::class);
-        $this->app->bind(CostCenterServiceInterface::class, CostCenterService::class);
-
-        $this->app->bind(ItemRepositoryInterface::class, ItemRepository::class);
-        $this->app->bind(ItemServiceInterface::class, ItemService::class);
-
-        $this->app->bind(MachineRepositoryInterface::class, MachineRepository::class);
-        $this->app->bind(MachineServiceInterface::class, MachineService::class);
-
-        $this->app->bind(MetrologyCallRepositoryInterface::class, MetrologyCallRepository::class);
-        $this->app->bind(MetrologyCallServiceInterface::class, MetrologyCallService::class);
-
-        $this->app->bind(OperationRepositoryInterface::class, OperationRepository::class);
-        $this->app->bind(OperationServiceInterface::class, OperationService::class);
-
-        $this->app->bind(LogRepositoryInterface::class, LogRepository::class);
-        $this->app->bind(LogServiceInterface::class, LogService::class);
+        foreach ($bindings as $interface => $implementation) {
+            $this->app->bind($interface, $implementation);
+        }
     }
 
     /**
