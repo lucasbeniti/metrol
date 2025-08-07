@@ -2,13 +2,20 @@
 
 namespace App\Traits;
 
+use App\Enums\LogActionsEnum;
 use App\Http\Services\Log\LogServiceInterface;
 use Illuminate\Support\Facades\Auth;
 
 trait LogsTrait
 {
+    protected LogServiceInterface $logService;
+
+    public function initializeLogsTrait(): void
+    {
+        $this->logService = app(LogServiceInterface::class);
+    }
+
     protected function storeLog(
-        LogServiceInterface $logService,
         int $actionId,
         string $entityName,
         string $entityValue,
@@ -18,9 +25,9 @@ trait LogsTrait
         $isEntityMachineOrOperation = in_array($entityName, ['máquina', 'operação']);
 
         $actionText = match ($actionId) {
-            1 => 'criou ' . ($isEntityMachineOrOperation ? 'a' : 'o'),
-            2 => 'atualizou ' . ($isEntityMachineOrOperation ? 'a' : 'o'),
-            3 => 'deletou ' . ($isEntityMachineOrOperation ? 'a' : 'o'),
+            LogActionsEnum::CREATE => 'criou ' . ($isEntityMachineOrOperation ? 'a' : 'o'),
+            LogActionsEnum::UPDATE => 'atualizou ' . ($isEntityMachineOrOperation ? 'a' : 'o'),
+            LogActionsEnum::DELETE => 'deletou ' . ($isEntityMachineOrOperation ? 'a' : 'o'),
             default => 'realizou uma ação em'
         };
         
@@ -34,7 +41,7 @@ trait LogsTrait
             $entityValue
         );
 
-        $logService->store([
+        $this->logService->store([
             'user_id' => $authenticatedUser->id,
             'action_id' => $actionId,
             'description' => $description,

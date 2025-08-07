@@ -3,9 +3,9 @@
 namespace App\Http\Services\User;
 
 use App\Enums\LogActionsEnum;
+use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
 use App\Http\Repositories\User\UserRepositoryInterface;
-use App\Http\Services\Log\LogServiceInterface;
 use App\Models\User;
 use App\Traits\LogsTrait;
 use Exception;
@@ -18,12 +18,11 @@ class UserService implements UserServiceInterface
     use LogsTrait;
 
     protected UserRepositoryInterface $userRepository;
-    protected LogServiceInterface $logService;
 
-    public function __construct(UserRepositoryInterface $userRepository, LogServiceInterface $logService)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
-        $this->logService = $logService;
+        $this->initializeLogsTrait();
     }
 
     public function getAll(): Collection
@@ -49,9 +48,8 @@ class UserService implements UserServiceInterface
         $user = $this->userRepository->store($data);
 
         $this->storeLog(
-            $this->logService,
             LogActionsEnum::CREATE,
-            'usuário',
+            LogEntitiesEnum::USERS, 
             $user->name,
             LogTablesEnum::USERS,
             $this->getUserLogDetails($user)
@@ -74,9 +72,8 @@ class UserService implements UserServiceInterface
 
         if ($success) {
             $this->storeLog(
-                $this->logService,
                 LogActionsEnum::UPDATE,
-                'usuário',
+                LogEntitiesEnum::USERS,
                 $data['name'],
                 LogTablesEnum::USERS,
                 $this->getUserLogDetails($user)
@@ -106,9 +103,8 @@ class UserService implements UserServiceInterface
 
         if ($success) {
             $this->storeLog(
-                $this->logService,
                 LogActionsEnum::DELETE,
-                'usuário',
+                LogEntitiesEnum::USERS,
                 $userName,
                 LogTablesEnum::USERS
             );

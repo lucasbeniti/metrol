@@ -3,9 +3,9 @@
 namespace App\Http\Services\MetrologyCall;
 
 use App\Enums\LogActionsEnum;
+use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
 use App\Http\Repositories\MetrologyCall\MetrologyCallRepositoryInterface;
-use App\Http\Services\Log\LogServiceInterface;
 use App\Models\MetrologyCall;
 use App\Traits\LogsTrait;
 use App\Utils\DateUtils;
@@ -18,12 +18,11 @@ class MetrologyCallService implements MetrologyCallServiceInterface
     use LogsTrait;
 
     protected MetrologyCallRepositoryInterface $metrologyCallRepository;
-    protected LogServiceInterface $logService;
 
-    public function __construct(MetrologyCallRepositoryInterface $metrologyCallRepository, LogServiceInterface $logService)
+    public function __construct(MetrologyCallRepositoryInterface $metrologyCallRepository)
     {
         $this->metrologyCallRepository = $metrologyCallRepository;
-        $this->logService = $logService;
+        $this->initializeLogsTrait();
     }
 
     public function getAll(): Collection
@@ -44,9 +43,8 @@ class MetrologyCallService implements MetrologyCallServiceInterface
         $metrologyCall = $this->metrologyCallRepository->store($data);
 
         $this->storeLog(
-            $this->logService,
             LogActionsEnum::CREATE,
-            'chamado de metrologia',
+            LogEntitiesEnum::METROLOGY_CALLS,
             $metrologyCall->id,
             LogTablesEnum::METROLOGY_CALLS,
             $this->getMetrologyCallLogDetails($metrologyCall)
@@ -62,9 +60,8 @@ class MetrologyCallService implements MetrologyCallServiceInterface
         $metrologyCall = $this->getById($id);
 
         $this->storeLog(
-            $this->logService,
             LogActionsEnum::UPDATE,
-            'chamado de metrologia',
+            LogEntitiesEnum::METROLOGY_CALLS,
             $metrologyCall->id,
             LogTablesEnum::METROLOGY_CALLS,
             $this->getMetrologyCallLogDetails($metrologyCall)
@@ -78,9 +75,8 @@ class MetrologyCallService implements MetrologyCallServiceInterface
         $success = $this->metrologyCallRepository->destroy($id);
 
         $this->storeLog(
-            $this->logService,
             LogActionsEnum::UPDATE,
-            'chamado de metrologia',
+            LogEntitiesEnum::METROLOGY_CALLS,
             $id,
             LogTablesEnum::METROLOGY_CALLS
         );

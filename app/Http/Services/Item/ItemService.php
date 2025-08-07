@@ -3,9 +3,9 @@
 namespace App\Http\Services\Item;
 
 use App\Enums\LogActionsEnum;
+use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
 use App\Http\Repositories\Item\ItemRepositoryInterface;
-use App\Http\Services\Log\LogServiceInterface;
 use App\Models\Item;
 use App\Traits\LogsTrait;
 use Exception;
@@ -16,12 +16,11 @@ class ItemService implements ItemServiceInterface
     use LogsTrait;
 
     protected ItemRepositoryInterface $itemRepository;
-    protected LogServiceInterface $logService;
 
-    public function __construct(ItemRepositoryInterface $itemRepository, LogServiceInterface $logService)
+    public function __construct(ItemRepositoryInterface $itemRepository)
     {
         $this->itemRepository = $itemRepository;
-        $this->logService = $logService;
+        $this->initializeLogsTrait();
     }
 
     public function getAll(): Collection
@@ -45,9 +44,8 @@ class ItemService implements ItemServiceInterface
         $item = $this->itemRepository->store($data);
 
         $this->storeLog(
-            $this->logService,
             LogActionsEnum::CREATE,
-            'item',
+            LogEntitiesEnum::ITEMS,
             $item->name,
             LogTablesEnum::ITEMS,
             $this->getItemLogDetails($item)
@@ -70,9 +68,8 @@ class ItemService implements ItemServiceInterface
 
         if ($success) {
             $this->storeLog(
-                $this->logService,
                 LogActionsEnum::UPDATE,
-                'item',
+                LogEntitiesEnum::ITEMS,
                 $data['name'],
                 LogTablesEnum::ITEMS,
                 $this->getItemLogDetails($item)
@@ -96,9 +93,8 @@ class ItemService implements ItemServiceInterface
 
         if ($success) {
             $this->storeLog(
-                $this->logService,
                 LogActionsEnum::DELETE,
-                'item',
+                LogEntitiesEnum::ITEMS,
                 $itemName,
                 LogTablesEnum::ITEMS
             );

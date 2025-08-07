@@ -3,9 +3,9 @@
 namespace App\Http\Services\Machine;
 
 use App\Enums\LogActionsEnum;
+use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
 use App\Http\Repositories\Machine\MachineRepositoryInterface;
-use App\Http\Services\Log\LogServiceInterface;
 use App\Models\Machine;
 use App\Traits\LogsTrait;
 use Exception;
@@ -16,12 +16,11 @@ class MachineService implements MachineServiceInterface
     use LogsTrait;
 
     protected MachineRepositoryInterface $machineRepository;
-    protected LogServiceInterface $logService;
 
-    public function __construct(MachineRepositoryInterface $machineRepository, LogServiceInterface $logService)
+    public function __construct(MachineRepositoryInterface $machineRepository)
     {
         $this->machineRepository = $machineRepository;
-        $this->logService = $logService;
+        $this->initializeLogsTrait();
     }
 
     public function getAll(): Collection
@@ -45,9 +44,8 @@ class MachineService implements MachineServiceInterface
         $machine = $this->machineRepository->store($data);
 
         $this->storeLog(
-            $this->logService,
             LogActionsEnum::CREATE,
-            'máquina',
+            LogEntitiesEnum::MACHINES,
             $machine->name,
             LogTablesEnum::MACHINES,
             $this->getMachineLogDetails($machine)
@@ -70,9 +68,8 @@ class MachineService implements MachineServiceInterface
 
         if ($success) {
             $this->storeLog(
-                $this->logService,
                 LogActionsEnum::UPDATE,
-                'máquina',
+                LogEntitiesEnum::MACHINES,
                 $data['name'],
                 LogTablesEnum::MACHINES,
                 $this->getMachineLogDetails($machine)
@@ -96,9 +93,8 @@ class MachineService implements MachineServiceInterface
 
         if ($success) {
             $this->storeLog(
-                $this->logService,
                 LogActionsEnum::DELETE,
-                'máquina',
+                LogEntitiesEnum::MACHINES,
                 $machineName,
                 LogTablesEnum::MACHINES
             );

@@ -3,9 +3,9 @@
 namespace App\Http\Services\Client;
 
 use App\Enums\LogActionsEnum;
+use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
 use App\Http\Repositories\Client\ClientRepositoryInterface;
-use App\Http\Services\Log\LogServiceInterface;
 use App\Models\Client;
 use App\Traits\LogsTrait;
 use Exception;
@@ -17,12 +17,11 @@ class ClientService implements ClientServiceInterface
     use LogsTrait;
 
     protected ClientRepositoryInterface $clientRepository;
-    protected LogServiceInterface $logService;
 
-    public function __construct(ClientRepositoryInterface $clientRepository, LogServiceInterface $logService)
+    public function __construct(ClientRepositoryInterface $clientRepository)
     {
         $this->clientRepository = $clientRepository;
-        $this->logService = $logService;
+        $this->initializeLogsTrait();
     }
 
     public function getAll(): Collection
@@ -48,9 +47,8 @@ class ClientService implements ClientServiceInterface
         $client = $this->clientRepository->store($data);
 
         $this->storeLog(
-            $this->logService,
             LogActionsEnum::CREATE,
-            'cliente',
+            LogEntitiesEnum::CLIENTS,
             $client->name,
             LogTablesEnum::CLIENTS,
             $this->getClientLogDetails($client)
@@ -73,9 +71,8 @@ class ClientService implements ClientServiceInterface
 
         if ($success) {
             $this->storeLog(
-                $this->logService,
                 LogActionsEnum::UPDATE,
-                'cliente',
+                LogEntitiesEnum::CLIENTS,
                 $data['name'],
                 LogTablesEnum::CLIENTS,
                 $this->getClientLogDetails($client)
@@ -99,9 +96,8 @@ class ClientService implements ClientServiceInterface
 
         if ($success) {
             $this->storeLog(
-                $this->logService,
                 LogActionsEnum::DELETE,
-                'cliente',
+                LogEntitiesEnum::CLIENTS,
                 $clientName,
                 LogTablesEnum::CLIENTS
             );

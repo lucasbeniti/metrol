@@ -3,9 +3,9 @@
 namespace App\Http\Services\Operation;
 
 use App\Enums\LogActionsEnum;
+use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
 use App\Http\Repositories\Operation\OperationRepositoryInterface;
-use App\Http\Services\Log\LogServiceInterface;
 use App\Models\Operation;
 use App\Traits\LogsTrait;
 use Exception;
@@ -16,12 +16,11 @@ class OperationService implements OperationServiceInterface
     use LogsTrait;
 
     protected OperationRepositoryInterface $operationRepository;
-    protected LogServiceInterface $logService;
 
-    public function __construct(OperationRepositoryInterface $operationRepository, LogServiceInterface $logService)
+    public function __construct(OperationRepositoryInterface $operationRepository)
     {
         $this->operationRepository = $operationRepository;
-        $this->logService = $logService;
+        $this->initializeLogsTrait();
     }
 
     public function getAll(int $itemId): Collection
@@ -45,9 +44,8 @@ class OperationService implements OperationServiceInterface
         $operation = $this->operationRepository->store($data);
 
         $this->storeLog(
-            $this->logService,
             LogActionsEnum::CREATE,
-            'operação',
+            LogEntitiesEnum::OPERATIONS,
             $operation->name,
             LogTablesEnum::OPERATIONS,
             $this->getOperationLogDetails($operation)
@@ -70,9 +68,8 @@ class OperationService implements OperationServiceInterface
 
         if ($success) {
             $this->storeLog(
-                $this->logService,
                 LogActionsEnum::UPDATE,
-                'operação',
+                LogEntitiesEnum::OPERATIONS,
                 $data['name'],
                 LogTablesEnum::OPERATIONS,
                 $this->getOperationLogDetails($operation)
@@ -96,9 +93,8 @@ class OperationService implements OperationServiceInterface
         
         if ($success) {
             $this->storeLog(
-                $this->logService,
                 LogActionsEnum::DELETE,
-                'operação',
+                LogEntitiesEnum::OPERATIONS,
                 $operationName,
                 LogTablesEnum::OPERATIONS
             );

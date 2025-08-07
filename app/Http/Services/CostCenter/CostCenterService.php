@@ -3,9 +3,9 @@
 namespace App\Http\Services\CostCenter;
 
 use App\Enums\LogActionsEnum;
+use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
 use App\Http\Repositories\CostCenter\CostCenterRepositoryInterface;
-use App\Http\Services\Log\LogServiceInterface;
 use App\Models\CostCenter;
 use App\Traits\LogsTrait;
 use Exception;
@@ -15,13 +15,12 @@ class CostCenterService implements CostCenterServiceInterface
 {
     use LogsTrait;
 
-    protected CostCenterRepositoryInterface $costCenterRepository;
-    protected LogServiceInterface $logService;
+    protected CostCenterRepositoryInterface $costCenterRepository;  
 
-    public function __construct(CostCenterRepositoryInterface $costCenterRepository, LogServiceInterface $logService)
+    public function __construct(CostCenterRepositoryInterface $costCenterRepository)
     {
         $this->costCenterRepository = $costCenterRepository;
-        $this->logService = $logService;
+        $this->initializeLogsTrait();
     }
 
     public function getAll(): Collection
@@ -45,9 +44,8 @@ class CostCenterService implements CostCenterServiceInterface
         $costCenter = $this->costCenterRepository->store($data);
 
         $this->storeLog(
-            $this->logService,
             LogActionsEnum::CREATE,
-            'centro de custo',
+            LogEntitiesEnum::COST_CENTERS,
             $costCenter->name,
             LogTablesEnum::COST_CENTERS,
             $this->getCostCenterLogDetails($costCenter)
@@ -70,9 +68,8 @@ class CostCenterService implements CostCenterServiceInterface
 
         if ($success) {
             $this->storeLog(
-                $this->logService,
                 LogActionsEnum::UPDATE,
-                'centro de custo',
+                LogEntitiesEnum::COST_CENTERS,
                 $data['name'],
                 LogTablesEnum::COST_CENTERS,
                 $this->getCostCenterLogDetails($costCenter)
@@ -96,9 +93,8 @@ class CostCenterService implements CostCenterServiceInterface
 
         if ($success) {
             $this->storeLog(
-                $this->logService,
                 LogActionsEnum::DELETE,
-                'centro de custo',
+                LogEntitiesEnum::COST_CENTERS,
                 $costCenterName,
                 LogTablesEnum::COST_CENTERS
             );
