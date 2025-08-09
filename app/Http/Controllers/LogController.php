@@ -10,14 +10,10 @@ use Inertia\Inertia;
 
 class LogController extends Controller
 {
-    protected LogServiceInterface $logService;
-    protected UserServiceInterface $userService;
-
-    public function __construct(LogServiceInterface $logService, UserServiceInterface $userService)
-    {
-        $this->logService = $logService;
-        $this->userService = $userService;
-    }
+    public function __construct(
+        private LogServiceInterface $logService, 
+        private UserServiceInterface $userService
+    ) {}
 
     public function index(Request $request): Response
     {

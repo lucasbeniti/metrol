@@ -14,22 +14,12 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class MetrologyCallController extends Controller
 {
-    protected MetrologyCallServiceInterface $metrologyCallService;
-    protected MachineServiceInterface $machineService;
-    protected OperationServiceInterface $operationService;
-    protected ItemServiceInterface $itemService;
-
     public function __construct(
-        MetrologyCallServiceInterface $metrologyCallService,
-        MachineServiceInterface $machineService,
-        OperationServiceInterface $operationService,
-        ItemServiceInterface $itemService
-    ) {
-        $this->metrologyCallService = $metrologyCallService;
-        $this->machineService = $machineService;
-        $this->operationService = $operationService;
-        $this->itemService = $itemService;
-    }
+        private MetrologyCallServiceInterface $metrologyCallService,
+        private MachineServiceInterface $machineService,
+        private OperationServiceInterface $operationService,
+        private ItemServiceInterface $itemService
+    ) {}
 
     public function index(): Response 
     {

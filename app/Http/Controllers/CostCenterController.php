@@ -12,14 +12,10 @@ use Inertia\Response;
 
 class CostCenterController extends Controller
 {
-    protected CostCenterServiceInterface $costCenterService;
-    protected ClientServiceInterface $clientService;
-
-    public function __construct(CostCenterServiceInterface $costCenterService, ClientServiceInterface $clientService)
-    {
-        $this->costCenterService = $costCenterService;
-        $this->clientService = $clientService;
-    }
+    public function __construct(
+        private CostCenterServiceInterface $costCenterService, 
+        private ClientServiceInterface $clientService
+    ) {}
 
     public function index(): Response
     {

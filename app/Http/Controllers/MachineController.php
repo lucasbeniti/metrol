@@ -12,12 +12,9 @@ use Inertia\Response;
 
 class MachineController extends Controller
 {
-    protected MachineServiceInterface $machineService;
-
-    public function __construct(MachineServiceInterface $machineService)
-    {
-        $this->machineService = $machineService;
-    }
+    public function __construct(
+        private MachineServiceInterface $machineService
+    ) {}
 
     public function index(): Response {
         return Inertia::render('machines', [

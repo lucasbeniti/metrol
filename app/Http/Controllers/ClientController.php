@@ -11,12 +11,9 @@ use Inertia\Response;
 
 class ClientController extends Controller
 {
-    protected ClientServiceInterface $clientService;
-
-    public function __construct(ClientServiceInterface $clientService)
-    {
-        $this->clientService = $clientService;
-    }
+    public function __construct(
+        private ClientServiceInterface $clientService
+    ) {}
 
     public function index(): Response
     {
