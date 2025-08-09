@@ -7,12 +7,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 class MachineRepository implements MachineRepositoryInterface 
 {
-    protected Machine $model;
-
-    public function __construct(Machine $machine)
-    {
-        $this->model = $machine;
-    }
+    public function __construct(
+        private Machine $model
+    ) {}
 
     public function getAll(): Collection
     {

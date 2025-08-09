@@ -17,11 +17,9 @@ class UserService implements UserServiceInterface
 {
     use LogsTrait;
 
-    protected UserRepositoryInterface $userRepository;
-
-    public function __construct(UserRepositoryInterface $userRepository)
-    {
-        $this->userRepository = $userRepository;
+    public function __construct(
+        private UserRepositoryInterface $userRepository
+    ) {
         $this->initializeLogsTrait();
     }
 

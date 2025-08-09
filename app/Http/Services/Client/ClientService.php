@@ -16,11 +16,9 @@ class ClientService implements ClientServiceInterface
 {
     use LogsTrait;
 
-    protected ClientRepositoryInterface $clientRepository;
-
-    public function __construct(ClientRepositoryInterface $clientRepository)
-    {
-        $this->clientRepository = $clientRepository;
+    public function __construct(
+        private ClientRepositoryInterface $clientRepository
+    ) {
         $this->initializeLogsTrait();
     }
 

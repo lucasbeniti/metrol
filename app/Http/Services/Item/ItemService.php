@@ -15,11 +15,9 @@ class ItemService implements ItemServiceInterface
 {
     use LogsTrait;
 
-    protected ItemRepositoryInterface $itemRepository;
-
-    public function __construct(ItemRepositoryInterface $itemRepository)
-    {
-        $this->itemRepository = $itemRepository;
+    public function __construct(
+        private ItemRepositoryInterface $itemRepository
+    ) {
         $this->initializeLogsTrait();
     }
 

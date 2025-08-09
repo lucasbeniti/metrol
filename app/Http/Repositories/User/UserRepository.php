@@ -10,12 +10,9 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class UserRepository implements UserRepositoryInterface
 {
-    protected User $model;
-
-    public function __construct(User $user)
-    {
-        $this->model = $user;
-    }
+    public function __construct(
+        private User $model
+    ) {}
 
     public function getAll(): Collection
     {

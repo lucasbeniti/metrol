@@ -7,12 +7,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 class OperationRepository implements OperationRepositoryInterface
 {
-    protected Operation $model;
-
-    public function __construct(Operation $operation)
-    {
-        $this->model = $operation;
-    }
+    public function __construct(
+        private Operation $model
+    ) {}
 
     public function getAll(int $itemId): Collection
     {

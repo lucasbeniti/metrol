@@ -7,12 +7,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CostCenterRepository implements CostCenterRepositoryInterface
 {
-    protected CostCenter $model;
-
-    public function __construct(CostCenter $costCenter)
-    {
-        $this->model = $costCenter;
-    }
+    public function __construct(
+        private CostCenter $model
+    ) {}
 
     public function getAll(): Collection
     {

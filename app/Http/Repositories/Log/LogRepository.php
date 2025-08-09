@@ -8,12 +8,9 @@ use Illuminate\Http\Request;
 
 class LogRepository implements LogRepositoryInterface 
 {
-    protected Log $model;
-
-    public function __construct(Log $log)
-    {
-        $this->model = $log;
-    }
+    public function __construct(
+        private Log $model
+    ) {}
 
     public function getAll(Request $request): Collection
     {

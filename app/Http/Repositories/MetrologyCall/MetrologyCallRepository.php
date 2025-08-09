@@ -13,12 +13,9 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class MetrologyCallRepository implements MetrologyCallRepositoryInterface
 {
-    protected MetrologyCall $model;
-
-    public function __construct(MetrologyCall $metrologyCall)
-    {
-        return $this->model = $metrologyCall;
-    }
+    public function __construct(
+        private MetrologyCall $model
+    ) {}
 
     public function getAll(): Collection
     {

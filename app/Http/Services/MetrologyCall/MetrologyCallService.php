@@ -17,11 +17,9 @@ class MetrologyCallService implements MetrologyCallServiceInterface
 {
     use LogsTrait;
 
-    protected MetrologyCallRepositoryInterface $metrologyCallRepository;
-
-    public function __construct(MetrologyCallRepositoryInterface $metrologyCallRepository)
-    {
-        $this->metrologyCallRepository = $metrologyCallRepository;
+    public function __construct(
+        private MetrologyCallRepositoryInterface $metrologyCallRepository
+    ) {
         $this->initializeLogsTrait();
     }
 

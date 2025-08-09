@@ -15,11 +15,9 @@ class OperationService implements OperationServiceInterface
 {
     use LogsTrait;
 
-    protected OperationRepositoryInterface $operationRepository;
-
-    public function __construct(OperationRepositoryInterface $operationRepository)
-    {
-        $this->operationRepository = $operationRepository;
+    public function __construct(
+        private OperationRepositoryInterface $operationRepository
+    ) {
         $this->initializeLogsTrait();
     }
 

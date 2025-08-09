@@ -15,11 +15,9 @@ class MachineService implements MachineServiceInterface
 {
     use LogsTrait;
 
-    protected MachineRepositoryInterface $machineRepository;
-
-    public function __construct(MachineRepositoryInterface $machineRepository)
-    {
-        $this->machineRepository = $machineRepository;
+    public function __construct(
+        private MachineRepositoryInterface $machineRepository
+    ) {
         $this->initializeLogsTrait();
     }
 

@@ -15,11 +15,9 @@ class CostCenterService implements CostCenterServiceInterface
 {
     use LogsTrait;
 
-    protected CostCenterRepositoryInterface $costCenterRepository;  
-
-    public function __construct(CostCenterRepositoryInterface $costCenterRepository)
-    {
-        $this->costCenterRepository = $costCenterRepository;
+    public function __construct(
+        private CostCenterRepositoryInterface $costCenterRepository
+    ) {
         $this->initializeLogsTrait();
     }
 

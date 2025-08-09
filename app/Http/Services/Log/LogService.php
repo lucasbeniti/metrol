@@ -8,10 +8,9 @@ use Illuminate\Http\Request;
 
 class LogService implements LogServiceInterface
 {
-    protected LogRepositoryInterface $logRepository;
-
-    public function __construct(LogRepositoryInterface $logRepository)
-    {
+    public function __construct(
+        private LogRepositoryInterface $logRepository
+    ) {
         $this->logRepository = $logRepository;
     }
 

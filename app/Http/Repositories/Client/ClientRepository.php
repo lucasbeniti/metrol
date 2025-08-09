@@ -8,12 +8,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ClientRepository implements ClientRepositoryInterface
 {
-    protected Client $model;
-
-    public function __construct(Client $client)
-    {
-        $this->model = $client;
-    }
+    public function __construct(
+        private Client $model
+    ) {}
 
     public function getAll(): Collection
     {

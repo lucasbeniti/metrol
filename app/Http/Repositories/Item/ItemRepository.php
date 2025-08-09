@@ -7,12 +7,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ItemRepository implements ItemRepositoryInterface
 {
-    protected Item $model;
-
-    public function __construct(Item $item)
-    {
-        $this->model = $item;
-    }
+    public function __construct(
+        private Item $model
+    ) {}
 
     public function getAll(): Collection
     {
