@@ -5,10 +5,12 @@ namespace App\Http\Services\User;
 use App\Enums\LogActionsEnum;
 use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
+use App\Enums\UserRolesEnum;
+use App\Exceptions\UserAlreadyExistsException;
+use App\Exceptions\UserCannotBeDeletedException;
 use App\Http\Repositories\User\UserRepositoryInterface;
 use App\Models\User;
 use App\Traits\LogsTrait;
-use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -35,10 +37,8 @@ class UserService implements UserServiceInterface
 
     public function store(array $data): User
     {
-        $userWithIdentificationAlreadyExists = $this->userRepository->getByIdentification($data['identification']);
-
-        if ($userWithIdentificationAlreadyExists) {
-            throw new Exception('Já existe um usuário com essa identificação.');
+        if ($this->userRepository->getByIdentification($data['identification'])) {
+            throw new UserAlreadyExistsException();
         }
 
         $data['password'] = Hash::make('123');
@@ -47,7 +47,7 @@ class UserService implements UserServiceInterface
 
         $this->storeLog(
             LogActionsEnum::CREATE,
-            LogEntitiesEnum::USERS, 
+            LogEntitiesEnum::USERS,
             $user->name,
             LogTablesEnum::USERS,
             $this->getUserLogDetails($user)
@@ -58,17 +58,14 @@ class UserService implements UserServiceInterface
 
     public function update(int $id, array $data): bool
     {
-        $userWithIdentificationAlreadyExists = $this->userRepository->getByIdentification($data['identification']);
-
-        if ($userWithIdentificationAlreadyExists && $userWithIdentificationAlreadyExists->id !== $id) {
-            throw new Exception('Já existe um usuário com essa identificação.');
+        $existingUser = $this->userRepository->getByIdentification($data['identification']);
+        if ($existingUser && $existingUser->id !== $id) {
+            throw new UserAlreadyExistsException();
         }
 
         $success = $this->userRepository->update($id, $data);
-
-        $user = $this->getById($id);
-
         if ($success) {
+            $user = $this->getById($id);
             $this->storeLog(
                 LogActionsEnum::UPDATE,
                 LogEntitiesEnum::USERS,
@@ -85,18 +82,22 @@ class UserService implements UserServiceInterface
     {
         $user = $this->userRepository->getById($id);
 
+        if (!$user) {
+            return false;
+        }
+
         $userName = $user->name;
 
         $hasMetrologyCalls = false;
 
-        if ($user->userRole->name === 'Metrologista' || $user->userRole->name === 'Operador') {
+        if (in_array($user->user_role_id, [UserRolesEnum::METROLOGIST, UserRolesEnum::OPERATOR], true)) {
             $hasMetrologyCalls = $user->openedMetrologyCalls()->count() > 0 || $user->closedMetrologyCalls()->count() > 0;
         }
 
         if ($user->logs()->count() > 0 || $hasMetrologyCalls) {
-            throw new Exception('Não é possível excluir um usuário que possui registros de logs ou chamados de metrologia.');
+            throw new UserCannotBeDeletedException();
         }
-        
+
         $success = $this->userRepository->destroy($id);
 
         if ($success) {

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\UserAlreadyExistsException;
+use App\Exceptions\UserCannotBeDeletedException;
 use Inertia\Inertia;
 use App\Http\Requests\UpsertUserRequest;
 use App\Http\Services\User\UserServiceInterface;
@@ -29,11 +31,9 @@ class UserController extends Controller
             $this->userService->store($request->validated());
         
             return redirect()->route('users.index');    
+        } catch (UserAlreadyExistsException $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
         } catch (Exception $e) {
-            if ($e->getMessage() === 'Já existe um usuário com essa identificação.') {
-                return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
-            }
-
             return redirect()->back()->withErrors(['error' => 'Erro interno do servidor. Tente novamente mais tarde.'])->withInput();
         }
     }
@@ -44,11 +44,9 @@ class UserController extends Controller
             $this->userService->update($id, $request->validated());
 
             return redirect()->route('users.index');
+        } catch (UserAlreadyExistsException $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
         } catch (Exception $e) {
-            if ($e->getMessage() === 'Já existe um usuário com essa identificação.') {
-                return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
-            }
-
             return redirect()->back()->withErrors(['error' => 'Erro interno do servidor. Tente novamente mais tarde.'])->withInput();
         }
     }
@@ -59,11 +57,9 @@ class UserController extends Controller
             $this->userService->destroy($id);
 
             return redirect()->route('users.index');
+        } catch (UserCannotBeDeletedException $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
         } catch (Exception $e) {
-            if ($e->getMessage() === 'Não é possível excluir um usuário que possui registros de logs ou chamadas de metrologia.') {
-                return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
-            }
-
             return redirect()->back()->withErrors(['error' => 'Erro interno do servidor. Tente novamente mais tarde.']);
         }
     }
