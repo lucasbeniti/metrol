@@ -45,7 +45,7 @@ jobs:
         run: php artisan migrate --force
 
       - name: Roda testes (PEST)
-        run: vendor/bin/pest --colors
+        run: php artisan test
 
       - name: Build frontend (React)
         run: |
