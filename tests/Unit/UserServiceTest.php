@@ -10,7 +10,6 @@ use App\Http\Services\User\UserService;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
-use Mockery;
 use Tests\TestCase;
 
 uses(TestCase::class);
