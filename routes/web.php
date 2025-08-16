@@ -85,6 +85,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Rotas do metrologista
         Route::put('/receive-item/{id}', 'receiveItem')->name('receiveItem');
+        Route::put('/close/{id}', 'close')->name('close');
     });
 });
 

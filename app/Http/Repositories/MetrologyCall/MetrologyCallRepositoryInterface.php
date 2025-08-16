@@ -2,6 +2,7 @@
 
 namespace App\Http\Repositories\MetrologyCall;
 
+use App\Enums\MetrologyCallStatusesEnum;
 use App\Models\MetrologyCall;
 use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -15,4 +16,5 @@ interface MetrologyCallRepositoryInterface
     public function destroy(int $id): bool;
     public function export(): BinaryFileResponse;
     public function receiveItem(int $id): bool;
+    public function close(int $id, int $status): bool;
 }

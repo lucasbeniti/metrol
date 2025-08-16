@@ -1,3 +1,4 @@
+import { useCloseMetrologyCallDialog } from '@/contexts/close-metrology-call-dialog-context';
 import { useReceiveItemDialog } from '@/contexts/receive-item-context';
 import { IMetrologyCall } from '@/types/metrology-call';
 import { isEditableByMetrologist, isWaitingReceive } from '@/utils/metrology_calls';
@@ -10,11 +11,20 @@ interface MetrologistActionsButtonsProps {
 
 const MetrologistActionsButtonsProps = ({ call }: MetrologistActionsButtonsProps) => {
   const { openReceiveItemDialog } = useReceiveItemDialog();
+  const { openCloseMetrologyCallDialog } = useCloseMetrologyCallDialog();
 
   const handleReceive = () => {
     openReceiveItemDialog({
       id: call.id,
       callRoute: 'metrology-calls.receiveItem',
+      itemName: call.operation?.item?.name || '',
+    });
+  };
+
+  const handleClose = () => {
+    openCloseMetrologyCallDialog({
+      id: call.id,
+      callRoute: 'metrology-calls.close',
       itemName: call.operation?.item?.name || '',
     });
   };
@@ -27,14 +37,7 @@ const MetrologistActionsButtonsProps = ({ call }: MetrologistActionsButtonsProps
     return <div className="flex h-8 items-center">Não disponível</div>;
   }
 
-  return (
-    <TooltipButton
-      variant="ghost"
-      icon={<CheckCheckIcon className="text-green-600" />}
-      text="Finalizar Medição"
-      // onClick={...}
-    />
-  );
+  return <TooltipButton variant="ghost" icon={<CheckCheckIcon className="text-green-600" />} text="Finalizar Medição" onClick={handleClose} />;
 };
 
 export default MetrologistActionsButtonsProps;

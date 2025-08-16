@@ -86,4 +86,18 @@ class MetrologyCallRepository implements MetrologyCallRepositoryInterface
             'received_at' => now()
         ]);
     }
+
+    public function close(int $id, int $status): bool
+    {
+        $metrologyCall = $this->getById($id);
+
+        if (!$metrologyCall) {
+            return false;
+        }
+
+        return $metrologyCall->update([
+            'closed_at' => now(),
+            'metrology_call_status_id' => $status
+        ]);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\MetrologyCallStatusesEnum;
 use Inertia\Inertia;
 use App\Http\Requests\UpsertMetrologyCallRequest;
 use App\Http\Services\Item\ItemServiceInterface;
@@ -9,6 +10,7 @@ use App\Http\Services\Machine\MachineServiceInterface;
 use App\Http\Services\MetrologyCall\MetrologyCallServiceInterface;
 use App\Http\Services\Operation\OperationServiceInterface;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -65,6 +67,13 @@ class MetrologyCallController extends Controller
     public function receiveItem($id): RedirectResponse
     {
         $this->metrologyCallService->receiveItem($id);
+
+        return redirect()->route('metrology-calls.index');
+    }
+
+    public function close($id, Request $request): RedirectResponse
+    {
+        $this->metrologyCallService->close($id, $request->status);
 
         return redirect()->route('metrology-calls.index');
     }

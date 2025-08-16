@@ -3,6 +3,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import '../css/app.css';
 import { Toaster } from './components/ui/sonner';
+import { CloseMetrologyCallDialogProvider } from './contexts/close-metrology-call-dialog-context';
 import { DestroyDialogProvider } from './contexts/destroy-dialog-context';
 import { ReceiveItemDialogProvider } from './contexts/receive-item-context';
 import { UpsertDialogProvider } from './contexts/upsert-dialog-context';
@@ -18,14 +19,16 @@ createInertiaApp({
 
     root.render(
       <>
-        <ReceiveItemDialogProvider>
-          <DestroyDialogProvider>
-            <UpsertDialogProvider>
-              <App {...props} />
-              <Toaster position="top-right" richColors />
-            </UpsertDialogProvider>
-          </DestroyDialogProvider>
-        </ReceiveItemDialogProvider>
+        <CloseMetrologyCallDialogProvider>
+          <ReceiveItemDialogProvider>
+            <DestroyDialogProvider>
+              <UpsertDialogProvider>
+                <App {...props} />
+                <Toaster position="top-right" richColors />
+              </UpsertDialogProvider>
+            </DestroyDialogProvider>
+          </ReceiveItemDialogProvider>
+        </CloseMetrologyCallDialogProvider>
       </>,
     );
   },
