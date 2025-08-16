@@ -24,6 +24,8 @@ use App\Http\Services\Client\ClientServiceInterface;
 use App\Http\Services\Client\ClientService;
 use App\Http\Services\CostCenter\CostCenterService;
 use App\Http\Services\CostCenter\CostCenterServiceInterface;
+use App\Http\Services\Dashboard\DashboardService;
+use App\Http\Services\Dashboard\DashboardServiceInterface;
 use App\Http\Services\Item\ItemService;
 use App\Http\Services\Item\ItemServiceInterface;
 use App\Http\Services\Log\LogService;
@@ -63,6 +65,7 @@ class RepositoryServiceProvider extends ServiceProvider
             MetrologyCallServiceInterface::class => MetrologyCallService::class,
             OperationServiceInterface::class => OperationService::class,
             LogServiceInterface::class => LogService::class,
+            DashboardServiceInterface::class => DashboardService::class, 
         ];
 
         foreach ($bindings as $interface => $implementation) {

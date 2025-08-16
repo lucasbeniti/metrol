@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\MetrologyCallStatusesEnum;
 use Inertia\Inertia;
 use App\Http\Requests\UpsertMetrologyCallRequest;
 use App\Http\Services\Item\ItemServiceInterface;
