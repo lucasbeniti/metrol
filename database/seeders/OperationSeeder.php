@@ -2,22 +2,26 @@
 
 namespace Database\Seeders;
 
+use App\Models\Item;
 use App\Models\Operation;
 use Illuminate\Database\Seeder;
 
 class OperationSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $operation = [
-            'name' => 'Operação 1',
-            'code' => '1',
-            'item_id' => 1,
-        ];
+        $items = Item::all();
+        $counter = 1;
 
-        Operation::create($operation);
+        foreach ($items as $item) {
+            foreach (range(1, 2) as $i) {
+                Operation::create([
+                    'name' => "Operação {$counter}",
+                    'code' => $counter,
+                    'item_id' => $item->id,
+                ]);
+                $counter++;
+            }
+        }
     }
 }

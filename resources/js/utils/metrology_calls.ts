@@ -39,3 +39,15 @@ export const isEditableByMetrologist = (statusId: number): boolean => {
 export const isWaitingReceive = (statusId: number): boolean => {
   return statusId === MetrologyCallStatus.WAITING_RECEIVE;
 };
+
+export const getColorFromMetrologyCallTypeForChart = (typeId: number) => {
+  if (typeId === MetrologyCallType.SETUP) {
+    return '#9333ea';
+  }
+
+  if (typeId === MetrologyCallType.ADJUSTMENT) {
+    return '#ea580c';
+  }
+
+  return '#2563eb';
+};

@@ -2,22 +2,26 @@
 
 namespace Database\Seeders;
 
+use App\Models\CostCenter;
 use App\Models\Item;
 use Illuminate\Database\Seeder;
 
 class ItemSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $item = [
-            'name' => 'Item 1',
-            'code' => '1',
-            'cost_center_id' => 1,
-        ];
+        $costCenters = CostCenter::all();
+        $counter = 1;
 
-        Item::create($item);
+        foreach ($costCenters as $cc) {
+            foreach (range(1, 4) as $i) {
+                Item::create([
+                    'name' => "Item {$counter}",
+                    'code' => $counter,
+                    'cost_center_id' => $cc->id,
+                ]);
+                $counter++;
+            }
+        }
     }
 }

@@ -3,35 +3,41 @@
 namespace Database\Seeders;
 
 use App\Models\MetrologyCall;
+use App\Models\Machine;
+use App\Models\Operation;
+use App\Models\User;
+use App\Models\MetrologyCallType;
+use App\Models\MetrologyCallStatus;
 use Illuminate\Database\Seeder;
 
 class MetrologyCallSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $openedMetrologyCall = [
-            'machine_id' => 1,
-            'operation_id' => 1,
-            'opened_by_user_id' => 1,
-            'metrology_call_type_id' => 1,
-            'metrology_call_status_id' => 1
-        ];
+        $machines = Machine::all();
+        $operations = Operation::all();
+        $users = User::all();
+        $types = MetrologyCallType::all();
+        $statuses = MetrologyCallStatus::all();
 
-        $closedMetrologyCall = [
-            'machine_id' => 1,
-            'operation_id' => 1,
-            'opened_by_user_id' => 1,
-            'metrology_call_type_id' => 1,
-            'closed_by_user_id' => 1,
-            'metrology_call_status_id' => 1,
-            'received_at' => now(),
-            'closed_at' => now()
-        ];
+        foreach (range(1, 30) as $i) {
+            $isClosed = rand(0, 1); 
 
-        MetrologyCall::create($openedMetrologyCall);
-        MetrologyCall::create($closedMetrologyCall);
+            $data = [
+                'machine_id' => $machines->random()->id,
+                'operation_id' => $operations->random()->id,
+                'opened_by_user_id' => $users->random()->id,
+                'metrology_call_type_id' => $types->random()->id,
+                'metrology_call_status_id' => $statuses->random()->id,
+            ];
+
+            if ($isClosed) {
+                $data['closed_by_user_id'] = $users->random()->id;
+                $data['received_at'] = now()->subDays(rand(1, 10));
+                $data['closed_at'] = now()->subDays(rand(0, 5));
+            }
+
+            MetrologyCall::create($data);
+        }
     }
 }

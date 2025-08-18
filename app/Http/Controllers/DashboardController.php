@@ -17,11 +17,19 @@ class DashboardController extends Controller
         $itemsWaitingForMeasurement = $this->dashboardService->countItemsWaitingForMeasurement();
         $averageTimeForMeasurement = $this->dashboardService->countAverageTimeForMeasurement();
         $itemsMeasuredToday = $this->dashboardService->countItemsMeasuredToday();
+        $itemsWaitingForMeasurementByType = $this->dashboardService->countItemsWaitingForMeasurementByType();
+        $top5Clients = $this->dashboardService->getTop5Clients();
+        $top5CostCenters = $this->dashboardService->getTop5CostCenters();
+        $top5Operations = $this->dashboardService->getTop5Operations();
 
         return Inertia::render('dashboard', [
             'itemsWaitingForMeasurement' => $itemsWaitingForMeasurement,
             'averageTimeForMeasurement' => $averageTimeForMeasurement,
-            'itemsMeasuredToday' => $itemsMeasuredToday
+            'itemsMeasuredToday' => $itemsMeasuredToday,
+            'itemsWaitingForMeasurementByType' => $itemsWaitingForMeasurementByType,
+            'top5Clients' => $top5Clients,
+            'top5CostCenters' => $top5CostCenters,
+            'top5Operations' => $top5Operations
         ]);
     }
 }

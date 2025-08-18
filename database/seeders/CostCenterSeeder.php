@@ -2,22 +2,26 @@
 
 namespace Database\Seeders;
 
+use App\Models\Client;
 use App\Models\CostCenter;
 use Illuminate\Database\Seeder;
 
 class CostCenterSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $costCenter = [
-            'name' => 'Centro de Custo 1',
-            'code' => '1',
-            'client_id' => 1,
-        ];
+        $clients = Client::all();
+        $counter = 1;
 
-        CostCenter::create($costCenter);
+        foreach ($clients as $client) {
+            foreach (range(1, 3) as $i) {
+                CostCenter::create([
+                    'name' => "Centro de custo {$counter}",
+                    'code' => $counter,
+                    'client_id' => $client->id,
+                ]);
+                $counter++;
+            }
+        }
     }
 }

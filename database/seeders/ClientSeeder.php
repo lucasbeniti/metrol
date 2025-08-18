@@ -12,11 +12,11 @@ class ClientSeeder extends Seeder
      */
     public function run(): void
     {
-        $client = [
-            'name' => 'Cliente 1',
-            'code' => '1',
-        ];
-
-        Client::create($client);
+        foreach (range(1, 5) as $i) {
+            Client::create([
+                'name' => "Cliente $i",
+                'code' => $i
+            ]);
+        }
     }
 }
