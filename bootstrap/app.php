@@ -1,5 +1,7 @@
 <?php
 
+use App\Exceptions\AlreadyExistsException;
+use App\Exceptions\CannotBeDeletedException;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
@@ -23,5 +25,22 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (AlreadyExistsException $e) {
+            return redirect()
+                ->back()
+                ->withErrors(['error' => $e->getMessage()])
+                ->withInput();
+        });
+
+        $exceptions->render(function (CannotBeDeletedException $e) {
+            return redirect()
+                ->back()
+                ->withErrors(['error' => $e->getMessage()]);
+        });
+
+        $exceptions->render(function () {
+            return redirect()
+                ->back()
+                ->withErrors(['error' => 'Erro interno do servidor. Tente novamente mais tarde']);
+        });
     })->create();

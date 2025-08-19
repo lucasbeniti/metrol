@@ -5,10 +5,11 @@ namespace App\Http\Services\Machine;
 use App\Enums\LogActionsEnum;
 use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
+use App\Exceptions\Machine\MachineAlreadyExistsException;
+use App\Exceptions\Machine\MachineCannotBeDeletedException;
 use App\Http\Repositories\Machine\MachineRepositoryInterface;
 use App\Models\Machine;
 use App\Traits\LogsTrait;
-use Exception;
 use Illuminate\Database\Eloquent\Collection;
 
 class MachineService implements MachineServiceInterface
@@ -36,7 +37,7 @@ class MachineService implements MachineServiceInterface
         $machineWithCodeAlreadyExists = $this->machineRepository->getByCode($data['code']);
 
         if ($machineWithCodeAlreadyExists) {
-            throw new Exception('Já existe uma máquina com esse código.');
+            throw new MachineAlreadyExistsException();
         }
 
         $machine = $this->machineRepository->store($data);
@@ -57,7 +58,7 @@ class MachineService implements MachineServiceInterface
         $machineWithCodeAlreadyExists = $this->machineRepository->getByCode($data['code']);
 
         if ($machineWithCodeAlreadyExists && $machineWithCodeAlreadyExists->id !== $id) {
-            throw new Exception('Já existe uma máquina com esse código.');
+            throw new MachineAlreadyExistsException();
         }
 
         $success = $this->machineRepository->update($id, $data);
@@ -84,7 +85,7 @@ class MachineService implements MachineServiceInterface
         $machineName = $machine->name;
 
         if ($machine->metrologyCalls()->count() > 0) {
-            throw new Exception('Não é possível excluir uma máquina que possui chamados de metrologia associadas.');
+            throw new MachineCannotBeDeletedException();
         }
 
         $success = $this->machineRepository->destroy($id);

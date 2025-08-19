@@ -5,10 +5,11 @@ namespace App\Http\Services\CostCenter;
 use App\Enums\LogActionsEnum;
 use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
+use App\Exceptions\CostCenter\CostCenterAlreadyExistsException;
+use App\Exceptions\CostCenter\CostCenterCannotBeDeletedException;
 use App\Http\Repositories\CostCenter\CostCenterRepositoryInterface;
 use App\Models\CostCenter;
 use App\Traits\LogsTrait;
-use Exception;
 use Illuminate\Database\Eloquent\Collection;
 
 class CostCenterService implements CostCenterServiceInterface
@@ -36,7 +37,7 @@ class CostCenterService implements CostCenterServiceInterface
         $costCenterWithCodeAlreadyExists = $this->costCenterRepository->getByCode($data['code']);
 
         if ($costCenterWithCodeAlreadyExists) {
-            throw new Exception('Já existe um centro de custo com esse código.');
+            throw new CostCenterAlreadyExistsException();
         }
 
         $costCenter = $this->costCenterRepository->store($data);
@@ -57,7 +58,7 @@ class CostCenterService implements CostCenterServiceInterface
         $costCenterWithCodeAlreadyExists = $this->costCenterRepository->getByCode($data['code']);
 
         if ($costCenterWithCodeAlreadyExists && $costCenterWithCodeAlreadyExists->id !== $id) {
-            throw new Exception('Já existe um centro de custo com esse código.');
+            throw new CostCenterAlreadyExistsException();
         }
 
         $success = $this->costCenterRepository->update($id, $data);
@@ -84,7 +85,7 @@ class CostCenterService implements CostCenterServiceInterface
         $costCenterName = $costCenter->name;
 
         if ($costCenter->items()->count() > 0) {
-            throw new Exception('Não é possível excluir um centro de custo que possui items associadas.');
+            throw new CostCenterCannotBeDeletedException();
         }
 
         $success = $this->costCenterRepository->destroy($id);

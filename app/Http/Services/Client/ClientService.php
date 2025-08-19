@@ -5,10 +5,11 @@ namespace App\Http\Services\Client;
 use App\Enums\LogActionsEnum;
 use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
+use App\Exceptions\Client\ClientAlreadyExistsException;
+use App\Exceptions\Client\ClientCannotBeDeletedException;
 use App\Http\Repositories\Client\ClientRepositoryInterface;
 use App\Models\Client;
 use App\Traits\LogsTrait;
-use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 
@@ -37,7 +38,7 @@ class ClientService implements ClientServiceInterface
         $clientWithCodeAlreadyExists = $this->clientRepository->getByCode($data['code']);
 
         if ($clientWithCodeAlreadyExists) {
-            throw new Exception('Já existe um cliente com esse código.');
+            throw new ClientAlreadyExistsException();
         }
 
         $data['password'] = Hash::make('123');
@@ -60,7 +61,7 @@ class ClientService implements ClientServiceInterface
         $clientWithCodeAlreadyExists = $this->clientRepository->getByCode($data['code']);
 
         if ($clientWithCodeAlreadyExists && $clientWithCodeAlreadyExists->id !== $id) {
-            throw new Exception('Já existe um cliente com esse código.');
+            throw new ClientAlreadyExistsException();
         }
 
         $success = $this->clientRepository->update($id, $data);
@@ -87,7 +88,7 @@ class ClientService implements ClientServiceInterface
         $clientName = $client->name;
 
         if ($client->costCenters()->count() > 0) {
-            throw new Exception('Não é possível excluir um cliente que possui centros de custo associados.');
+            throw new ClientCannotBeDeletedException();
         }
 
         $success = $this->clientRepository->destroy($id);

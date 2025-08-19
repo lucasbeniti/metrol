@@ -5,7 +5,6 @@ namespace App\Http\Services\MetrologyCall;
 use App\Enums\LogActionsEnum;
 use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
-use App\Enums\MetrologyCallStatusesEnum;
 use App\Http\Repositories\MetrologyCall\MetrologyCallRepositoryInterface;
 use App\Models\MetrologyCall;
 use App\Traits\LogsTrait;

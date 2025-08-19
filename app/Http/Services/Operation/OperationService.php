@@ -5,10 +5,11 @@ namespace App\Http\Services\Operation;
 use App\Enums\LogActionsEnum;
 use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
+use App\Exceptions\Operation\OperationAlreadyExistsException;
+use App\Exceptions\Operation\OperationCannotBeDeletedException;
 use App\Http\Repositories\Operation\OperationRepositoryInterface;
 use App\Models\Operation;
 use App\Traits\LogsTrait;
-use Exception;
 use Illuminate\Database\Eloquent\Collection;
 
 class OperationService implements OperationServiceInterface
@@ -36,7 +37,7 @@ class OperationService implements OperationServiceInterface
         $operationWithCodeAlreadyExists = $this->operationRepository->getByCode($data['item_id'], $data['code']);
 
         if ($operationWithCodeAlreadyExists) {
-            throw new Exception('Já existe uma operação com esse código.');
+            throw new OperationAlreadyExistsException();
         }
 
         $operation = $this->operationRepository->store($data);
@@ -57,7 +58,7 @@ class OperationService implements OperationServiceInterface
         $operationWithCodeAlreadyExists = $this->operationRepository->getByCode($data['item_id'], $data['code']);
 
         if ($operationWithCodeAlreadyExists && $operationWithCodeAlreadyExists->id !== $operationId) {
-            throw new Exception('Já existe uma operação com esse código.');
+            throw new OperationAlreadyExistsException();
         }
 
         $success = $this->operationRepository->update($itemId, $operationId, $data);
@@ -84,7 +85,7 @@ class OperationService implements OperationServiceInterface
         $operationName = $operation->name;
 
         if ($operation->metrologyCalls()->count() > 0 || $operation->machines()->count() > 0) {
-            throw new Exception('Não é possível excluir uma operação que possui chamados de metrologia ou máquinas associadas.');
+            throw new OperationCannotBeDeletedException();
         }
 
         $success = $this->operationRepository->destroy($itemId, $operationId);

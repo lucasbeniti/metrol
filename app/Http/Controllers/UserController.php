@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\UserAlreadyExistsException;
-use App\Exceptions\UserCannotBeDeletedException;
+use App\Exceptions\User\UserAlreadyExistsException;
+use App\Exceptions\User\UserCannotBeDeletedException;
 use Inertia\Inertia;
 use App\Http\Requests\UpsertUserRequest;
 use App\Http\Services\User\UserServiceInterface;

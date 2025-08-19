@@ -5,10 +5,11 @@ namespace App\Http\Services\Item;
 use App\Enums\LogActionsEnum;
 use App\Enums\LogEntitiesEnum;
 use App\Enums\LogTablesEnum;
+use App\Exceptions\Item\ItemAlreadyExistsException;
+use App\Exceptions\Item\ItemCannotBeDeletedException;
 use App\Http\Repositories\Item\ItemRepositoryInterface;
 use App\Models\Item;
 use App\Traits\LogsTrait;
-use Exception;
 use Illuminate\Database\Eloquent\Collection;
 
 class ItemService implements ItemServiceInterface
@@ -36,7 +37,7 @@ class ItemService implements ItemServiceInterface
         $itemWithCodeAlreadyExists = $this->itemRepository->getByCode($data['code']);
 
         if ($itemWithCodeAlreadyExists) {
-            throw new Exception('Já existe um item com esse código.');
+            throw new ItemAlreadyExistsException();
         }
 
         $item = $this->itemRepository->store($data);
@@ -57,7 +58,7 @@ class ItemService implements ItemServiceInterface
         $itemWithCodeAlreadyExists = $this->itemRepository->getByCode($data['code']);
 
         if ($itemWithCodeAlreadyExists && $itemWithCodeAlreadyExists->id !== $id) {
-            throw new Exception('Já existe um item com esse código.');
+            throw new ItemAlreadyExistsException();
         }
 
         $success = $this->itemRepository->update($id, $data);
@@ -84,7 +85,7 @@ class ItemService implements ItemServiceInterface
         $itemName = $item->name;
 
         if ($item->operations()->count() > 0) {
-            throw new Exception('Não é possível excluir um item que possui operações associadas.');
+            throw new ItemCannotBeDeletedException();
         }
 
         $success = $this->itemRepository->destroy($id);

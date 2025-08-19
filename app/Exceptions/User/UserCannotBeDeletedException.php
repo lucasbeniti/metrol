@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\User;
 
-use Exception;
+use App\Exceptions\CannotBeDeletedException;
 
-class UserCannotBeDeletedException extends Exception
+class UserCannotBeDeletedException extends CannotBeDeletedException
 {
     public function __construct()
     {

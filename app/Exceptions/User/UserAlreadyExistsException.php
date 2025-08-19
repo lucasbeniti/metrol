@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\User;
 
-use Exception;
+use App\Exceptions\AlreadyExistsException;
 
-class UserAlreadyExistsException extends Exception
+class UserAlreadyExistsException extends AlreadyExistsException
 {
     public function __construct()
     {
