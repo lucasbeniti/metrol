@@ -44,14 +44,14 @@ class MetrologyCallController extends Controller
         return redirect()->route('metrology-calls.index');
     }
 
-    public function update($id, UpsertMetrologyCallRequest $request): RedirectResponse 
+    public function update(int $id, UpsertMetrologyCallRequest $request): RedirectResponse 
     {
         $this->metrologyCallService->update($id, $request->validated());
 
         return redirect()->route('metrology-calls.index');
     }
 
-    public function destroy($id): RedirectResponse 
+    public function destroy(int $id): RedirectResponse 
     {
         $this->metrologyCallService->destroy($id);
 
@@ -63,14 +63,14 @@ class MetrologyCallController extends Controller
         return $this->metrologyCallService->export();
     }
 
-    public function receiveItem($id): RedirectResponse
+    public function receiveItem(int $id): RedirectResponse
     {
         $this->metrologyCallService->receiveItem($id);
 
         return redirect()->route('metrology-calls.index');
     }
 
-    public function close($id, Request $request): RedirectResponse
+    public function close(int $id, Request $request): RedirectResponse
     {
         $this->metrologyCallService->close($id, $request->status);
 

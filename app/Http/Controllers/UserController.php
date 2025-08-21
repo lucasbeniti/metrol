@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\User\UserAlreadyExistsException;
-use App\Exceptions\User\UserCannotBeDeletedException;
 use Inertia\Inertia;
 use App\Http\Requests\UpsertUserRequest;
 use App\Http\Services\User\UserServiceInterface;
-use Exception;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -27,41 +24,23 @@ class UserController extends Controller
 
     public function store(UpsertUserRequest $request): RedirectResponse
     {
-        try {
-            $this->userService->store($request->validated());
-        
-            return redirect()->route('users.index');    
-        } catch (UserAlreadyExistsException $e) {
-            return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'Erro interno do servidor. Tente novamente mais tarde.'])->withInput();
-        }
+        $this->userService->store($request->validated());
+
+        return redirect()->route('users.index');
     }
 
-    public function update($id, UpsertUserRequest $request): RedirectResponse
+    public function update(int $id, UpsertUserRequest $request): RedirectResponse
     {
-        try {
-            $this->userService->update($id, $request->validated());
+        $this->userService->update($id, $request->validated());
 
-            return redirect()->route('users.index');
-        } catch (UserAlreadyExistsException $e) {
-            return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'Erro interno do servidor. Tente novamente mais tarde.'])->withInput();
-        }
+        return redirect()->route('users.index');
     }
 
-    public function destroy($id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
-        try {
-            $this->userService->destroy($id);
+        $this->userService->destroy($id);
 
-            return redirect()->route('users.index');
-        } catch (UserCannotBeDeletedException $e) {
-            return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'Erro interno do servidor. Tente novamente mais tarde.']);
-        }
+        return redirect()->route('users.index');
     }
 
     public function export(): BinaryFileResponse
