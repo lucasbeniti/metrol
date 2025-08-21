@@ -8,6 +8,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -25,20 +26,20 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (AlreadyExistsException $e) {
+        $exceptions->render(function (AlreadyExistsException $e, Request $request) {
             return redirect()
                 ->back()
                 ->withErrors(['error' => $e->getMessage()])
                 ->withInput();
         });
 
-        $exceptions->render(function (CannotBeDeletedException $e) {
+        $exceptions->render(function (CannotBeDeletedException $e, Request $request) {
             return redirect()
                 ->back()
                 ->withErrors(['error' => $e->getMessage()]);
         });
 
-        $exceptions->render(function () {
+        $exceptions->render(function (Throwable $e, Request $request) {
             return redirect()
                 ->back()
                 ->withErrors(['error' => 'Erro interno do servidor. Tente novamente mais tarde']);
