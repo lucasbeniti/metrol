@@ -39,7 +39,7 @@ export default function Dashboard({
         <div className="grid grid-cols-3 gap-4">
           <Card>
             <CardHeader>
-              <CardDescription>Quantidade de items esperando por medição</CardDescription>
+              <CardDescription>Quantidade de itens esperando por medição</CardDescription>
               <div className="flex justify-between">
                 <CardTitle className="text-2xl font-semibold">
                   {itemsWaitingForMeasurement} {itemsWaitingForMeasurement === 1 ? 'unidade' : 'unidades'}
@@ -61,7 +61,7 @@ export default function Dashboard({
 
           <Card>
             <CardHeader>
-              <CardDescription>Quantidade de items medidos no dia</CardDescription>
+              <CardDescription>Quantidade de itens medidos no dia</CardDescription>
               <div className="flex justify-between">
                 <CardTitle className="text-2xl font-semibold">{itemsMeasuredToday} unidades</CardTitle>
                 <ListCheckIcon />
@@ -71,9 +71,9 @@ export default function Dashboard({
         </div>
 
         <div className="grid grid-cols-2 grid-rows-2 gap-4 pb-0">
-          <ChartBarDefault title="Items por cliente" data={top5Clients} type="client" />
-          <ChartBarDefault title="Items por centro de custo" data={top5CostCenters} type="costCenter" />
-          <ChartBarDefault title="Items por operação" data={top5Operations} type="operation" />
+          <ChartBarDefault title="Itens por cliente" data={top5Clients} type="client" />
+          <ChartBarDefault title="Itens por centro de custo" data={top5CostCenters} type="costCenter" />
+          <ChartBarDefault title="Itens por operação" data={top5Operations} type="operation" />
           <ItemsWaitingForMeasurementPieChart data={itemsWaitingForMeasurementByType} />
         </div>
       </div>
