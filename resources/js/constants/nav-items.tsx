@@ -33,7 +33,7 @@ export const mainNavItems: NavItem[] = [
     icon: Theater,
   },
   {
-    title: 'Items',
+    title: 'Itens',
     url: '/items',
     icon: PackageSearch,
   },

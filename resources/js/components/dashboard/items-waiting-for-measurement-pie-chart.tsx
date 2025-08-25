@@ -22,7 +22,7 @@ export function ItemsWaitingForMeasurementPieChart({ data }: ItemsWaitingForMeas
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle className="text-center">Quantidade de items esperando por medição</CardTitle>
+        <CardTitle className="text-center">Quantidade de itens esperando por medição</CardTitle>
         <CardDescription>Distribuição por tipo</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
