@@ -25,7 +25,7 @@ class DashboardService implements DashboardServiceInterface
     {
         $closedCalls = $this->metrologyCallRepository
             ->getAll()
-            ->filter(fn($call) => $call->closed_at && ($call->created_at->isToday() && $call->closed_at->isToday()));
+            ->filter(fn($call) => $call->closed_at && ($call->received_at->isToday() && $call->closed_at->isToday()));
 
         if ($closedCalls->isEmpty()) {
             return 0;
